@@ -23,6 +23,8 @@ useHead({
 
     <ArchitectureMap />
 
+    <TierMap />
+
     <FilesGrid />
 
     <SessionLoop />
