@@ -1,0 +1,21 @@
+{
+  "name": "build-your-agents",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "nuxt": "^3.13.0",
+    "typescript": "^5.4.5",
+    "vue-tsc": "^2.0.21"
+  },
+  "dependencies": {
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
+  }
+}
