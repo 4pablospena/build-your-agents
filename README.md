@@ -40,6 +40,16 @@ Copy `.env.example` to `.env` when deploying:
 | -------- | ------- |
 | `NUXT_PUBLIC_SITE_URL` | Public site URL **without** trailing slash. Used for `og:url` and absolute `og:image` / `twitter:image` in `nuxt.config.ts`. |
 
+## Deploy (Vercel)
+
+1. Import the Git repo in the [Vercel dashboard](https://vercel.com/new). Vercel will detect **pnpm** from `pnpm-lock.yaml`.
+2. **Build command:** `pnpm run build` (default if the install step runs pnpm; otherwise set it explicitly).
+3. **Framework preset:** Nuxt.js (auto). **Node.js:** 20.x or 22.x (matches `engines.node` in `package.json`).
+4. **Environment variables (Production):** set `NUXT_PUBLIC_SITE_URL` to your public URL with **no** trailing slash, e.g. `https://your-project.vercel.app` or your custom domain. Redeploy after changing it so OG meta match the live URL.
+5. Deploy. `sharp` is a **runtime dependency** so `scripts/generate-og.mjs` succeeds on Vercel’s build and in `postinstall`.
+
+Nitro is configured with `preset: 'vercel'` in [`nuxt.config.ts`](nuxt.config.ts) for a predictable serverless output.
+
 ## Agent markdown templates
 
 Canonical markdown lives in `templates/*.md` (Soul, Identity, Agents, User,

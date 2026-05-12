@@ -10,6 +10,11 @@ export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   ssr: true,
 
+  // Explicit preset so CI/Vercel always emit the serverless bundle Nitro expects
+  nitro: {
+    preset: 'vercel'
+  },
+
   // Avoid Vite 7 pre-transform trying to resolve `#app-manifest` on cold dev
   // (see nuxt/nuxt#33606). This site does not rely on experimental app manifest.
   experimental: {
