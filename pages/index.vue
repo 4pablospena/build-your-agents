@@ -7,7 +7,7 @@ useHead({
 
 <template>
   <main>
-    <AppHeader active="overview" />
+    <AppHeader active="top" />
     <HeroSection />
 
     <MarqueeBar

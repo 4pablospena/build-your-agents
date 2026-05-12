@@ -30,15 +30,20 @@ const priority = [
           rules it applies before making any independent decision.
         </p>
 
-        <div class="rules__table" role="table">
-          <div class="rules__th">
-            <span>If</span><span>Then</span>
-          </div>
-          <div v-for="r in rules" :key="r.when" class="rules__tr">
-            <span class="rules__when">{{ r.when }}</span>
-            <span class="rules__do">{{ r.do }}</span>
-          </div>
-        </div>
+        <table class="rules__table">
+          <thead>
+            <tr>
+              <th scope="col" class="rules__th-cell">If</th>
+              <th scope="col" class="rules__th-cell">Then</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="r in rules" :key="r.when" class="rules__tr">
+              <td class="rules__when">{{ r.when }}</td>
+              <td class="rules__do">{{ r.do }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <aside class="rules__col rules__priority">
@@ -83,37 +88,58 @@ const priority = [
 
 .rules__table {
   margin-top: 28px;
+  width: 100%;
+  border-collapse: collapse;
   border: var(--stroke-fat) solid var(--ink);
   background: var(--paper);
   box-shadow: var(--shadow);
+  table-layout: fixed;
 }
-.rules__th, .rules__tr {
-  display: grid;
-  grid-template-columns: 1fr 1.6fr;
-}
-.rules__th {
+.rules__table thead tr {
   font-family: var(--display);
   text-transform: uppercase;
   font-size: 0.85rem;
   background: var(--ink);
   color: var(--paper);
 }
-.rules__th span { padding: 10px 14px; }
-.rules__th span + span { border-left: 2px solid var(--paper); }
+.rules__th-cell {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 400;
+  width: 38%;
+}
+.rules__th-cell + .rules__th-cell {
+  width: 62%;
+  border-left: 2px solid var(--paper);
+}
 
-.rules__tr { border-top: var(--stroke) solid var(--ink); }
-.rules__when, .rules__do { padding: 14px; font-family: var(--mono); font-size: 0.86rem; }
+.rules__tr {
+  border-top: var(--stroke) solid var(--ink);
+}
+.rules__when,
+.rules__do {
+  padding: 14px;
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  vertical-align: top;
+}
 .rules__when {
   font-weight: 700;
   background: var(--lemon);
   border-right: var(--stroke) solid var(--ink);
+  width: 38%;
 }
-.rules__tr:nth-child(odd) .rules__when { background: var(--acid); }
-.rules__do { line-height: 1.5; }
+.rules__tr:nth-child(odd) .rules__when {
+  background: var(--acid);
+}
+.rules__do {
+  line-height: 1.5;
+  width: 62%;
+}
 
 .rules__priority {
   position: sticky;
-  top: 96px;
+  top: 6rem;
   border: var(--stroke-fat) solid var(--ink);
   background: var(--hot);
   color: var(--paper);
@@ -166,5 +192,12 @@ const priority = [
 @media (max-width: 920px) {
   .rules__grid { grid-template-columns: 1fr; }
   .rules__priority { position: static; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rules__hl,
+  .rules__priority {
+    transform: none;
+  }
 }
 </style>
