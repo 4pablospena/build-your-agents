@@ -1,5 +1,10 @@
 # MEMORY.md — Long-Term Memory
 
+Evergreen facts the agent should **assume true** until superseded. Not a
+diary: daily scratch lives in `memory/[YYYY-MM-DD].md`. **Do not store
+secrets** (passwords, API keys) here — use **Credentials References** for
+*where* to look them up.
+
 ## User Preferences (confirmed)
 - Prefers TypeScript strict mode
 - Uses pnpm, not npm
@@ -20,9 +25,20 @@
 - Primary editor: [editor name]
 - Deploys to: [platform]
 
-## Superseded Information
-- [YYYY-MM-DD] Was using X → now Y confirmed
+## Credentials References
+- API keys / tokens: stored in [e.g. 1Password item] or `.env` (never paste
+  values into this file)
+- SSH / signing: [e.g. macOS Keychain / hardware key]
+- Repo access: [which account / PAT lives where]
+
+## Resolved Issues
+- [YYYY-MM-DD] [Problem] → [Resolution in one line]
+- [YYYY-MM-DD] [Problem] → [Resolution]
 
 ## Memory Hygiene
 Only promote here after confirmation or 2+ observations.
 Never delete — move to Superseded with a date stamp.
+Do not log PII you would not want in a shared repo.
+
+## Superseded Information
+- [YYYY-MM-DD] Was using X → now Y confirmed

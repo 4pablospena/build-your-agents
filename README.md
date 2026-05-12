@@ -18,7 +18,7 @@ asymmetric layout, Archivo Black + Fraunces + Space Mono.
 
 | Route   | Description |
 | ------- | ----------- |
-| `/`     | Landing: hero, architecture map, file cards, session loop, docs CTA |
+| `/`     | Landing: hero, **who it’s for** (`#audience`), architecture, files, session loop, docs CTA |
 | `/docs` | Full markdown documentation for each of the seven agent files |
 
 ## Run it
@@ -41,7 +41,8 @@ Copy `.env.example` to `.env` when deploying:
 ## Agent markdown templates
 
 Canonical markdown lives in `templates/*.md` (Soul, Identity, Agents, User,
-Memory, Heartbeat, Tools). `scripts/sync-templates.mjs` copies them into
+Memory, Heartbeat, Tools). [`templates/README.md`](templates/README.md) is a
+one-page reading map (also copied to `public/templates/`). `scripts/sync-templates.mjs` copies all `*.md` from `templates/` into
 `public/templates/` so they can be fetched or linked in production.
 
 `assets/og-card.svg` is the vector source for the social preview image;
@@ -71,7 +72,8 @@ build-your-agents/
 ├── composables/
 │   ├── useAgentFiles.ts          # the 7-file spec data (single source of truth)
 │   └── useAgentFiles.types.ts    # shared types for file metadata
-├── templates/                    # canonical *.md for each agent file
+├── templates/                    # canonical *.md + README map for downloads
+│   └── README.md                 # reading map (also at /templates/README.md)
 ├── scripts/
 │   ├── sync-templates.mjs        # templates/ → public/templates/
 │   └── generate-og.mjs           # assets/og-card.svg → public/og.png
@@ -87,3 +89,7 @@ build-your-agents/
 Following the Vue best-practices skill: route views stay thin, feature UI is
 split into focused components, shared state lives in a composable, props
 flow down and data is typed.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

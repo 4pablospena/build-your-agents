@@ -20,7 +20,7 @@ const howSteps = [
   {
     n: '01',
     title: 'Download',
-    body: 'Grab the seven .md files. One at a time, copy-paste, or curl them from /templates/ once your site is live.'
+    body: 'Grab the seven .md files. One at a time, copy-paste, or curl them from /templates/ once your site is live. For a reading map, see README.md in the same folder.'
   },
   {
     n: '02',
@@ -31,6 +31,11 @@ const howSteps = [
     n: '03',
     title: 'Point your model',
     body: 'Drop the folder as system context or workspace rules. Same files power the overview on the home page.'
+  },
+  {
+    n: '04',
+    title: 'Two memory layers',
+    body: 'Use memory/[date].md for daily notes and session summaries. Promote confirmed facts to MEMORY.md — evergreen, one line per fact, supersede instead of delete.'
   }
 ]
 
@@ -98,6 +103,9 @@ function templateHref(filename: string) {
             or all seven, drop them into a folder, and point your agent at them.
             Same sources as the
             <NuxtLink to="/">interactive overview</NuxtLink>.
+            For a one-page map of roles and read order, open
+            <a class="docs__inline-link" :href="templateHref('README.md')">README.md</a>
+            (also under <code class="docs__code">/templates/</code>).
           </p>
 
           <div class="docs__cta-row bya-rise bya-rise-4">
@@ -405,6 +413,19 @@ BASE=<span class="c-str">"YOUR_ORIGIN"</span>
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.docs__inline-link {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: inherit;
+}
+.docs__code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  padding: 2px 6px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
 }
 
 .docs__cta-row {
@@ -756,8 +777,10 @@ BASE=<span class="c-str">"YOUR_ORIGIN"</span>
   line-height: 1.55;
   white-space: pre-wrap;
   word-break: break-word;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
   max-height: 280px;
-  overflow: auto;
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--paper) var(--ink);
 }

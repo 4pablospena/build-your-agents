@@ -7,7 +7,7 @@ const ogImage = siteUrl ? `${siteUrl}/og.png` : '/og.png'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-01',
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV !== 'production' },
   ssr: true,
 
   // Avoid Vite 7 pre-transform trying to resolve `#app-manifest` on cold dev

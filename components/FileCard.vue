@@ -262,10 +262,12 @@ const sourcePanelId = computed(() => `fc-source-${props.file.id}`)
   background: var(--ink);
   color: var(--acid);
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   line-height: 1.6;
-  white-space: pre;
-  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  overflow-x: hidden;
   max-height: 320px;
   overflow-y: auto;
   scrollbar-width: thin;

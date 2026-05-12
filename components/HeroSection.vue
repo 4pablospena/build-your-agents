@@ -39,6 +39,9 @@ const stats = [
           <a class="bya-btn bya-btn--ghost" href="#files">
             Browse the files
           </a>
+          <a class="bya-btn bya-btn--ghost" href="#audience">
+            Honest scope
+          </a>
         </div>
       </div>
 

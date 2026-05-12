@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Pulled from AGENTS.md "Decision Rules" + "Tool Selection Guide" from TOOLS.md
+// Decision table mirrors templates/AGENTS.md "Decision Rules". Tool priority mirrors TOOLS.md.
 const rules = [
   { when: 'Ambiguous instruction', do: 'Ask one clarifying question before proceeding.' },
   { when: 'Destructive or irreversible action', do: 'Require explicit confirmation. No exceptions.' },

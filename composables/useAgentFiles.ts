@@ -36,7 +36,7 @@ export function useAgentFiles() {
       tier: 1,
       reads: [],
       sections: ['Agent Metadata', 'Routing Configuration', 'Model Configuration', 'Agent Tags', 'Multi-Agent Settings', 'Session Settings'],
-      excerpt: 'Primary LLM: claude-opus-4-5 · Fallback: claude-haiku-4-5 · Gateway port: 18789.',
+      excerpt: 'Primary LLM: claude-opus-4-7 · Fallback: claude-haiku-4-5 · Gateway port: 18789.',
       markdownContent: identityMd
     },
     {
@@ -74,7 +74,16 @@ export function useAgentFiles() {
       symbol: '◐',
       tier: 4,
       reads: [],
-      sections: ['User Preferences (confirmed)', 'Ongoing Projects', 'Known Patterns', 'Important Facts', 'Credentials References', 'Resolved Issues', 'Superseded Information'],
+      sections: [
+        'User Preferences (confirmed)',
+        'Ongoing Projects',
+        'Known Patterns',
+        'Important Facts',
+        'Credentials References',
+        'Resolved Issues',
+        'Memory Hygiene',
+        'Superseded Information'
+      ],
       excerpt: 'Only promote information here once it has been confirmed or observed at least twice.',
       markdownContent: memoryMd
     },
@@ -87,7 +96,7 @@ export function useAgentFiles() {
       symbol: '◈',
       tier: 4,
       reads: ['MEMORY.md', 'USER.md'],
-      sections: ['Heartbeat Settings', 'Daily Tasks', 'Weekly Tasks', 'Conditional Tasks', 'Heartbeat Log', 'Disabled Tasks'],
+      sections: ['Heartbeat Settings', 'Daily Tasks', 'Weekly Tasks (Monday)', 'Conditional Tasks', 'Heartbeat Log', 'Disabled Tasks'],
       excerpt: 'Never execute a task that requires user confirmation autonomously — send a message instead.',
       markdownContent: heartbeatMd
     },
@@ -100,7 +109,7 @@ export function useAgentFiles() {
       symbol: '⌬',
       tier: 3,
       reads: [],
-      sections: ['Built-in Capabilities', 'Installed Skills', 'Tool Selection Guide', 'Unavailable / Planned', 'Tool Error Handling'],
+      sections: ['Built-in Capabilities', 'Installed Skills / MCPs', 'Tool Selection Guide', 'Unavailable / Planned', 'Tool Error Handling'],
       excerpt: 'Memory first → workspace files → specialised tool → web search last.',
       markdownContent: toolsMd
     }

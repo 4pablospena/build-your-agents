@@ -21,6 +21,8 @@ useHead({
       ]"
     />
 
+    <AudienceFit />
+
     <ArchitectureMap />
 
     <TierMap />
