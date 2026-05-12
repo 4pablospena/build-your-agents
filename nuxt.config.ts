@@ -1,4 +1,34 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
+function isDraftPostFile(absPath: string): boolean {
+  try {
+    const s = readFileSync(absPath, 'utf8')
+    const m = s.match(/^---\r?\n([\s\S]*?)\r?\n---/)
+    if (!m?.[1]) return false
+    return /^draft:\s*true\s*$/m.test(m[1])
+  } catch {
+    return false
+  }
+}
+
+function blogPrerenderRoutes(): string[] {
+  const routes = ['/blog']
+  try {
+    const dir = join(process.cwd(), 'content', 'posts')
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith('.md')) continue
+      const abs = join(dir, f)
+      if (isDraftPostFile(abs)) continue
+      routes.push(`/blog/${f.slice(0, -3)}`)
+    }
+  } catch {
+    /* content/posts missing */
+  }
+  return routes
+}
+
 const description =
   'A seven-file architecture for designing personal AI agents. Soul, Identity, Agents, User, Memory, Heartbeat, Tools. Open documentation.'
 const title = 'Build your own agents — A framework for modular AI agents'
@@ -6,9 +36,36 @@ const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || '').replace(/\/$/, '')
 const ogImage = siteUrl ? `${siteUrl}/og.png` : '/og.png'
 
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || ''
+    }
+  },
+
   compatibilityDate: '2025-05-01',
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
   ssr: true,
+
+  modules: ['@nuxt/content', '@nuxtjs/tailwindcss'],
+
+  content: {
+    documentDriven: false
+  },
+
+  tailwindcss: {
+    configPath: 'tailwind.config.ts'
+  },
+
+  hooks: {
+    'nitro:config'(nitroConfig) {
+      const routes = blogPrerenderRoutes()
+      nitroConfig.prerender = nitroConfig.prerender || {}
+      const cur = nitroConfig.prerender.routes
+      nitroConfig.prerender.routes = Array.isArray(cur)
+        ? [...new Set([...cur, ...routes])]
+        : routes
+    }
+  },
 
   // Explicit preset so CI/Vercel always emit the serverless bundle Nitro expects
   nitro: {
