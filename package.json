@@ -2,6 +2,7 @@
   "name": "build-your-agents",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
     "build": "node scripts/sync-templates.mjs && node scripts/generate-og.mjs && nuxt build",
     "dev": "nuxt prepare && nuxt dev",

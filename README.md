@@ -24,11 +24,13 @@ asymmetric layout, Archivo Black + Fraunces + Space Mono.
 ## Run it
 
 ```bash
-npm install
-npm run dev          # http://localhost:3000
-npm run build        # sync templates → public, generate og.png, production build
-npm run generate     # static site → .output/public
+pnpm install
+pnpm dev             # http://localhost:3000
+pnpm build           # sync templates → public, generate og.png, production build
+pnpm generate        # static site → .output/public
 ```
+
+Use [pnpm](https://pnpm.io/) (Corepack: `corepack enable` then `corepack prepare pnpm@9.15.9 --activate`). The repo pins the version in `package.json` under `packageManager`.
 
 ## Environment
 
