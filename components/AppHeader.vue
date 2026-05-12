@@ -1,14 +1,15 @@
 <script setup lang="ts">
 // Top navigation. Props in, events up. Thin presentation only.
 defineProps<{
-  active?: 'top' | 'architecture' | 'files' | 'docs'
+  active?: 'top' | 'architecture' | 'files' | 'session-loop' | 'docs-page'
 }>()
 
-const links: { id: string; label: string }[] = [
-  { id: 'top', label: 'Overview' },
-  { id: 'architecture', label: 'Architecture' },
-  { id: 'files', label: 'The 7 files' },
-  { id: 'docs', label: 'Docs' }
+const navLinks: { label: string; to: string; id: string }[] = [
+  { label: 'Overview', to: '/#top', id: 'top' },
+  { label: 'Architecture', to: '/#architecture', id: 'architecture' },
+  { label: 'The 7 files', to: '/#files', id: 'files' },
+  { label: 'Session', to: '/#session-loop', id: 'session-loop' },
+  { label: 'Docs', to: '/docs', id: 'docs-page' }
 ]
 
 const NAV_ID = 'hdr-primary-nav'
@@ -34,10 +35,10 @@ onMounted(() => {
 <template>
   <header class="hdr">
     <div class="bya-container hdr__shell">
-      <a class="hdr__brand" href="#top" aria-label="Build your own agents">
+      <NuxtLink class="hdr__brand" to="/#top" aria-label="Build your own agents">
         <span class="hdr__mark" aria-hidden="true">◣◥</span>
         <span class="hdr__name">build/your/agents</span>
-      </a>
+      </NuxtLink>
 
       <button
         type="button"
@@ -56,21 +57,21 @@ onMounted(() => {
         :class="{ 'is-open': menuOpen }"
         aria-label="Primary"
       >
-        <a
-          v-for="l in links"
+        <NuxtLink
+          v-for="l in navLinks"
           :key="l.id"
-          :href="`#${l.id}`"
+          :to="l.to"
           :class="['hdr__link', { 'is-active': active === l.id }]"
           @click="closeMenu"
         >
           {{ l.label }}
-        </a>
+        </NuxtLink>
       </nav>
 
-      <a class="bya-btn hdr__cta" href="#files" @click="closeMenu">
+      <NuxtLink class="bya-btn hdr__cta" to="/#files" @click="closeMenu">
         <span>Read the spec</span>
         <span aria-hidden="true">→</span>
-      </a>
+      </NuxtLink>
     </div>
   </header>
 </template>
@@ -103,6 +104,7 @@ onMounted(() => {
   text-transform: uppercase;
   font-size: 1rem;
   letter-spacing: 0.02em;
+  color: inherit;
 }
 .hdr__menu-btn {
   display: none;

@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "node scripts/sync-templates.mjs && nuxt build",
     "dev": "nuxt prepare && nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "node scripts/sync-templates.mjs && nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare && node scripts/sync-templates.mjs"
   },
   "devDependencies": {
     "nuxt": "^3.13.0",

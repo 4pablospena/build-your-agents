@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AgentFile } from '~/composables/useAgentFiles'
+import type { AgentFile } from '~/composables/useAgentFiles.types'
 
 const props = defineProps<{
   file: AgentFile

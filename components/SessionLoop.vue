@@ -12,7 +12,7 @@ const steps = [
 </script>
 
 <template>
-  <section id="docs" class="loop">
+  <section id="session-loop" class="loop">
     <div class="bya-container">
       <header class="loop__head">
         <span class="bya-eyebrow">04 / The session loop</span>
