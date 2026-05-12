@@ -11,10 +11,11 @@ const { files } = useAgentFiles()
         <h2 class="bya-h2">
           Every file does <span class="files__hl">one thing.</span>
         </h2>
-        <p class="bya-lede">
+        <p class="bya-lede files__lede-wrap">
           Click any file in the architecture map above to jump here. Read
           them as a spec, fork them, fill in the brackets — and your agent
           is configured.
+          <NuxtLink class="files__docs-link" to="/docs">Download the .md templates →</NuxtLink>
         </p>
       </header>
 
@@ -41,6 +42,27 @@ const { files } = useAgentFiles()
   max-width: 820px;
 }
 .files__head .bya-eyebrow { margin-bottom: 14px; }
+.files__lede-wrap {
+  display: block;
+}
+.files__docs-link {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 8px 14px;
+  border: var(--stroke) solid var(--ink);
+  background: var(--acid);
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+.files__docs-link:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
 .files__hl {
   display: inline-block;
   background: var(--pink);

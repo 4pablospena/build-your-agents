@@ -12,7 +12,7 @@ const steps = [
 </script>
 
 <template>
-  <section id="docs" class="loop">
+  <section id="session-loop" class="loop">
     <div class="bya-container">
       <header class="loop__head">
         <span class="bya-eyebrow">04 / The session loop</span>
@@ -29,7 +29,10 @@ const steps = [
       <ol class="loop__list">
         <li v-for="(s, i) in steps" :key="s.n" class="loop__step">
           <span class="loop__num">{{ s.n }}</span>
-          <span class="loop__connector" v-if="i < steps.length - 1" aria-hidden="true">│</span>
+          <!-- Siempre misma rejilla: sin el conector en la última fila, Vite/CSS colocaban el body en la columna 2 y quedaba horizontal (bug visual). -->
+          <span class="loop__connector" aria-hidden="true">{{
+            i < steps.length - 1 ? '│' : '\u00a0'
+          }}</span>
           <div class="loop__body">
             <span class="loop__file">{{ s.file }}</span>
             <span class="loop__act">{{ s.act }}</span>
@@ -87,25 +90,42 @@ const steps = [
 .loop__step {
   position: relative;
   display: grid;
-  grid-template-columns: 80px 1fr;
+  /* Col 2 fija: hueco del conector; el cuerpo siempre en col 3 (misma estructura en las 5 filas). */
+  grid-template-columns: 80px 1.25rem 1fr;
   align-items: center;
-  gap: 16px;
-  padding: 18px 16px;
+  column-gap: 16px;
+  row-gap: 0;
+  padding: 22px 20px;
   border: var(--stroke) solid var(--paper);
   background: var(--ink);
 }
 .loop__step + .loop__step { border-top: 0; }
 
 .loop__num {
+  grid-column: 1;
+  grid-row: 1;
   font-family: var(--display);
   font-size: 2.4rem;
   color: var(--acid);
   line-height: 1;
 }
+.loop__connector {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--paper);
+  opacity: 0.45;
+}
 .loop__body {
+  grid-column: 3;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  min-width: 0;
 }
 .loop__file {
   font-family: var(--mono);

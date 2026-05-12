@@ -1,40 +1,77 @@
 <script setup lang="ts">
 // Top navigation. Props in, events up. Thin presentation only.
 defineProps<{
-  active?: 'overview' | 'architecture' | 'files' | 'docs'
+  active?: 'top' | 'architecture' | 'files' | 'session-loop' | 'docs-page'
 }>()
 
-const links: { id: string; label: string }[] = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'architecture', label: 'Architecture' },
-  { id: 'files', label: 'The 7 files' },
-  { id: 'docs', label: 'Docs' }
+const navLinks: { label: string; to: string; id: string }[] = [
+  { label: 'Overview', to: '/#top', id: 'top' },
+  { label: 'Architecture', to: '/#architecture', id: 'architecture' },
+  { label: 'The 7 files', to: '/#files', id: 'files' },
+  { label: 'Session', to: '/#session-loop', id: 'session-loop' },
+  { label: 'Docs', to: '/docs', id: 'docs-page' }
 ]
+
+const NAV_ID = 'hdr-primary-nav'
+const menuOpen = ref(false)
+
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value
+}
+
+function closeMenu() {
+  menuOpen.value = false
+}
+
+onMounted(() => {
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') closeMenu()
+  }
+  window.addEventListener('keydown', onKey)
+  onUnmounted(() => window.removeEventListener('keydown', onKey))
+})
 </script>
 
 <template>
   <header class="hdr">
-    <div class="bya-container hdr__row">
-      <a class="hdr__brand" href="#top" aria-label="Build your own agents">
+    <div class="bya-container hdr__shell">
+      <NuxtLink class="hdr__brand" to="/#top" aria-label="Build your own agents">
         <span class="hdr__mark" aria-hidden="true">◣◥</span>
         <span class="hdr__name">build/your/agents</span>
-      </a>
+      </NuxtLink>
 
-      <nav class="hdr__nav" aria-label="Primary">
-        <a
-          v-for="l in links"
+      <button
+        type="button"
+        class="hdr__menu-btn"
+        :aria-expanded="menuOpen"
+        :aria-controls="NAV_ID"
+        :aria-label="menuOpen ? 'Close menu' : 'Open menu'"
+        @click="toggleMenu"
+      >
+        <span class="hdr__menu-icon" aria-hidden="true" />
+      </button>
+
+      <nav
+        :id="NAV_ID"
+        class="hdr__nav"
+        :class="{ 'is-open': menuOpen }"
+        aria-label="Primary"
+      >
+        <NuxtLink
+          v-for="l in navLinks"
           :key="l.id"
-          :href="`#${l.id}`"
+          :to="l.to"
           :class="['hdr__link', { 'is-active': active === l.id }]"
+          @click="closeMenu"
         >
           {{ l.label }}
-        </a>
+        </NuxtLink>
       </nav>
 
-      <a class="bya-btn hdr__cta" href="#files">
+      <NuxtLink class="bya-btn hdr__cta" to="/#files" @click="closeMenu">
         <span>Read the spec</span>
         <span aria-hidden="true">→</span>
-      </a>
+      </NuxtLink>
     </div>
   </header>
 </template>
@@ -47,14 +84,18 @@ const links: { id: string; label: string }[] = [
   background: var(--paper);
   border-bottom: var(--stroke-fat) solid var(--ink);
 }
-.hdr__row {
+.hdr__shell {
   display: grid;
   grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
   align-items: center;
-  gap: 24px;
+  column-gap: 24px;
+  row-gap: 0;
   padding: 14px 0;
 }
 .hdr__brand {
+  grid-column: 1;
+  grid-row: 1;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -63,6 +104,29 @@ const links: { id: string; label: string }[] = [
   text-transform: uppercase;
   font-size: 1rem;
   letter-spacing: 0.02em;
+  color: inherit;
+}
+.hdr__menu-btn {
+  display: none;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: var(--paper);
+  border: var(--stroke) solid var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  cursor: pointer;
+}
+.hdr__menu-icon {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  box-shadow: 0 -6px 0 var(--ink), 0 6px 0 var(--ink);
 }
 .hdr__mark {
   display: inline-block;
@@ -75,10 +139,17 @@ const links: { id: string; label: string }[] = [
 .hdr__name { font-family: var(--mono); font-size: 0.92rem; }
 
 .hdr__nav {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
   display: flex;
   justify-content: center;
   gap: 6px;
   flex-wrap: wrap;
+}
+.hdr__cta {
+  grid-column: 3;
+  grid-row: 1;
 }
 .hdr__link {
   font-family: var(--mono);
@@ -102,7 +173,41 @@ const links: { id: string; label: string }[] = [
 .hdr__cta { padding: 10px 16px; font-size: 0.82rem; }
 
 @media (max-width: 920px) {
-  .hdr__nav { display: none; }
-  .hdr__row { grid-template-columns: 1fr auto; }
+  .hdr__shell {
+    grid-template-columns: 1fr auto auto;
+    column-gap: 12px;
+  }
+  .hdr__menu-btn {
+    display: inline-flex;
+  }
+  .hdr__nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: stretch;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: var(--stroke) solid var(--ink);
+  }
+  .hdr__nav.is-open {
+    display: flex;
+  }
+  .hdr__link {
+    padding: 14px 12px;
+    border: none;
+    border-bottom: 2px solid var(--paper-2);
+  }
+  .hdr__link:last-of-type {
+    border-bottom: none;
+  }
+}
+
+@media (min-width: 921px) {
+  .hdr__nav {
+    display: flex !important;
+  }
 }
 </style>

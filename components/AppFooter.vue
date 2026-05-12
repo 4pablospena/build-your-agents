@@ -13,16 +13,17 @@ const year = new Date().getFullYear()
       <div class="ft__cols">
         <div class="ft__col">
           <h4 class="ft__h">Spec</h4>
-          <a href="#architecture">Architecture</a>
-          <a href="#files">The 7 files</a>
-          <a href="#docs">Session loop</a>
+          <a href="/#architecture">Architecture</a>
+          <a href="/#files">The 7 files</a>
+          <a href="/#session-loop">Session loop</a>
+          <NuxtLink to="/docs">Markdown templates</NuxtLink>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Files</h4>
-          <a href="#file-soul">SOUL.md</a>
-          <a href="#file-agents">AGENTS.md</a>
-          <a href="#file-memory">MEMORY.md</a>
-          <a href="#file-tools">TOOLS.md</a>
+          <a href="/#file-soul">SOUL.md</a>
+          <a href="/#file-agents">AGENTS.md</a>
+          <a href="/#file-memory">MEMORY.md</a>
+          <a href="/#file-tools">TOOLS.md</a>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Principles</h4>

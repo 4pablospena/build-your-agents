@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AgentFile } from '~/composables/useAgentFiles'
+import type { AgentFile } from '~/composables/useAgentFiles.types'
 
 const props = defineProps<{
   file: AgentFile
@@ -8,6 +8,7 @@ const props = defineProps<{
 
 const number = computed(() => String(props.index + 1).padStart(2, '0'))
 const showSource = ref(false)
+const sourcePanelId = computed(() => `fc-source-${props.file.id}`)
 </script>
 
 <template>
@@ -40,10 +41,21 @@ const showSource = ref(false)
     </blockquote>
 
     <!-- Markdown source viewer -->
-    <div class="fc__source" :class="{ 'fc__source--open': showSource }">
+    <div
+      :id="sourcePanelId"
+      class="fc__source"
+      :class="{ 'fc__source--open': showSource }"
+    >
       <button
+        type="button"
         class="fc__source-toggle"
         :aria-expanded="showSource"
+        :aria-controls="sourcePanelId"
+        :aria-label="
+          showSource
+            ? `Hide ${file.filename} markdown source`
+            : `View ${file.filename} markdown source`
+        "
         @click="showSource = !showSource"
       >
         <span class="fc__source-icon" aria-hidden="true">{ }</span>
