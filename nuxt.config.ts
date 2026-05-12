@@ -3,7 +3,7 @@ const description =
   'A seven-file architecture for designing personal AI agents. Soul, Identity, Agents, User, Memory, Heartbeat, Tools. Open documentation.'
 const title = 'Build your own agents — A framework for modular AI agents'
 const siteUrl = (process.env.NUXT_PUBLIC_SITE_URL || '').replace(/\/$/, '')
-const ogImage = siteUrl ? `${siteUrl}/og.svg` : '/og.svg'
+const ogImage = siteUrl ? `${siteUrl}/og.png` : '/og.png'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-01',
@@ -44,6 +44,7 @@ export default defineNuxtConfig({
         { name: 'twitter:image', content: ogImage }
       ],
       link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
