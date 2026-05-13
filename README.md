@@ -12,14 +12,17 @@ asymmetric layout, Archivo Black + Fraunces + Space Mono.
 - Nuxt 3 (SSR, file-based routing)
 - Vue 3 with `<script setup lang="ts">` (Composition API)
 - One composable as single source of truth: `composables/useAgentFiles.ts`
-- No CSS framework — handcrafted design tokens in `assets/css/main.css`
+- Landing and `/docs` use handcrafted tokens in `assets/css/main.css` (no global Tailwind reset)
+- Blog (`/blog`, `/blog/*`) uses `@nuxt/content` v2, `@nuxtjs/tailwindcss` (Preflight off), and `@tailwindcss/typography` so prose stays readable without clashing with the rest of the site
 
 ## Pages
 
-| Route   | Description |
-| ------- | ----------- |
-| `/`     | Landing: hero, **who it’s for** (`#audience`), architecture, files, session loop, docs CTA |
-| `/docs` | Full markdown documentation for each of the seven agent files |
+| Route          | Description                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `/`            | Landing: hero, **who it’s for** (`#audience`), architecture, files, session loop, docs CTA |
+| `/docs`        | Full markdown documentation for each of the seven agent files                              |
+| `/blog`        | Post index: sort by date, tag filter (`?tag=`), search, pagination (6 per page)            |
+| `/blog/<slug>` | Single post from `content/posts/*.md` with SEO, reading time, prev/next                    |
 
 ## Run it
 
@@ -27,7 +30,7 @@ asymmetric layout, Archivo Black + Fraunces + Space Mono.
 pnpm install
 pnpm dev             # http://localhost:3000
 pnpm build           # sync templates → public, generate og.png, production build
-pnpm generate        # static site → .output/public
+pnpm generate        # static site (preset writes under `.vercel/output/static`; use `npx serve` as printed)
 ```
 
 Use [pnpm](https://pnpm.io/) (Corepack: `corepack enable` then `corepack prepare pnpm@9.15.9 --activate`). The repo pins the version in `package.json` under `packageManager`.
@@ -36,8 +39,8 @@ Use [pnpm](https://pnpm.io/) (Corepack: `corepack enable` then `corepack prepare
 
 Copy `.env.example` to `.env` when deploying:
 
-| Variable | Purpose |
-| -------- | ------- |
+| Variable               | Purpose                                                                                                                      |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `NUXT_PUBLIC_SITE_URL` | Public site URL **without** trailing slash. Used for `og:url` and absolute `og:image` / `twitter:image` in `nuxt.config.ts`. |
 
 ## Deploy (Vercel)
@@ -48,7 +51,18 @@ Copy `.env.example` to `.env` when deploying:
 4. **Environment variables (Production):** set `NUXT_PUBLIC_SITE_URL` to your public URL with **no** trailing slash, e.g. `https://your-project.vercel.app` or your custom domain. Redeploy after changing it so OG meta match the live URL.
 5. Deploy. `sharp` is a **runtime dependency** so `scripts/generate-og.mjs` succeeds on Vercel’s build and in `postinstall`.
 
-Nitro is configured with `preset: 'vercel'` in [`nuxt.config.ts`](nuxt.config.ts) for a predictable serverless output.
+Nitro is configured with `preset: 'vercel'` in [`nuxt.config.ts`](nuxt.config.ts) for a predictable serverless output. Static generation uses the Vercel static preset and prerenders `/blog` plus each published post (files with `draft: true` in frontmatter are omitted from prerender so the build does not 404).
+
+## Blog (`content/posts`)
+
+Posts live under `content/posts/*.md` with YAML frontmatter:
+
+`title`, `description`, `date` (YYYY-MM-DD), `tags` (array), optional `cover` (URL path, e.g. `/images/posts/welcome-cover.svg`), optional `draft`.
+
+- **Production / `pnpm build` / `pnpm generate`:** posts with `draft: true` are excluded from listings and return 404 if visited directly; they are **not** prerendered.
+- **Development (`pnpm dev`):** drafts appear in the index and are viewable like any other post.
+
+Queries and helpers are in `composables/useBlogPosts.ts`. Nitro’s `nitro:config` hook extends `prerender.routes` with `/blog` and `/blog/<slug>` for every non-draft markdown file.
 
 ## Agent markdown templates
 
@@ -69,9 +83,16 @@ build-your-agents/
 ├── nuxt.config.ts                # head, fonts, css, og/twitter, favicon
 ├── pages/
 │   ├── index.vue                 # route view — wires sections only
-│   └── docs.vue                  # /docs — markdown documentation
+│   ├── docs.vue                  # /docs — markdown documentation
+│   └── blog/
+│       ├── index.vue             # /blog — list, filters, pagination
+│       └── [...slug].vue         # /blog/* — post + SEO + prev/next
+├── content/
+│   └── posts/*.md                # blog posts (@nuxt/content)
 ├── components/
-│   ├── AppHeader.vue             # sticky nav
+│   ├── AppHeader.vue             # sticky nav (includes Blog)
+│   ├── BlogCard.vue              # post teaser on /blog
+│   ├── BlogHeader.vue            # post title row + tags
 │   ├── HeroSection.vue           # headline + poster
 │   ├── MarqueeBar.vue            # CSS-only ticker
 │   ├── ArchitectureMap.vue       # SVG diagram of the seven files
@@ -83,7 +104,8 @@ build-your-agents/
 │   └── AppFooter.vue
 ├── composables/
 │   ├── useAgentFiles.ts          # the 7-file spec data (single source of truth)
-│   └── useAgentFiles.types.ts    # shared types for file metadata
+│   ├── useAgentFiles.types.ts    # shared types for file metadata
+│   └── useBlogPosts.ts           # queryContent, drafts, reading time, prev/next
 ├── templates/                    # canonical *.md + README map for downloads
 │   └── README.md                 # reading map (also at /templates/README.md)
 ├── scripts/
