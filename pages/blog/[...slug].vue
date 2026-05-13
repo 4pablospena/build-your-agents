@@ -100,6 +100,8 @@ useSeoMeta({
               :date="post.date"
               :tags="post.tags"
               :reading-minutes="readingMinutes"
+              :author="post.author"
+              :author-intro="post.authorIntro"
             />
 
             <div class="prose prose-lg prose-blog max-w-none pt-2">

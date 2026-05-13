@@ -5,6 +5,8 @@ const props = defineProps<{
   date?: string
   tags?: string[]
   readingMinutes: number
+  author?: string
+  authorIntro?: string
 }>()
 
 const dateLabel = computed(() => {
@@ -26,6 +28,22 @@ const dateLabel = computed(() => {
     <p v-if="description" class="bya-lede mt-5 text-ink/95">
       {{ description }}
     </p>
+
+    <aside
+      v-if="author || authorIntro"
+      class="relative mt-6 border-[3px] border-ink bg-paper-2 p-5 shadow-[6px_6px_0_0_#2563ff]"
+      aria-label="Author note"
+    >
+      <div class="absolute left-0 top-0 h-full w-1.5 bg-hot" aria-hidden="true" />
+      <p class="pl-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-ink/80">From the author</p>
+      <p v-if="author" class="mt-2 pl-3 font-display text-sm uppercase tracking-tight text-ink">
+        {{ author }}
+      </p>
+      <p v-if="authorIntro" class="mt-3 pl-3 font-serif text-base leading-relaxed text-ink/95">
+        {{ authorIntro }}
+      </p>
+    </aside>
+
     <div class="mt-6 flex flex-wrap items-center gap-3 font-mono text-sm text-ink/85">
       <time v-if="date" :datetime="date">{{ dateLabel }}</time>
       <span v-if="date" aria-hidden="true" class="text-hot">·</span>

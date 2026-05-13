@@ -10,6 +10,10 @@ export type BlogPost = {
   cover?: string
   draft?: boolean
   body?: unknown
+  /** Optional byline for post detail (e.g. full name). */
+  author?: string
+  /** Short first-person note shown above the article body. */
+  authorIntro?: string
 }
 
 /** Base query: all posts under content/posts, newest first; hides drafts outside dev. */

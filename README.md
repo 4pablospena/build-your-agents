@@ -17,12 +17,12 @@ asymmetric layout, Archivo Black + Fraunces + Space Mono.
 
 ## Pages
 
-| Route   | Description |
-| ------- | ----------- |
-| `/`     | Landing: hero, **who it’s for** (`#audience`), architecture, files, session loop, docs CTA |
-| `/docs` | Full markdown documentation for each of the seven agent files |
-| `/blog` | Post index: sort by date, tag filter (`?tag=`), search, pagination (6 per page) |
-| `/blog/<slug>` | Single post from `content/posts/*.md` with SEO, reading time, prev/next |
+| Route          | Description                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `/`            | Landing: hero, **who it’s for** (`#audience`), architecture, files, session loop, docs CTA |
+| `/docs`        | Full markdown documentation for each of the seven agent files                              |
+| `/blog`        | Post index: sort by date, tag filter (`?tag=`), search, pagination (6 per page)            |
+| `/blog/<slug>` | Single post from `content/posts/*.md` with SEO, reading time, prev/next                    |
 
 ## Run it
 
@@ -39,8 +39,8 @@ Use [pnpm](https://pnpm.io/) (Corepack: `corepack enable` then `corepack prepare
 
 Copy `.env.example` to `.env` when deploying:
 
-| Variable | Purpose |
-| -------- | ------- |
+| Variable               | Purpose                                                                                                                      |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | `NUXT_PUBLIC_SITE_URL` | Public site URL **without** trailing slash. Used for `og:url` and absolute `og:image` / `twitter:image` in `nuxt.config.ts`. |
 
 ## Deploy (Vercel)
