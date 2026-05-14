@@ -117,6 +117,11 @@ export default {
               marginBottom: '2.5rem'
             },
             img: {
+              maxWidth: '100%',
+              height: 'auto',
+              display: 'block',
+              marginLeft: 'auto',
+              marginRight: 'auto',
               borderWidth: '3px',
               borderColor: '#0a0a0a',
               borderRadius: '0',
