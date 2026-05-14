@@ -4,13 +4,15 @@ import type { BlogPost } from '~/composables/useBlogPosts'
 const route = useRoute()
 const raw = route.params.slug
 const slug = Array.isArray(raw) ? raw.join('/') : String(raw || '')
+/** Aligns with Nuxt Content index paths (lowercased). */
+const pathSlug = slug.toLowerCase()
 
-if (!slug) {
+if (!pathSlug) {
   throw createError({ statusCode: 404, statusMessage: 'Not found' })
 }
 
-const { data: doc } = await useAsyncData(`blog-doc-${slug}`, () =>
-  queryContent('posts').where({ _path: `/posts/${slug}` }).findOne()
+const { data: doc } = await useAsyncData(`blog-doc-${pathSlug}`, () =>
+  queryContent('posts').where({ _path: `/posts/${pathSlug}` }).findOne()
 )
 
 if (!doc.value) {
@@ -38,7 +40,9 @@ const siteBase = computed(() => String(config.public.siteUrl || '').replace(/\/$
 
 const seoTitle = computed(() => (post.value?.title ? `${post.value.title} — Blog` : 'Blog'))
 const seoDesc = computed(() => post.value?.description || '')
-const seoUrl = computed(() => (siteBase.value ? `${siteBase.value}/blog/${slug}` : `/blog/${slug}`))
+const seoUrl = computed(() =>
+  siteBase.value ? `${siteBase.value}/blog/${pathSlug}` : `/blog/${pathSlug}`
+)
 const seoImage = computed(() => {
   const c = post.value?.cover
   if (c && siteBase.value && String(c).startsWith('/')) return `${siteBase.value}${c}`

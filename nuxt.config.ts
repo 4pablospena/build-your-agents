@@ -21,7 +21,8 @@ function blogPrerenderRoutes(): string[] {
       if (!f.endsWith('.md')) continue
       const abs = join(dir, f)
       if (isDraftPostFile(abs)) continue
-      routes.push(`/blog/${f.slice(0, -3)}`)
+      // Match @nuxt/content _path keys (filesystem names normalized to lowercase).
+      routes.push(`/blog/${f.slice(0, -3).toLowerCase()}`)
     }
   } catch {
     /* content/posts missing */
