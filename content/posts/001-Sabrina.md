@@ -1,25 +1,26 @@
 ---
-title: "Sabrina — B2B prospecting on the seven-file spec"
+title: "Sabrina: seven-file B2B prospecting"
 description: "Case study: from a dense PDF pipeline (Discord, LinkedIn, Unipile, Lusha, Odoo) to seven markdown files the agent can run inside—filing tiers, deduplicating nine first-draft overlaps, and writing SOUL from what the spec never said out loud."
 date: 2026-05-15
 tags: [agents, b2b, case-study, openclaw, odoo]
-readtime: 14
-cover: "/images/posts/ChatGPT Image May 14, 2026, 01_01_44 PM.png"
+cover: "/images/posts/sabrina-cover.png"
+author: "Pablo Suárez Peña"
+authorIntro: "I build and refine AI agents with OpenClaw—professionally at Resizes, and on personal projects where I can take more risk. This case study is how we turned a B2B prospecting spec into seven files Sabrina can run inside; I publish notes like this to clarify my own thinking and in case they help someone facing a similar filing problem."
 ---
 
-From a PDF specification to seven clean markdown files. A walkthrough of every decision made along the way — what went where, what broke in the first draft, and what the spec alone could not tell us.
+A walkthrough of every decision along the way — what went where, what broke in the first draft, and what the spec alone could not tell us.
+
+Sabrina is being built for [Resizes](https://resiz.es), where the commercial team needs qualified B2B leads in Odoo without manually chaining LinkedIn search, enrichment, and CRM updates after every command.
 
 ---
 
 ## The brief
 
-The starting point was a detailed functional specification: an agent that receives a command in Discord, searches LinkedIn for qualified companies and leads, enriches contact data, registers everything in Odoo CRM, and sends connection requests — all without the sales rep lifting a finger after the initial command.
+The starting point was a thorough functional specification for the pipeline below — six phases, decision tables, error handling, rate limits, deduplication rules, field mappings. Everything you would want before writing a line of code.
 
 The full pipeline in one line:
 
 > Discord command → LinkedIn search (Unipile) → contact enrichment (Lusha) → Odoo CRM registration → LinkedIn connection request → Discord summary.
-
-The specification was thorough. Six phases, decision tables, error handling, rate limits, deduplication rules, field mappings. Everything you would want before writing a line of code.
 
 The job was not to build the pipeline. It was to translate it into seven files that the agent could actually live inside — and to think carefully about what belongs where.
 
@@ -179,7 +180,7 @@ The startup validation is equally important: before accepting any Job, Sabrina v
 
 ---
 
-## The hardest decision: where does the database schema live?
+## Step nine: where does the database schema live?
 
 One decision cost more iterations than any other: where does the agent's internal database schema belong?
 
@@ -211,11 +212,7 @@ The rule that emerged from this: if a piece of information changes together with
 
 ## What comes next
 
-These files are now going into real use. Sabrina will run against actual data, with real LinkedIn accounts, processing real Jobs. That is when the spec meets reality — and reality always has something to say.
-
-The plan is to document what happens in a follow-up post: the before and after. What the files looked like going in, what changed after the first real run, which rules needed updating, which decisions turned out to be wrong. A real before/after comparison of the files — what a section looked like before production feedback and what it looked like after — is the most honest way to show how living agents evolve.
-
-That post will be published once there is enough real data to make it worth reading.
+These files are now going into real use. When the team starts running live prospecting Jobs, Sabrina will process real leads with real LinkedIn accounts — that is when the spec meets reality. The follow-up will be a before/after of the seven files: what changed after the first production runs, which rules needed updating, and which decisions turned out to be wrong — grounded in a commercial team at work, not a hypothetical walkthrough. That post will ship once there is enough real data to make it worth reading.
 
 ---
 
