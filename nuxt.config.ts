@@ -14,6 +14,10 @@ function isDraftPostFile(absPath: string): boolean {
 }
 
 function blogPrerenderRoutes(): string[] {
+  // /rss.xml is intentionally NOT prerendered: it needs the live request
+  // origin (or NUXT_PUBLIC_SITE_URL at runtime) to emit canonical URLs.
+  // Vercel CDN caches the dynamic response via the `s-maxage` header set
+  // inside server/routes/rss.xml.ts.
   const routes = ['/blog']
   try {
     const dir = join(process.cwd(), 'content', 'posts')
@@ -108,6 +112,12 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        {
+          rel: 'alternate',
+          type: 'application/rss+xml',
+          title: 'build/your/agents — Blog',
+          href: '/rss.xml'
+        },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

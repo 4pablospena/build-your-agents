@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const { files } = useAgentFiles()
 
+const runtimeConfig = useRuntimeConfig()
+const siteOrigin = computed(() => runtimeConfig.public.siteUrl || 'YOUR_ORIGIN')
+const hasSiteOrigin = computed(() => Boolean(runtimeConfig.public.siteUrl))
+
 const docStats = [
   { k: '7', v: 'starter files' },
   { k: '1', v: 'folder to boot' },
@@ -169,6 +173,7 @@ function templateHref(filename: string) {
         <div class="docs__grid">
           <article
             v-for="(f, i) in files"
+            :id="`docs-card-${f.id}`"
             :key="f.id"
             :class="[
               'docs__card',
@@ -281,21 +286,51 @@ function templateHref(filename: string) {
       <div class="bya-container docs__bundle-inner">
         <span class="bya-eyebrow docs__bundle-eyebrow">All seven · one folder</span>
         <h2 class="bya-h2 docs__bundle-title">
-          Curl them in a loop<br />
-          <span class="docs__bundle-hl">once you know your origin.</span>
+          One zip or<br />
+          <span class="docs__bundle-hl">a curl loop.</span>
         </h2>
         <p class="docs__bundle-lede">
-          Replace <code class="docs__inline-code">YOUR_ORIGIN</code> with your
-          deployed site (e.g. <code class="docs__inline-code">https://example.com</code>).
-          Filenames match the templates above.
+          Grab every file in a single archive — or stream them with curl when
+          you already know your origin.
+        </p>
+
+        <div class="docs__bundle-zip">
+          <a
+            class="bya-btn docs__bundle-zip-btn"
+            href="/templates/build-your-agents.zip"
+            download="build-your-agents.zip"
+          >
+            Download all 7
+            <span aria-hidden="true">↓</span>
+          </a>
+          <p class="docs__bundle-zip-meta">
+            <code class="docs__inline-code">build-your-agents.zip</code>
+            · 8 markdown files (the seven + README) · ~7 KB · regenerated on
+            every <code class="docs__inline-code">pnpm build</code>.
+          </p>
+        </div>
+
+        <h3 class="docs__bundle-sub">Or with curl</h3>
+        <p class="docs__bundle-lede docs__bundle-lede--sub">
+          <template v-if="hasSiteOrigin">
+            <code class="docs__inline-code">BASE</code> already points to this
+            site’s origin
+            (<code class="docs__inline-code">{{ siteOrigin }}</code>). Swap it
+            only if you mirror the templates somewhere else.
+          </template>
+          <template v-else>
+            Replace <code class="docs__inline-code">YOUR_ORIGIN</code> with your
+            deployed site (e.g.
+            <code class="docs__inline-code">https://example.com</code>).
+          </template>
         </p>
         <pre class="bya-code docs__terminal" tabindex="0"><span class="c-cmt"># Download all seven into the current directory</span>
-BASE=<span class="c-str">"YOUR_ORIGIN"</span>
+BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 <span class="c-key">for</span> n <span class="c-key">in</span> SOUL IDENTITY AGENTS USER MEMORY HEARTBEAT TOOLS; <span class="c-key">do</span>
   curl -fsSL <span class="c-str">"$BASE/templates/${n}.md"</span> -o <span class="c-str">"${n}.md"</span>
 <span class="c-key">done</span></pre>
         <div class="docs__bundle-cta">
-          <NuxtLink class="bya-btn" to="/">
+          <NuxtLink class="bya-btn bya-btn--ghost" to="/">
             Back to overview
             <span aria-hidden="true">↖</span>
           </NuxtLink>
@@ -896,6 +931,55 @@ BASE=<span class="c-str">"YOUR_ORIGIN"</span>
   margin: 0 0 18px;
   max-width: 58ch;
   opacity: 0.9;
+}
+.docs__bundle-lede--sub {
+  margin-top: 6px;
+}
+.docs__bundle-zip {
+  margin: 6px 0 30px;
+  padding: 22px;
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--stroke-fat) solid var(--paper);
+  box-shadow: 8px 8px 0 0 var(--hot);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  max-width: 560px;
+  transform: rotate(-0.6deg);
+}
+.docs__bundle-zip-btn {
+  background: var(--hot);
+  color: var(--paper);
+  border-color: var(--ink);
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
+.docs__bundle-zip-btn:hover {
+  box-shadow: 10px 10px 0 0 var(--ink);
+}
+.docs__bundle-zip-meta {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  margin: 0;
+  opacity: 0.78;
+}
+.docs__bundle-zip-meta .docs__inline-code {
+  background: rgba(10, 10, 10, 0.08);
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.docs__bundle-sub {
+  font-family: var(--display);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  margin: 6px 0 6px;
+  opacity: 0.86;
+}
+@media (prefers-reduced-motion: reduce) {
+  .docs__bundle-zip { transform: none; }
 }
 .docs__inline-code {
   font-size: 0.88em;

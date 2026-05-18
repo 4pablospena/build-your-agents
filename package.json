@@ -7,11 +7,11 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "node scripts/sync-templates.mjs && node scripts/generate-og.mjs && nuxt build",
+    "build": "node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs && nuxt build",
     "dev": "nuxt prepare && nuxt dev",
-    "generate": "node scripts/sync-templates.mjs && node scripts/generate-og.mjs && nuxt generate",
+    "generate": "node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs && nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare && node scripts/sync-templates.mjs && node scripts/generate-og.mjs"
+    "postinstall": "nuxt prepare && node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs"
   },
   "devDependencies": {
     "@nuxt/content": "2",

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Top navigation. Props in, events up. Thin presentation only.
 defineProps<{
-  active?: 'top' | 'architecture' | 'files' | 'session-loop' | 'docs-page' | 'blog-page'
+  active?: 'top' | 'architecture' | 'files' | 'session-loop' | 'docs-page' | 'blog-page' | 'start-page'
 }>()
 
 const navLinks: { label: string; to: string; id: string }[] = [
@@ -9,6 +9,7 @@ const navLinks: { label: string; to: string; id: string }[] = [
   { label: 'Architecture', to: '/#architecture', id: 'architecture' },
   { label: 'The 7 files', to: '/#files', id: 'files' },
   { label: 'Session', to: '/#session-loop', id: 'session-loop' },
+  { label: 'Start', to: '/start', id: 'start-page' },
   { label: 'Blog', to: '/blog', id: 'blog-page' },
   { label: 'Docs', to: '/docs', id: 'docs-page' }
 ]

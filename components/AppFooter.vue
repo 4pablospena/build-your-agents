@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const year = new Date().getFullYear()
+
+// External repository URL. Hardcoded for Ola 0; can be moved into runtimeConfig
+// in Ola 1 alongside the RSS feed.
+const repoUrl = 'https://github.com/4pablospena/build-your-agents'
 </script>
 
 <template>
@@ -16,6 +20,7 @@ const year = new Date().getFullYear()
           <a href="/#architecture">Architecture</a>
           <a href="/#files">The 7 files</a>
           <a href="/#session-loop">Session loop</a>
+          <NuxtLink to="/start">Reading map</NuxtLink>
           <NuxtLink to="/docs">Markdown templates</NuxtLink>
         </div>
         <div class="ft__col">
@@ -30,6 +35,22 @@ const year = new Date().getFullYear()
           <span>No black box.</span>
           <span>Markdown is the API.</span>
           <span>Version your soul.</span>
+        </div>
+        <div class="ft__col">
+          <h4 class="ft__h">Follow</h4>
+          <NuxtLink to="/blog">Blog</NuxtLink>
+          <a :href="repoUrl" target="_blank" rel="noopener noreferrer">
+            GitHub
+            <span class="ft__ext" aria-hidden="true">↗</span>
+          </a>
+          <a href="/rss.xml" type="application/rss+xml" target="_blank" rel="noopener noreferrer">
+            RSS
+            <span class="ft__ext" aria-hidden="true">↗</span>
+          </a>
+          <span class="ft__soon" aria-disabled="true">
+            Changelog
+            <span class="ft__badge">soon</span>
+          </span>
         </div>
       </div>
     </div>
@@ -69,7 +90,7 @@ const year = new Date().getFullYear()
 
 .ft__cols {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
 .ft__col { display: flex; flex-direction: column; gap: 6px; }
@@ -81,13 +102,36 @@ const year = new Date().getFullYear()
   color: var(--hot);
   letter-spacing: 0.08em;
 }
-.ft__col a, .ft__col span {
+.ft__col > a, .ft__col > span {
   font-family: var(--mono);
   font-size: 0.82rem;
   color: var(--paper);
   text-decoration: none;
 }
-.ft__col a:hover { color: var(--acid); }
+.ft__col > a:hover { color: var(--acid); }
+.ft__ext {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+.ft__soon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.ft__badge {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border: 1px solid var(--paper);
+  color: var(--lemon);
+  border-color: var(--lemon);
+  line-height: 1;
+}
 
 .ft__meta {
   border-top: var(--stroke) solid var(--paper);
