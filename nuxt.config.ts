@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { STATIC_PUBLIC_ROUTES } from './config/staticRoutes'
 
 function isDraftPostFile(absPath: string): boolean {
   try {
@@ -18,19 +19,7 @@ function staticPrerenderRoutes(): string[] {
   // origin (or NUXT_PUBLIC_SITE_URL at runtime) to emit canonical URLs.
   // Vercel CDN caches the dynamic response via the `s-maxage` header set
   // inside server/routes/rss.xml.ts.
-  const routes = [
-    '/start',
-    '/help',
-    '/docs',
-    '/blog',
-    '/examples',
-    '/changelog',
-    '/openclaw',
-    '/tools',
-    '/tools/validate',
-    '/tools/cursor-rules',
-    '/tools/search'
-  ]
+  const routes = [...STATIC_PUBLIC_ROUTES]
   try {
     const dir = join(process.cwd(), 'content', 'posts')
     for (const f of readdirSync(dir)) {

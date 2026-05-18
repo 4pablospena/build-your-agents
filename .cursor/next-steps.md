@@ -88,7 +88,19 @@ Detalle por ola (referencia; no reabrir salvo regresión):
 
 ---
 
+## Deduplicación (post-soporte) — DONE
+
+- [x] `config/staticRoutes.ts` — única lista para prerender + sitemap
+- [x] Footer desde `footerSpecLinks` / `footerFollowLinks` / `toolsNav` en `useSiteNav`
+- [x] FAQ solo en `useSiteNav.ts`; `docs/SUPPORT.md` como índice
+- [x] `/docs` — CTA a `/start` (sin `howSteps` duplicado)
+- [x] README — tabla de 7 archivos acortada; enlace a `templates/README.md`
+- [x] `site-nav.mdc` y CONTRIBUTING alineados
+
+---
+
 ## Secuencia futura (ideas, no comprometidas)
 
 - Más case studies en `/examples` (solo tag `case-study` + `filesTouched`).
 - Ampliar FAQ en `useSiteNav` cuando lleguen preguntas recurrentes en Issues.
+- Agrupar header en dropdown si el menú crece otra vez.

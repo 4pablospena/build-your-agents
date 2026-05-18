@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const year = new Date().getFullYear()
 const { files } = useAgentFiles()
-const { repoUrl, issuesUrl } = useSiteNav()
+const { repoUrl, issuesUrl, footerSpecLinks, footerFollowLinks, toolsNav } = useSiteNav()
 </script>
 
 <template>
@@ -15,13 +15,10 @@ const { repoUrl, issuesUrl } = useSiteNav()
       <div class="ft__cols">
         <div class="ft__col">
           <h4 class="ft__h">Spec</h4>
-          <a href="/#architecture">Architecture</a>
-          <a href="/#files">The 7 files</a>
-          <a href="/#session-loop">Session loop</a>
-          <NuxtLink to="/start">Reading map</NuxtLink>
-          <NuxtLink to="/examples">Examples</NuxtLink>
-          <NuxtLink to="/openclaw">OpenClaw &amp; MCPs</NuxtLink>
-          <NuxtLink to="/docs">Markdown templates</NuxtLink>
+          <template v-for="link in footerSpecLinks" :key="link.id">
+            <a v-if="link.to.startsWith('/#')" :href="link.to">{{ link.label }}</a>
+            <NuxtLink v-else :to="link.to">{{ link.label }}</NuxtLink>
+          </template>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Files</h4>
@@ -34,14 +31,19 @@ const { repoUrl, issuesUrl } = useSiteNav()
         <div class="ft__col">
           <h4 class="ft__h">Tools</h4>
           <NuxtLink to="/tools">All tools</NuxtLink>
-          <NuxtLink to="/tools/validate">Validator</NuxtLink>
-          <NuxtLink to="/tools/cursor-rules">Cursor rules</NuxtLink>
-          <NuxtLink to="/tools/search">Search</NuxtLink>
+          <NuxtLink
+            v-for="tool in toolsNav"
+            :key="tool.id"
+            :to="tool.path"
+          >{{ tool.label }}</NuxtLink>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Follow</h4>
-          <NuxtLink to="/help">Help</NuxtLink>
-          <NuxtLink to="/blog">Blog</NuxtLink>
+          <NuxtLink
+            v-for="link in footerFollowLinks"
+            :key="link.id"
+            :to="link.to"
+          >{{ link.label }}</NuxtLink>
           <a :href="repoUrl" target="_blank" rel="noopener noreferrer">
             GitHub
             <span class="ft__ext" aria-hidden="true">↗</span>
@@ -58,7 +60,6 @@ const { repoUrl, issuesUrl } = useSiteNav()
             RSS
             <span class="ft__ext" aria-hidden="true">↗</span>
           </a>
-          <NuxtLink to="/changelog">Changelog</NuxtLink>
           <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer">
             Sitemap
             <span class="ft__ext" aria-hidden="true">↗</span>

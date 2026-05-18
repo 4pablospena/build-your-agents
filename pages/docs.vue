@@ -23,29 +23,6 @@ const marqueeItems = [
   'No framework'
 ]
 
-const howSteps = [
-  {
-    n: '01',
-    title: 'Download',
-    body: 'Grab the seven .md files. One at a time, copy-paste, or curl them from /templates/ once your site is live. For a reading map, see README.md in the same folder.'
-  },
-  {
-    n: '02',
-    title: 'Fill the brackets',
-    body: 'Replace [AgentName], [Your Name], ports, models — everything is human-readable and diff-friendly.'
-  },
-  {
-    n: '03',
-    title: 'Point your model',
-    body: 'Drop the folder as system context or workspace rules. Same files power the overview on the home page.'
-  },
-  {
-    n: '04',
-    title: 'Two memory layers',
-    body: 'Use memory/[date].md for daily notes and session summaries. Promote confirmed facts to MEMORY.md — evergreen, one line per fact, supersede instead of delete.'
-  }
-]
-
 const openPreview = reactive<Record<string, boolean>>({})
 const copied = reactive<Record<string, boolean>>({})
 
@@ -269,24 +246,32 @@ function templateHref(filename: string) {
       </div>
     </section>
 
-    <section class="docs__steps">
-      <div class="bya-container">
-        <header class="docs__steps-head">
-          <span class="bya-eyebrow">How to use</span>
-          <h2 class="bya-h2 docs__steps-title">
-            From download to <span class="docs__steps-hl">running folder.</span>
-          </h2>
-        </header>
-        <div class="docs__steps-grid">
-          <article
-            v-for="(s, i) in howSteps"
-            :key="s.n"
-            :class="['docs__step-card', i % 2 === 0 ? 'tilt-l' : 'tilt-r']"
+    <section class="docs__start">
+      <div class="bya-container docs__start-inner">
+        <span class="bya-eyebrow">After download</span>
+        <h2 class="bya-h2 docs__start-title">
+          Fill in <span class="docs__start-hl">the right order.</span>
+        </h2>
+        <p class="docs__start-lede">
+          Use the cards above to grab each file, or the ZIP / curl block below
+          for all seven at once. For fill order, time estimates, and saved
+          progress in your browser, follow the interactive checklist — not a
+          second copy of the steps here.
+        </p>
+        <div class="docs__start-cta">
+          <NuxtLink class="bya-btn" to="/start">
+            Fill order &amp; track progress
+            <span aria-hidden="true">→</span>
+          </NuxtLink>
+          <a
+            class="bya-btn bya-btn--ghost"
+            href="/templates/README.md"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <span class="docs__step-num">{{ s.n }}</span>
-            <h3 class="bya-h3 docs__step-title">{{ s.title }}</h3>
-            <p class="docs__step-body">{{ s.body }}</p>
-          </article>
+            Reading map (README.md)
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </section>
@@ -849,24 +834,23 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   opacity: 1;
 }
 
-/* ----- How to use ----- */
-.docs__steps {
+/* ----- Start CTA ----- */
+.docs__start {
   padding: 72px 0 88px;
   background:
     radial-gradient(520px 260px at 88% 0%, rgba(200, 255, 0, 0.28), transparent 55%),
     var(--paper-2);
   border-bottom: var(--stroke-fat) solid var(--ink);
 }
-.docs__steps-head {
-  margin-bottom: 40px;
+.docs__start-inner {
   max-width: 720px;
 }
-.docs__steps-head .bya-eyebrow {
+.docs__start-inner .bya-eyebrow {
   margin-bottom: 12px;
   background: var(--ink);
   color: var(--paper);
 }
-.docs__steps-hl {
+.docs__start-hl {
   display: inline-block;
   background: var(--acid);
   padding: 0 12px;
@@ -874,36 +858,18 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   box-shadow: 6px 6px 0 0 var(--ink);
   transform: rotate(-0.85deg);
 }
-.docs__steps-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
-}
-.docs__step-card {
-  position: relative;
-  background: var(--paper);
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow);
-  padding: 22px 22px 20px;
-  display: grid;
-  gap: 10px;
-}
-.docs__step-num {
-  font-family: var(--display);
-  font-size: 2.8rem;
-  line-height: 1;
-  color: var(--hot);
-  -webkit-text-stroke: 2px var(--ink);
-}
-.docs__step-title {
-  font-size: 1.15rem;
-  margin: 0;
-}
-.docs__step-body {
+.docs__start-lede {
   font-family: var(--mono);
   font-size: 0.84rem;
   line-height: 1.55;
-  margin: 0;
+  margin: 18px 0 0;
+  max-width: 58ch;
+}
+.docs__start-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
 }
 
 /* ----- Closing band ----- */

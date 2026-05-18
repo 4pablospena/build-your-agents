@@ -7,7 +7,7 @@ Thanks for helping improve **build/your/agents**. This repo ships two things:
 
 ## Before you open a PR
 
-1. Read [`docs/SUPPORT.md`](docs/SUPPORT.md) (same content as the live `/help` page).
+1. Read **`/help`** on the deployed site (FAQ lives in code: `composables/useSiteNav.ts`). Repo index: [`docs/SUPPORT.md`](docs/SUPPORT.md).
 2. Open a [GitHub Issue](https://github.com/4pablospena/build-your-agents/issues/new/choose) if you are unsure which template fits.
 
 ## Changing the agent templates
@@ -32,7 +32,7 @@ That syncs `templates/` → `public/templates/`, rebuilds the ZIP, and verifies 
 
 ## Changing the site
 
-- **Navigation** — update [`composables/useSiteNav.ts`](composables/useSiteNav.ts), then header/footer/help as needed. See [`.cursor/rules/site-nav.mdc`](.cursor/rules/site-nav.mdc).
+- **Navigation** — update [`composables/useSiteNav.ts`](composables/useSiteNav.ts) and [`config/staticRoutes.ts`](config/staticRoutes.ts). See [`.cursor/rules/site-nav.mdc`](.cursor/rules/site-nav.mdc).
 - **Seven-file metadata** — prefer [`composables/useAgentFiles.ts`](composables/useAgentFiles.ts) as the single source of truth.
 - **Blog posts** — add markdown under `content/posts/` with frontmatter; use tag `case-study` and optional `filesTouched` for `/examples`.
 
@@ -54,7 +54,7 @@ Copy [`.env.example`](.env.example) to `.env` when testing absolute URLs (Open G
 
 - [ ] `pnpm build` succeeds
 - [ ] Template edits include `content/changelog/` entry (if applicable)
-- [ ] New public routes added to `useSiteNav`, README site map, and `nuxt.config.ts` prerender list
+- [ ] New public routes added to `useSiteNav`, `config/staticRoutes.ts`, and README site map
 - [ ] Copy stays honest (see `AudienceFit` on the landing page — no SLA or compliance claims)
 
 ## License

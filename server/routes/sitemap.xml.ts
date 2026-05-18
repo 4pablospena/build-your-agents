@@ -1,6 +1,7 @@
 // Sitemap for static routes + published blog posts.
 
 import { serverQueryContent } from '#content/server'
+import { STATIC_PUBLIC_ROUTES } from '../../config/staticRoutes'
 import { blogSlugFromPath } from '~/composables/useBlogPosts'
 
 type FeedPost = {
@@ -8,21 +9,6 @@ type FeedPost = {
   date?: string
   draft?: boolean
 }
-
-const STATIC_ROUTES = [
-  '/',
-  '/start',
-  '/help',
-  '/docs',
-  '/examples',
-  '/openclaw',
-  '/changelog',
-  '/tools',
-  '/tools/validate',
-  '/tools/cursor-rules',
-  '/tools/search',
-  '/blog'
-]
 
 function xmlEscape(input: string): string {
   return input
@@ -52,7 +38,7 @@ export default defineEventHandler(async (event) => {
   const all = (await serverQueryContent(event, 'posts').sort({ date: -1 }).find()) as FeedPost[]
   const posts = import.meta.dev ? all : all.filter((p) => p.draft !== true)
 
-  const staticEntries = STATIC_ROUTES.map(
+  const staticEntries = STATIC_PUBLIC_ROUTES.map(
     (path) => `  <url>
     <loc>${xmlEscape(`${origin}${path}`)}</loc>
     <lastmod>${today}</lastmod>

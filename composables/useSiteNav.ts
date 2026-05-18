@@ -50,6 +50,18 @@ export function useSiteNav() {
   /** Primary header: learn anchors + use/meta routes (no Overview, no OpenClaw). */
   const headerLinks: SiteNavLink[] = [...learnLinks, ...useLinks, ...metaLinks]
 
+  /** Footer Spec column — stable labels, includes OpenClaw (not in header). */
+  const footerSpecLinks: SiteNavLink[] = [
+    ...learnLinks,
+    { label: 'Reading map', to: '/start', id: 'start-page' },
+    { label: 'Examples', to: '/examples', id: 'examples-page' },
+    { label: 'OpenClaw & MCPs', to: '/openclaw', id: 'openclaw-page' },
+    { label: 'Markdown templates', to: '/docs', id: 'docs-page' }
+  ]
+
+  /** Footer Follow column — in-site meta routes (externals rendered separately). */
+  const footerFollowLinks: SiteNavLink[] = [...metaLinks]
+
   const newHereCards: NewHereCard[] = [
     {
       title: 'Start the checklist',
@@ -117,6 +129,8 @@ export function useSiteNav() {
     useLinks,
     metaLinks,
     headerLinks,
+    footerSpecLinks,
+    footerFollowLinks,
     newHereCards,
     faq,
     toolsNav

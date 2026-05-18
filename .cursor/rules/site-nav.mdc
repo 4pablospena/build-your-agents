@@ -6,6 +6,7 @@ globs:
   - components/AppFooter.vue
   - composables/useSiteNav.ts
   - nuxt.config.ts
+  - config/staticRoutes.ts
   - README.md
 alwaysApply: false
 ---
@@ -15,10 +16,10 @@ alwaysApply: false
 When you add or rename a **public route**:
 
 1. Register links in `composables/useSiteNav.ts` (`learnLinks`, `useLinks`, `metaLinks`, or `newHereCards` as appropriate).
-2. Wire `AppHeader.vue` / `AppFooter.vue` only through `useSiteNav` — do not duplicate URL arrays in components.
-3. Add the route to `staticPrerenderRoutes()` in `nuxt.config.ts` (unless it must stay dynamic like `/rss.xml`).
+2. Wire `AppHeader.vue` / `AppFooter.vue` only through `useSiteNav` (`headerLinks`, `footerSpecLinks`, `footerFollowLinks`, `toolsNav`) — do not duplicate URL arrays in components.
+3. Add the route to [`config/staticRoutes.ts`](config/staticRoutes.ts) (prerender + sitemap import this list; `/rss.xml` stays dynamic).
 4. Update the **Site map** table in root `README.md`.
-5. If user-facing help copy changes, update `docs/SUPPORT.md` and the `faq` array in `useSiteNav.ts`.
+5. **FAQ:** edit only the `faq` array in `useSiteNav.ts`. Update [`docs/SUPPORT.md`](docs/SUPPORT.md) only when routes, utilities, or Issues policy change — not FAQ body text.
 6. For template-only downloads, update `templates/README.md` (synced to `public/templates/` on build).
 
 Support channel: **GitHub Issues only** (templates under `.github/ISSUE_TEMPLATE/`).

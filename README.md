@@ -23,12 +23,10 @@ Seven markdown files. No black box. No vendor lock-in. This site documents the a
 | File | Role |
 |------|------|
 | **SOUL.md** | Who the agent is — voice, values, hard limits |
-| **IDENTITY.md** | Where it lives — metadata, models, routing |
 | **AGENTS.md** | How it operates — workflows, decision rules, escalation |
-| **USER.md** | Who it serves — preferences, projects, “do not do” |
-| **TOOLS.md** | What it can reach — skills, MCPs, selection order |
 | **MEMORY.md** | Evergreen facts — one line per fact, supersede only |
-| **HEARTBEAT.md** | Scheduled tasks — what may run alone vs needs confirmation |
+
+Full roles, memory layers, and session read order: **[`templates/README.md`](templates/README.md)** (canonical reading map, also at `/templates/README.md` after build).
 
 Plain `.md` you version in git, drop into a folder, and point any capable model at as system context or workspace rules.
 
@@ -85,7 +83,7 @@ Turns [`templates/README.md`](templates/README.md) into an interactive reading m
 
 ### Footer & navigation
 
-- Navigation data: [`composables/useSiteNav.ts`](composables/useSiteNav.ts) (single source of truth)
+- Navigation: [`composables/useSiteNav.ts`](composables/useSiteNav.ts) · prerender/sitemap: [`config/staticRoutes.ts`](config/staticRoutes.ts)
 - Header: Architecture · The 7 files · Session · **Start** · Docs · Examples · Tools · **Help** · Blog · Changelog
 - Footer: Spec · all **7 files** · Tools · Follow (Blog, GitHub, RSS, Changelog, Help, Issues)
 - OpenClaw: `/openclaw` (footer + home “New here?” strip — not in the main header)
@@ -93,7 +91,7 @@ Turns [`templates/README.md`](templates/README.md) into an interactive reading m
 ### Getting help
 
 - **[`/help`](pages/help.vue)** — FAQ, links to `/start` and `/docs`, utilities under `/tools`
-- **[`docs/SUPPORT.md`](docs/SUPPORT.md)** — same content for repo readers
+- **[`docs/SUPPORT.md`](docs/SUPPORT.md)** — repo index (FAQ text only in `useSiteNav.ts` / `/help`)
 - **GitHub Issues** — [open with a template](https://github.com/4pablospena/build-your-agents/issues/new/choose) (bug, question, spec change)
 - **Contributing** — [`CONTRIBUTING.md`](CONTRIBUTING.md) (templates + changelog policy)
 
@@ -243,7 +241,10 @@ build-your-agents/
 │   ├── useAgentFiles.types.ts
 │   ├── useBlogPosts.ts
 │   ├── useStartJourney.ts      # journey order + localStorage progress
-│   └── useSiteNav.ts           # header/footer/help navigation
+│   ├── useSiteNav.ts           # header/footer/help navigation
+│   └── (see config/staticRoutes.ts)
+├── config/
+│   └── staticRoutes.ts         # prerender + sitemap route list
 ├── templates/*.md              # canonical agent files + README
 ├── scripts/
 │   ├── sync-templates.mjs
