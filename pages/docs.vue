@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import type { AgentFileId } from '~/composables/useBlogPosts'
-
 const { files } = useAgentFiles()
-const { postsForFile } = await usePostsGroupedByFileTag()
 
 const runtimeConfig = useRuntimeConfig()
 const siteOrigin = computed(() => runtimeConfig.public.siteUrl || 'YOUR_ORIGIN')
@@ -169,11 +166,6 @@ function templateHref(filename: string) {
             </header>
             <p class="docs__card-tag">{{ f.tagline }}</p>
             <p class="docs__role">{{ f.role }}</p>
-
-            <DocsBlogLinks
-              :file-id="f.id as AgentFileId"
-              :posts="postsForFile(f.id as AgentFileId)"
-            />
 
             <div class="docs__actions">
               <a

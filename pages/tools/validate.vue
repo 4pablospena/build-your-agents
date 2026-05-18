@@ -17,10 +17,9 @@ useHead({
 
 <template>
   <ToolsShell
-    active="validate"
     eyebrow="Validator"
     title="Does your .md still match the spec?"
-    lede="Checks level-2 headings (##) against the canonical section list in useAgentFiles — entirely in your browser."
+    lede="Checks level-2 headings (##) against the canonical section list for each spec file — entirely in your browser."
   >
     <div class="tval">
       <div class="tval__row">
@@ -39,7 +38,7 @@ useHead({
       <p class="tval__hint">
         Expected sections for
         <strong>{{ v.file?.filename }}</strong>:
-        <span v-for="s in v.file?.sections" :key="s" class="tval__chip">{{
+        <span v-for="s in v.file?.sections ?? []" :key="s" class="tval__chip">{{
           s
         }}</span>
       </p>
@@ -69,28 +68,28 @@ useHead({
           :class="v.result.ok ? 'tval__verdict--ok' : 'tval__verdict--warn'"
         >
           <template v-if="v.result.ok">
-            All {{ v.result.expected.length }} sections present.
+            All {{ v.result.expected?.length ?? 0 }} sections present.
           </template>
           <template v-else>
-            Missing {{ v.result.missing.length }} section(s).
+            Missing {{ v.result.missing?.length ?? 0 }} section(s).
           </template>
         </p>
 
-        <div v-if="v.result.missing.length" class="tval__block">
+        <div v-if="v.result.missing?.length" class="tval__block">
           <h3 class="tval__block-title">Missing</h3>
           <ul>
             <li v-for="s in v.result.missing" :key="s">{{ s }}</li>
           </ul>
         </div>
 
-        <div v-if="v.result.matched.length" class="tval__block">
+        <div v-if="v.result.matched?.length" class="tval__block">
           <h3 class="tval__block-title">Found</h3>
           <ul>
             <li v-for="s in v.result.matched" :key="s">{{ s }}</li>
           </ul>
         </div>
 
-        <div v-if="v.result.extra.length" class="tval__block">
+        <div v-if="v.result.extra?.length" class="tval__block">
           <h3 class="tval__block-title">Extra headings (not in spec)</h3>
           <ul>
             <li v-for="s in v.result.extra" :key="s">{{ s }}</li>

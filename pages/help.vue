@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { newHereCards, faq, toolsNav, issuesUrl, repoUrl } = useSiteNav()
+const { newHereCards, faq, issuesUrl, repoUrl } = useSiteNav()
 
 useHead({
   title: 'Help — Build your own agents',
@@ -106,15 +106,7 @@ useHead({
           </p>
         </header>
 
-        <ul class="hlp__tools" role="list">
-          <li v-for="tool in toolsNav" :key="tool.id" role="listitem">
-            <NuxtLink class="hlp__tool-card" :to="tool.path">
-              <span class="hlp__tool-eyebrow">{{ tool.eyebrow }}</span>
-              <span class="hlp__tool-label">{{ tool.label }}</span>
-              <span class="hlp__tool-desc">{{ tool.description }}</span>
-            </NuxtLink>
-          </li>
-        </ul>
+        <ToolsGrid />
       </div>
     </section>
 
@@ -341,48 +333,6 @@ useHead({
   font-size: 0.84rem;
   line-height: 1.55;
   margin: 0;
-}
-
-.hlp__tools {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 18px;
-}
-.hlp__tool-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 18px 16px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 4px 4px 0 0 var(--ink);
-  background: var(--paper);
-  text-decoration: none;
-  color: inherit;
-}
-.hlp__tool-card:hover {
-  background: var(--pink);
-  color: var(--paper);
-  box-shadow: 7px 7px 0 0 var(--ink);
-}
-.hlp__tool-eyebrow {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.85;
-}
-.hlp__tool-label {
-  font-family: var(--display);
-  text-transform: uppercase;
-  font-size: 1rem;
-}
-.hlp__tool-desc {
-  font-family: var(--mono);
-  font-size: 0.76rem;
-  line-height: 1.45;
 }
 
 .hlp__band {

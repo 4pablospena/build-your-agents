@@ -13,7 +13,6 @@ useHead({
 
 <template>
   <ToolsShell
-    active="search"
     eyebrow="Search"
     title="Find posts, changelog, tools."
     lede="Indexed from @nuxt/content — type at least two characters. Arrow keys to move, Enter to open, Escape to close."
