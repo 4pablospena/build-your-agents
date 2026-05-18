@@ -1,0 +1,24 @@
+---
+description: When adding or renaming public site routes, keep navigation and docs in sync.
+globs:
+  - pages/**
+  - components/AppHeader.vue
+  - components/AppFooter.vue
+  - composables/useSiteNav.ts
+  - nuxt.config.ts
+  - README.md
+alwaysApply: false
+---
+
+# Site navigation checklist
+
+When you add or rename a **public route**:
+
+1. Register links in `composables/useSiteNav.ts` (`learnLinks`, `useLinks`, `metaLinks`, or `newHereCards` as appropriate).
+2. Wire `AppHeader.vue` / `AppFooter.vue` only through `useSiteNav` — do not duplicate URL arrays in components.
+3. Add the route to `staticPrerenderRoutes()` in `nuxt.config.ts` (unless it must stay dynamic like `/rss.xml`).
+4. Update the **Site map** table in root `README.md`.
+5. If user-facing help copy changes, update `docs/SUPPORT.md` and the `faq` array in `useSiteNav.ts`.
+6. For template-only downloads, update `templates/README.md` (synced to `public/templates/` on build).
+
+Support channel: **GitHub Issues only** (templates under `.github/ISSUE_TEMPLATE/`).

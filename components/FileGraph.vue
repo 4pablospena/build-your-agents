@@ -41,8 +41,8 @@ function resultHref(fileId: AgentFileId) {
             <span class="fgraph__hl">Place new content.</span>
           </template>
           <template v-else>
-            ¿En qué archivo<br />
-            <span class="fgraph__hl">va esto?</span>
+            Which file does<br />
+            <span class="fgraph__hl">this belong in?</span>
           </template>
         </h2>
         <p class="fgraph__lede">
@@ -95,7 +95,7 @@ function resultHref(fileId: AgentFileId) {
       </div>
 
       <div class="fgraph__wizard">
-        <h3 class="fgraph__wizard-title">¿En qué archivo va esto?</h3>
+        <h3 class="fgraph__wizard-title">Which file does this belong in?</h3>
         <label class="fgraph__label" for="fgraph-query">
           Describe what you want to document
         </label>

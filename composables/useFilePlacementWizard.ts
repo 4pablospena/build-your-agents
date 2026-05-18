@@ -1,4 +1,4 @@
-// “¿En qué archivo va esto?” — scores sections + decision rules (no new agent fields).
+// “Which file does this belong in?” — scores sections + decision rules (no new agent fields).
 
 import type { AgentFileId } from './useBlogPosts'
 import { decisionRules, toolPriority } from './useDecisionRules'

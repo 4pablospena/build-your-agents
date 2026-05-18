@@ -1,0 +1,47 @@
+name: Spec change
+description: Propose an edit to templates/*.md (requires changelog entry)
+title: "[spec]: "
+labels: ["spec"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Spec changes must include a matching file under `content/changelog/` in the same PR. See [CHANGELOG.md](https://github.com/4pablospena/build-your-agents/blob/main/CHANGELOG.md) and [CONTRIBUTING.md](https://github.com/4pablospena/build-your-agents/blob/main/CONTRIBUTING.md).
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I will add (or have added) a `content/changelog/` entry in the same PR
+          required: true
+        - label: I understand this is an open pattern, not a guaranteed product roadmap
+          required: true
+  - type: dropdown
+    id: file
+    attributes:
+      label: Primary file affected
+      options:
+        - soul
+        - identity
+        - agents
+        - user
+        - tools
+        - memory
+        - heartbeat
+        - multiple
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should change and why?
+      description: One or two paragraphs. Link a blog post slug if there is field-note context.
+    validations:
+      required: true
+  - type: textarea
+    id: changelog-draft
+    attributes:
+      label: Draft changelog reason (one line)
+      placeholder: "Expanded session-loop pseudocode and decision table."
+    validations:
+      required: true

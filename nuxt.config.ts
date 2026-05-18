@@ -13,12 +13,15 @@ function isDraftPostFile(absPath: string): boolean {
   }
 }
 
-function blogPrerenderRoutes(): string[] {
+function staticPrerenderRoutes(): string[] {
   // /rss.xml is intentionally NOT prerendered: it needs the live request
   // origin (or NUXT_PUBLIC_SITE_URL at runtime) to emit canonical URLs.
   // Vercel CDN caches the dynamic response via the `s-maxage` header set
   // inside server/routes/rss.xml.ts.
   const routes = [
+    '/start',
+    '/help',
+    '/docs',
     '/blog',
     '/examples',
     '/changelog',
@@ -52,7 +55,10 @@ const ogImage = siteUrl ? `${siteUrl}/og.png` : '/og.png'
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || ''
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '',
+      repoUrl:
+        process.env.NUXT_PUBLIC_REPO_URL ||
+        'https://github.com/4pablospena/build-your-agents'
     }
   },
 
@@ -72,7 +78,7 @@ export default defineNuxtConfig({
 
   hooks: {
     'nitro:config'(nitroConfig) {
-      const routes = blogPrerenderRoutes()
+      const routes = staticPrerenderRoutes()
       nitroConfig.prerender = nitroConfig.prerender || {}
       const cur = nitroConfig.prerender.routes
       nitroConfig.prerender.routes = Array.isArray(cur)

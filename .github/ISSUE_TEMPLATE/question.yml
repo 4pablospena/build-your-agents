@@ -1,0 +1,36 @@
+name: Question
+description: How to use the seven-file spec or this documentation site
+title: "[question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For quick answers, see [docs/SUPPORT.md](https://github.com/4pablospena/build-your-agents/blob/main/docs/SUPPORT.md) or the live `/help` page.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+      description: What are you trying to do with the seven files or the site?
+    validations:
+      required: true
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      options:
+        - Fill order / which file to use
+        - Memory (daily vs MEMORY.md)
+        - HEARTBEAT / scheduling
+        - OpenClaw / Cursor / MCPs
+        - Downloading templates
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (optional)
+      description: Tooling, model, or setup — no secrets or API keys.
+    validations:
+      required: false

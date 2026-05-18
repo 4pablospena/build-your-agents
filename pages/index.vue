@@ -23,6 +23,8 @@ useHead({
 
     <AudienceFit />
 
+    <NewHereStrip />
+
     <ArchitectureMap />
 
     <TierMap />
