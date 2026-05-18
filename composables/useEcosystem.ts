@@ -3,9 +3,6 @@
 
 import type { AgentFileId } from './useBlogPosts'
 
-export const RESIZES_URL = 'https://resiz.es'
-export const SITE_REPO_URL = 'https://github.com/4pablospena/build-your-agents'
-
 export type EcosystemLane = {
   id: 'openclaw' | 'cursor' | 'mcp'
   title: string
@@ -67,8 +64,3 @@ export const ecosystemLanes: EcosystemLane[] = [
     }
   }
 ]
-
-/** Blog posts tagged openclaw — same filter pattern as case studies. */
-export function useOpenClawPostsQuery() {
-  return useBlogPostListQuery().where({ tags: { $contains: 'openclaw' } })
-}

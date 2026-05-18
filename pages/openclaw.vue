@@ -1,19 +1,8 @@
 <script setup lang="ts">
-import type { AgentFileId, BlogPost } from '~/composables/useBlogPosts'
-import { blogSlugFromPath } from '~/composables/useBlogPosts'
-import {
-  RESIZES_URL,
-  SITE_REPO_URL,
-  ecosystemLanes
-} from '~/composables/useEcosystem'
+import type { AgentFileId } from '~/composables/useBlogPosts'
+import { ecosystemLanes } from '~/composables/useEcosystem'
 
 const { byId } = useAgentFiles()
-
-const { data: openclawPosts } = await useAsyncData('openclaw-posts', () =>
-  useOpenClawPostsQuery().find() as Promise<BlogPost[]>
-)
-
-const posts = computed(() => openclawPosts.value ?? [])
 
 function fileChipStyle(color: string) {
   const onPaper = ['lemon', 'acid'].includes(color)
@@ -164,62 +153,6 @@ useHead({
       lede="These are the same cards as on the home page — fill the brackets, drop the folder into your workspace or rules, and ship."
       :show-docs-link="true"
     />
-
-    <section class="oc__links">
-      <div class="bya-container">
-        <header class="oc__links-head">
-          <span class="bya-eyebrow">Go deeper</span>
-          <h2 class="bya-h2">
-            Resizes, repo <span class="oc__hl">and field notes.</span>
-          </h2>
-        </header>
-
-        <div class="oc__link-grid">
-          <a
-            class="oc__link-card"
-            :href="RESIZES_URL"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="oc__link-k">Resizes</span>
-            <span class="oc__link-v">Commercial agents in production</span>
-            <span class="oc__link-go" aria-hidden="true">↗</span>
-          </a>
-          <a
-            class="oc__link-card"
-            :href="SITE_REPO_URL"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span class="oc__link-k">GitHub</span>
-            <span class="oc__link-v">Templates &amp; site source</span>
-            <span class="oc__link-go" aria-hidden="true">↗</span>
-          </a>
-          <NuxtLink class="oc__link-card" to="/examples">
-            <span class="oc__link-k">Examples</span>
-            <span class="oc__link-v">Case studies (e.g. Sabrina / OpenClaw)</span>
-            <span class="oc__link-go" aria-hidden="true">→</span>
-          </NuxtLink>
-        </div>
-
-        <div v-if="posts.length" class="oc__posts">
-          <h3 class="oc__posts-title">Blog · tagged openclaw</h3>
-          <ul class="oc__posts-list" role="list">
-            <li v-for="post in posts" :key="post._path || post._id" role="listitem">
-              <NuxtLink
-                class="oc__post-link"
-                :to="`/blog/${blogSlugFromPath(post._path!)}`"
-              >
-                <span class="oc__post-title">{{ post.title }}</span>
-                <span v-if="post.description" class="oc__post-desc">{{
-                  post.description
-                }}</span>
-              </NuxtLink>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
     <section class="oc__band">
       <div class="bya-container oc__band-inner">
@@ -437,100 +370,6 @@ useHead({
   padding-left: 4px;
 }
 
-.oc__links {
-  padding: 72px 0;
-  border-bottom: var(--stroke-fat) solid var(--ink);
-}
-.oc__links-head {
-  margin-bottom: 28px;
-  max-width: 560px;
-}
-
-.oc__link-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 40px;
-}
-.oc__link-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 18px;
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow);
-  background: var(--paper);
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-  min-height: 100px;
-}
-.oc__link-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-lg);
-  background: var(--acid);
-}
-.oc__link-k {
-  font-family: var(--display);
-  text-transform: uppercase;
-  font-size: 1rem;
-}
-.oc__link-v {
-  font-family: var(--mono);
-  font-size: 0.76rem;
-  line-height: 1.45;
-  opacity: 0.85;
-  flex: 1;
-}
-.oc__link-go {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  font-size: 1rem;
-}
-
-.oc__posts-title {
-  margin: 0 0 16px;
-  font-family: var(--display);
-  text-transform: uppercase;
-  font-size: 0.95rem;
-}
-.oc__posts-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.oc__post-link {
-  display: block;
-  padding: 16px 18px;
-  border: var(--stroke) solid var(--ink);
-  background: var(--paper-2);
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 4px 4px 0 0 var(--ink);
-}
-.oc__post-link:hover {
-  background: var(--lemon);
-  transform: translate(-1px, -1px);
-}
-.oc__post-title {
-  display: block;
-  font-family: var(--display);
-  font-size: 0.95rem;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-.oc__post-desc {
-  display: block;
-  font-family: var(--serif);
-  font-size: 0.92rem;
-  line-height: 1.4;
-  opacity: 0.9;
-}
-
 .oc__band {
   padding: 48px 0 88px;
   background: var(--ink);
@@ -548,8 +387,7 @@ useHead({
 }
 
 @media (max-width: 960px) {
-  .oc__lanes,
-  .oc__link-grid {
+  .oc__lanes {
     grid-template-columns: 1fr;
   }
   .oc__quick li {
