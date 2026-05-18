@@ -9,7 +9,7 @@ withDefaults(
   {
     eyebrow: '03 / The seven files',
     lede:
-      'Click any file in the tier map above to jump here. Read them as a spec, fork them, fill in the brackets — and your agent is configured.',
+      'Click a card to highlight what it reads (and who reads it) in the maps above. Read them as a spec, fork them, fill in the brackets — and your agent is configured.',
     showDocsLink: true
   }
 )

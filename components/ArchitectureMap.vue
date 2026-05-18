@@ -2,6 +2,7 @@
 // Visual map of the seven files and their relationships.
 // Single responsibility: render the architecture overview as a brutalist SVG.
 const { files } = useAgentFiles()
+const graph = useFileGraph()
 
 // Stable positions for the planet diagram
 const nodes = [
@@ -14,18 +15,32 @@ const nodes = [
   { id: 'heartbeat', x: 82,  y: 72, label: 'HEARTBEAT', color: 'var(--grape)',  text: 'var(--paper)' }
 ]
 
-// Edges: agents reads from many; heartbeat reads memory+user.
-const edges = [
-  { from: 'agents', to: 'soul' },
-  { from: 'agents', to: 'tools' },
-  { from: 'agents', to: 'user' },
-  { from: 'agents', to: 'memory' },
-  { from: 'agents', to: 'identity' },
-  { from: 'heartbeat', to: 'memory' },
-  { from: 'heartbeat', to: 'user' }
-]
+const edges = computed(() => {
+  const list: { from: string; to: string }[] = []
+  for (const f of files) {
+    for (const dep of f.reads) {
+      const toId = graph.filenameToId(dep)
+      if (toId) list.push({ from: f.id, to: toId })
+    }
+  }
+  return list
+})
 
 const pos = (id: string) => nodes.find(n => n.id === id)!
+
+function nodeClass(id: string) {
+  const role = graph.roleFor(id)
+  return {
+    'arch__node--dim': graph.isDimmed(id),
+    'arch__node--selected': role === 'selected',
+    'arch__node--reads': role === 'reads',
+    'arch__node--readby': role === 'readBy'
+  }
+}
+
+function onNodeClick(id: string) {
+  graph.select(id)
+}
 </script>
 
 <template>
@@ -50,11 +65,16 @@ const pos = (id: string) => nodes.find(n => n.id === id)!
           <g stroke="var(--ink)" stroke-width="0.45" fill="none">
             <line
               v-for="(e, i) in edges"
-              :key="i"
+              :key="`${e.from}-${e.to}-${i}`"
               :x1="pos(e.from).x"
               :y1="pos(e.from).y"
               :x2="pos(e.to).x"
               :y2="pos(e.to).y"
+              :class="[
+                'arch__wire',
+                { 'arch__wire--active': graph.isEdgeActive(e.from, e.to) },
+                { 'arch__wire--dim': graph.hasSelection && !graph.isEdgeActive(e.from, e.to) }
+              ]"
               stroke-dasharray="1.5 1"
             />
           </g>
@@ -66,12 +86,15 @@ const pos = (id: string) => nodes.find(n => n.id === id)!
           :key="n.id"
           :href="`#file-${n.id}`"
           class="arch__node"
+          :class="nodeClass(n.id)"
           :style="{
             left: n.x + '%',
             top: n.y + '%',
             background: n.color,
             color: n.text
           }"
+          :aria-current="graph.roleFor(n.id) === 'selected' ? 'true' : undefined"
+          @click="onNodeClick(n.id)"
         >
           <span class="arch__node-label">{{ n.label }}</span>
         </a>
@@ -88,7 +111,22 @@ const pos = (id: string) => nodes.find(n => n.id === id)!
       </div>
 
       <ul class="arch__legend">
-        <li v-for="f in files" :key="f.id" class="arch__legend-item">
+        <li
+          v-for="f in files"
+          :key="f.id"
+          class="arch__legend-item"
+          :class="{
+            'arch__legend-item--dim': graph.isDimmed(f.id),
+            'arch__legend-item--selected': graph.roleFor(f.id) === 'selected',
+            'arch__legend-item--reads': graph.roleFor(f.id) === 'reads',
+            'arch__legend-item--readby': graph.roleFor(f.id) === 'readBy'
+          }"
+          role="button"
+          tabindex="0"
+          @click="graph.select(f.id)"
+          @keydown.enter.prevent="graph.select(f.id)"
+          @keydown.space.prevent="graph.select(f.id)"
+        >
           <span :class="['arch__dot', `arch__dot--${f.color}`]" aria-hidden="true">{{ f.symbol }}</span>
           <span class="arch__legend-name">{{ f.filename }}</span>
           <span class="arch__legend-role">{{ f.tagline }}</span>
@@ -159,6 +197,33 @@ const pos = (id: string) => nodes.find(n => n.id === id)!
   transform: translate(calc(-50% - 3px), calc(-50% - 3px));
   box-shadow: 8px 8px 0 0 var(--ink);
 }
+.arch__node--dim {
+  opacity: 0.32;
+  filter: grayscale(0.4);
+}
+.arch__node--selected {
+  outline: 4px solid var(--paper);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--ink), 8px 8px 0 0 var(--ink);
+  z-index: 3;
+}
+.arch__node--reads {
+  outline: 3px dashed var(--hot);
+  outline-offset: 2px;
+}
+.arch__node--readby {
+  outline: 3px dashed var(--sky);
+  outline-offset: 2px;
+}
+
+.arch__wire--active {
+  stroke: var(--hot);
+  stroke-width: 0.85;
+  stroke-dasharray: none;
+}
+.arch__wire--dim {
+  opacity: 0.2;
+}
 
 .arch__sticker {
   position: absolute;
@@ -192,7 +257,20 @@ const pos = (id: string) => nodes.find(n => n.id === id)!
   padding: 12px 14px;
   background: var(--paper);
   box-shadow: 4px 4px 0 0 var(--ink);
+  cursor: pointer;
+  transition: opacity 120ms ease, transform 120ms ease;
 }
+.arch__legend-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
+.arch__legend-item--dim { opacity: 0.38; }
+.arch__legend-item--selected {
+  background: var(--lemon);
+  box-shadow: 6px 6px 0 0 var(--hot);
+}
+.arch__legend-item--reads { border-color: var(--hot); border-width: 3px; }
+.arch__legend-item--readby { border-color: var(--sky); border-width: 3px; }
 .arch__dot {
   grid-row: 1 / span 2;
   width: 36px; height: 36px;

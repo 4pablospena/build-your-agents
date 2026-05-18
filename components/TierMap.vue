@@ -13,6 +13,41 @@ withDefaults(
 )
 
 const { files, tiers, byId } = useAgentFiles()
+const graph = useFileGraph()
+
+function chipClass(fid: string) {
+  const role = graph.roleFor(fid)
+  return {
+    'tmap__chip--dim': graph.isDimmed(fid),
+    'tmap__chip--selected': role === 'selected',
+    'tmap__chip--reads': role === 'reads',
+    'tmap__chip--readby': role === 'readBy'
+  }
+}
+
+function onChipClick(fid: string) {
+  graph.select(fid)
+}
+
+function depClass(filename: string) {
+  const id = graph.filenameToId(filename)
+  if (!id) return {}
+  const role = graph.roleFor(id)
+  return {
+    'tmap__flow-dep--dim': graph.isDimmed(id),
+    'tmap__flow-dep--selected': role === 'selected',
+    'tmap__flow-dep--reads': role === 'reads',
+    'tmap__flow-dep--readby': role === 'readBy'
+  }
+}
+
+function flowFromClass(fileId: string) {
+  const role = graph.roleFor(fileId)
+  return {
+    'tmap__flow-from--dim': graph.isDimmed(fileId),
+    'tmap__flow-from--selected': role === 'selected'
+  }
+}
 
 const tierBg: Record<number, string> = {
   1: 'var(--ink)',
@@ -78,10 +113,13 @@ const tierAccent: Record<number, string> = {
               :key="fid"
               :href="`#file-${fid}`"
               class="tmap__chip"
+              :class="chipClass(fid)"
               :style="{
                 background: `var(--${byId(fid)!.color})`,
                 color: ['lemon','acid'].includes(byId(fid)!.color) ? 'var(--ink)' : 'var(--paper)'
               }"
+              :aria-current="graph.roleFor(fid) === 'selected' ? 'true' : undefined"
+              @click="onChipClick(fid)"
             >
               <span class="tmap__chip-sym" aria-hidden="true">{{ byId(fid)!.symbol }}</span>
               <span class="tmap__chip-name">{{ byId(fid)!.filename }}</span>
@@ -106,16 +144,23 @@ const tierAccent: Record<number, string> = {
             v-for="f in files.filter(f => f.reads.length > 0)"
             :key="f.id"
             class="tmap__flow-item"
+            :class="{ 'tmap__flow-item--dim': graph.hasSelection && graph.isDimmed(f.id) }"
           >
             <span
               class="tmap__flow-from"
+              :class="flowFromClass(f.id)"
               :style="{
                 background: `var(--${f.color})`,
                 color: ['lemon','acid'].includes(f.color) ? 'var(--ink)' : 'var(--paper)'
               }"
             >{{ f.filename }}</span>
             <span class="tmap__flow-reads">reads ↳</span>
-            <span v-for="r in f.reads" :key="r" class="tmap__flow-dep">{{ r }}</span>
+            <span
+              v-for="r in f.reads"
+              :key="r"
+              class="tmap__flow-dep"
+              :class="depClass(r)"
+            >{{ r }}</span>
           </span>
         </div>
       </div>
@@ -232,6 +277,21 @@ const tierAccent: Record<number, string> = {
   transform: translate(-3px, -3px);
   box-shadow: 8px 8px 0 0 var(--ink);
 }
+.tmap__chip--dim {
+  opacity: 0.35;
+  filter: grayscale(0.35);
+}
+.tmap__chip--selected {
+  outline: 4px solid var(--ink);
+  outline-offset: 3px;
+  z-index: 2;
+}
+.tmap__chip--reads {
+  box-shadow: 0 0 0 3px var(--hot), 5px 5px 0 0 var(--ink);
+}
+.tmap__chip--readby {
+  box-shadow: 0 0 0 3px var(--sky), 5px 5px 0 0 var(--ink);
+}
 
 .tmap__chip-sym {
   font-size: 1.5rem;
@@ -306,6 +366,16 @@ const tierAccent: Record<number, string> = {
   background: var(--paper-2);
   border: 2px solid var(--ink);
 }
+.tmap__flow-item--dim { opacity: 0.35; }
+.tmap__flow-from--selected {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+.tmap__flow-dep--selected { background: var(--lemon); }
+.tmap__flow-dep--reads { border-color: var(--hot); border-width: 3px; }
+.tmap__flow-dep--readby { border-color: var(--sky); border-width: 3px; }
+.tmap__flow-dep--dim,
+.tmap__flow-from--dim { opacity: 0.35; }
 
 @media (max-width: 920px) {
   .tmap__band { grid-template-columns: 1fr; }

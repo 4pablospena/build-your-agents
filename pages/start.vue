@@ -149,6 +149,8 @@ useHead({
       ]"
     />
 
+    <FileGraph variant="wizard" eyebrow="Place your content" />
+
     <section class="st__list-wrap">
       <div class="bya-container">
         <header class="st__list-head">

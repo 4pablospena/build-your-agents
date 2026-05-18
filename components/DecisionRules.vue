@@ -1,19 +1,6 @@
 <script setup lang="ts">
 // Decision table mirrors templates/AGENTS.md "Decision Rules". Tool priority mirrors TOOLS.md.
-const rules = [
-  { when: 'Ambiguous instruction', do: 'Ask one clarifying question before proceeding.' },
-  { when: 'Destructive or irreversible action', do: 'Require explicit confirmation. No exceptions.' },
-  { when: 'Missing information', do: 'Check MEMORY.md, then USER.md, then ask.' },
-  { when: 'Conflicting instructions', do: 'SOUL.md limits → AGENTS.md → user request.' },
-  { when: 'Unknown topic', do: 'Acknowledge the gap. Do not guess.' }
-]
-
-const priority = [
-  { rank: '01', label: 'Memory first', desc: 'Already in MEMORY.md? Use it. No tool call.' },
-  { rank: '02', label: 'Workspace files', desc: 'Check local files before fetching the web.' },
-  { rank: '03', label: 'Specialised tool', desc: 'Calendar for dates. GitHub for code.' },
-  { rank: '04', label: 'Web search last', desc: 'Only when nothing else can answer.' }
-]
+const { decisionRules: rules, toolPriority: priority } = useDecisionRules()
 </script>
 
 <template>

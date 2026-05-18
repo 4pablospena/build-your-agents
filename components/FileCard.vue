@@ -6,15 +6,43 @@ const props = defineProps<{
   index: number
 }>()
 
+const graph = useFileGraph()
 const number = computed(() => String(props.index + 1).padStart(2, '0'))
 const showSource = ref(false)
 const sourcePanelId = computed(() => `fc-source-${props.file.id}`)
+
+const graphRole = computed(() => graph.roleFor(props.file.id))
+
+function onCardActivate() {
+  graph.select(props.file.id)
+}
+
+function onCardClick(event: MouseEvent) {
+  const target = event.target as HTMLElement
+  if (target.closest('a, button, textarea, input, label')) return
+  onCardActivate()
+}
 </script>
 
 <template>
   <article
     :id="`file-${file.id}`"
-    :class="['fc', `fc--${file.color}`]"
+    :class="[
+      'fc',
+      `fc--${file.color}`,
+      {
+        'fc--graph-dim': graph.isDimmed(file.id),
+        'fc--graph-selected': graphRole === 'selected',
+        'fc--graph-reads': graphRole === 'reads',
+        'fc--graph-readby': graphRole === 'readBy'
+      }
+    ]"
+    role="button"
+    tabindex="0"
+    :aria-pressed="graphRole === 'selected'"
+    @click="onCardClick"
+    @keydown.enter.prevent="onCardActivate"
+    @keydown.space.prevent="onCardActivate"
   >
     <header class="fc__head">
       <span class="fc__num">{{ number }}</span>
@@ -94,6 +122,8 @@ const sourcePanelId = computed(() => `fc-source-${props.file.id}`)
   flex-direction: column;
   gap: 14px;
   background: var(--paper);
+  cursor: pointer;
+  transition: opacity 120ms ease, outline 120ms ease, transform 120ms ease;
 }
 .fc--hot   { background: var(--hot);   color: var(--paper); }
 .fc--sky   { background: var(--sky);   color: var(--paper); }
@@ -102,6 +132,23 @@ const sourcePanelId = computed(() => `fc-source-${props.file.id}`)
 .fc--acid  { background: var(--acid);  color: var(--ink); }
 .fc--grape { background: var(--grape); color: var(--paper); }
 .fc--ink   { background: var(--ink);   color: var(--paper); }
+.fc--graph-dim {
+  opacity: 0.42;
+  filter: grayscale(0.25);
+}
+.fc--graph-selected {
+  outline: 5px solid var(--ink);
+  outline-offset: 4px;
+  transform: translate(-2px, -2px);
+}
+.fc--graph-reads {
+  outline: 4px dashed var(--hot);
+  outline-offset: 3px;
+}
+.fc--graph-readby {
+  outline: 4px dashed var(--sky);
+  outline-offset: 3px;
+}
 
 .fc__head {
   display: grid;

@@ -27,6 +27,8 @@ useHead({
 
     <TierMap />
 
+    <FileGraph />
+
     <FilesGrid />
 
     <SessionLoop />
