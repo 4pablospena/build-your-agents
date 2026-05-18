@@ -1,7 +1,7 @@
 // Build a single .cursor/rules markdown bundle from the seven spec files.
 
 import type { AgentFile } from './useAgentFiles.types'
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 
 const BUNDLE_FILENAME = 'build-your-agents.cursor-rules.md'
 

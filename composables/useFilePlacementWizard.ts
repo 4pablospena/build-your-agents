@@ -1,6 +1,6 @@
 // “Which file does this belong in?” — scores sections + decision rules (no new agent fields).
 
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 import { decisionRules, toolPriority } from './useDecisionRules'
 
 export type PlacementMatch = {

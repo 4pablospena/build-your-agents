@@ -38,7 +38,7 @@ Detalle por ola (referencia; no reabrir salvo regresión):
 - [x] **Ola 4** — `content/changelog/`, `/changelog`, `ChangelogBanner` en `/docs`
 - [x] **Ola 5** — `/openclaw`, `useEcosystem`
 - [x] **Ola 6** — `FileGraph`, `useFilePlacementWizard`
-- [x] **Ola 7** — `DocsBlogLinks`, `FilesTouchedStrip`
+- [x] **Ola 7** — `FilesTouchedStrip` (blog ↔ spec vía `filesTouched` en posts y `/examples`; sin `DocsBlogLinks` en `/docs`)
 - [x] **Ola 8** — `/tools/validate`, `/tools/cursor-rules`, `/tools/search`
 
 ---

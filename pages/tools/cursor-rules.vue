@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AgentFileId } from '~/composables/useBlogPosts'
+import type { AgentFileId } from '~/composables/useAgentFiles.types'
 
 const gen = useCursorRulesGenerator()
 

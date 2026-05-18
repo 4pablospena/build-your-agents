@@ -1,6 +1,6 @@
 // Client-side markdown validation against useAgentFiles().sections.
 
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 
 export type SectionValidationResult = {
   ok: boolean

@@ -2,7 +2,7 @@
 // File metadata (color, symbol, filename) comes from useAgentFiles(); this
 // composable owns query helpers and the “recent update” window for /docs.
 
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 
 /** Show the /docs banner when the latest entry is newer than this many days. */
 export const CHANGELOG_RECENT_DAYS = 14

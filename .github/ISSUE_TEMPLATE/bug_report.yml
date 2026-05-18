@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting. Check [/help](https://github.com/4pablospena/build-your-agents/blob/main/docs/SUPPORT.md) for FAQs first.
+        Thanks for reporting. Check the live site **/help** for FAQs first, or [docs/SUPPORT.md](https://github.com/4pablospena/build-your-agents/blob/main/docs/SUPPORT.md) for a repo index of routes and utilities.
   - type: textarea
     id: what-happened
     attributes:
