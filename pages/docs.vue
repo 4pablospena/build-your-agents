@@ -85,6 +85,7 @@ function templateHref(filename: string) {
 <template>
   <main class="docs">
     <AppHeader active="docs-page" />
+    <ChangelogBanner />
 
     <section class="docs__hero">
       <div class="docs__deco docs__deco--a" aria-hidden="true">MARKDOWN</div>

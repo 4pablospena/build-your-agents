@@ -48,10 +48,7 @@ const repoUrl = 'https://github.com/4pablospena/build-your-agents'
             RSS
             <span class="ft__ext" aria-hidden="true">↗</span>
           </a>
-          <span class="ft__soon" aria-disabled="true">
-            Changelog
-            <span class="ft__badge">soon</span>
-          </span>
+          <NuxtLink to="/changelog">Changelog</NuxtLink>
         </div>
       </div>
     </div>

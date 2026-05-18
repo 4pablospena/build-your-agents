@@ -10,6 +10,7 @@ defineProps<{
     | 'blog-page'
     | 'start-page'
     | 'examples-page'
+    | 'changelog-page'
 }>()
 
 const navLinks: { label: string; to: string; id: string }[] = [
@@ -20,7 +21,8 @@ const navLinks: { label: string; to: string; id: string }[] = [
   { label: 'Start', to: '/start', id: 'start-page' },
   { label: 'Examples', to: '/examples', id: 'examples-page' },
   { label: 'Blog', to: '/blog', id: 'blog-page' },
-  { label: 'Docs', to: '/docs', id: 'docs-page' }
+  { label: 'Docs', to: '/docs', id: 'docs-page' },
+  { label: 'Changelog', to: '/changelog', id: 'changelog-page' }
 ]
 
 const NAV_ID = 'hdr-primary-nav'
