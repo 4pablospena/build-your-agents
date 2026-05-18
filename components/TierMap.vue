@@ -1,6 +1,17 @@
 <script setup lang="ts">
 // Tier map: shows the four-tier architecture as stacked horizontal bands.
 // Structural hierarchy derived from the dependency graph in useAgentFiles.
+withDefaults(
+  defineProps<{
+    eyebrow?: string
+    hideLegend?: boolean
+  }>(),
+  {
+    eyebrow: '02b / Tier Map',
+    hideLegend: false
+  }
+)
+
 const { files, tiers, byId } = useAgentFiles()
 
 const tierBg: Record<number, string> = {
@@ -27,7 +38,7 @@ const tierAccent: Record<number, string> = {
   <section id="tiers" class="tmap">
     <div class="bya-container">
       <header class="tmap__head">
-        <span class="bya-eyebrow">02b / Tier Map</span>
+        <span class="bya-eyebrow">{{ eyebrow }}</span>
         <h2 class="bya-h2">
           Four tiers.<br />
           <span class="tmap__hl">One coherent agent.</span>
@@ -88,7 +99,7 @@ const tierAccent: Record<number, string> = {
       </div>
 
       <!-- Dependency legend -->
-      <div class="tmap__legend">
+      <div v-if="!hideLegend" class="tmap__legend">
         <span class="bya-chip">Dependency flow</span>
         <div class="tmap__flow">
           <span

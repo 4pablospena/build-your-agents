@@ -1,5 +1,19 @@
 <script setup lang="ts">
 // Section that lists all seven file cards. Pure composition.
+withDefaults(
+  defineProps<{
+    eyebrow?: string
+    lede?: string
+    showDocsLink?: boolean
+  }>(),
+  {
+    eyebrow: '03 / The seven files',
+    lede:
+      'Click any file in the tier map above to jump here. Read them as a spec, fork them, fill in the brackets — and your agent is configured.',
+    showDocsLink: true
+  }
+)
+
 const { files } = useAgentFiles()
 </script>
 
@@ -7,15 +21,15 @@ const { files } = useAgentFiles()
   <section id="files" class="files">
     <div class="bya-container">
       <header class="files__head">
-        <span class="bya-eyebrow">03 / The seven files</span>
+        <span class="bya-eyebrow">{{ eyebrow }}</span>
         <h2 class="bya-h2">
           Every file does <span class="files__hl">one thing.</span>
         </h2>
         <p class="bya-lede files__lede-wrap">
-          Click any file in the architecture map above to jump here. Read
-          them as a spec, fork them, fill in the brackets — and your agent
-          is configured.
-          <NuxtLink class="files__docs-link" to="/docs">Download the .md templates →</NuxtLink>
+          {{ lede }}
+          <NuxtLink v-if="showDocsLink" class="files__docs-link" to="/docs">
+            Download the .md templates →
+          </NuxtLink>
         </p>
       </header>
 

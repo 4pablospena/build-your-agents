@@ -11,6 +11,7 @@ defineProps<{
     | 'start-page'
     | 'examples-page'
     | 'changelog-page'
+    | 'openclaw-page'
 }>()
 
 const navLinks: { label: string; to: string; id: string }[] = [
@@ -20,6 +21,7 @@ const navLinks: { label: string; to: string; id: string }[] = [
   { label: 'Session', to: '/#session-loop', id: 'session-loop' },
   { label: 'Start', to: '/start', id: 'start-page' },
   { label: 'Examples', to: '/examples', id: 'examples-page' },
+  { label: 'OpenClaw', to: '/openclaw', id: 'openclaw-page' },
   { label: 'Blog', to: '/blog', id: 'blog-page' },
   { label: 'Docs', to: '/docs', id: 'docs-page' },
   { label: 'Changelog', to: '/changelog', id: 'changelog-page' }
