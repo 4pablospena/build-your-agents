@@ -36,11 +36,7 @@ const stats = [
             See the architecture
             <span aria-hidden="true">↘</span>
           </a>
-          <!--
-            Secondary CTA — Ola 0 hook for the future /examples hub (Ola 3).
-            Points directly to the first case study until /examples ships.
-          -->
-          <NuxtLink class="bya-btn bya-btn--ghost" to="/blog/001-sabrina">
+          <NuxtLink class="bya-btn bya-btn--ghost" to="/examples">
             See a real case
             <span aria-hidden="true">↗</span>
           </NuxtLink>

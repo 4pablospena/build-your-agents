@@ -21,6 +21,7 @@ const repoUrl = 'https://github.com/4pablospena/build-your-agents'
           <a href="/#files">The 7 files</a>
           <a href="/#session-loop">Session loop</a>
           <NuxtLink to="/start">Reading map</NuxtLink>
+          <NuxtLink to="/examples">Examples</NuxtLink>
           <NuxtLink to="/docs">Markdown templates</NuxtLink>
         </div>
         <div class="ft__col">

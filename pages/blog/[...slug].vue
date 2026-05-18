@@ -108,15 +108,29 @@ useSeoMeta({
               :author-intro="post.authorIntro"
             />
 
+            <FilesTouchedStrip
+              v-if="post.filesTouched?.length"
+              :file-ids="post.filesTouched"
+              layout="horizontal"
+              compact
+              class="mb-8 lg:hidden"
+            />
+
             <div class="prose prose-lg prose-blog max-w-none pt-2">
               <ContentRenderer :value="doc!" />
             </div>
           </div>
         </div>
+
+        <FilesTouchedStrip
+          v-if="post.filesTouched?.length"
+          :file-ids="post.filesTouched"
+          class="hidden shrink-0 lg:block"
+        />
       </div>
 
       <nav
-        class="mt-12 grid max-w-4xl gap-4 font-mono text-sm sm:grid-cols-2"
+        class="mt-12 grid max-w-5xl gap-4 font-mono text-sm sm:grid-cols-2"
         aria-label="Adjacent posts"
       >
         <NuxtLink

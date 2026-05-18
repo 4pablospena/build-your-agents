@@ -3,6 +3,7 @@ title: "Sabrina: seven-file B2B prospecting"
 description: "Case study: from a dense PDF pipeline (Discord, LinkedIn, Unipile, Lusha, Odoo) to seven markdown files the agent can run inside—filing tiers, deduplicating nine first-draft overlaps, and writing SOUL from what the spec never said out loud."
 date: 2026-05-15
 tags: [agents, b2b, case-study, openclaw, odoo]
+filesTouched: [soul, identity, agents, user, tools, memory, heartbeat]
 cover: "/images/posts/sabrina-cover.png"
 author: "Pablo Suárez Peña"
 authorIntro: "I build and refine AI agents with OpenClaw—professionally at Resizes, and on personal projects where I can take more risk. This case study is how we turned a B2B prospecting spec into seven files Sabrina can run inside; I publish notes like this to clarify my own thinking and in case they help someone facing a similar filing problem."

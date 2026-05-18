@@ -1,5 +1,15 @@
 export const BLOG_PAGE_SIZE = 6
 
+/** Agent file ids that match `useAgentFiles().files[].id`. */
+export type AgentFileId =
+  | 'soul'
+  | 'identity'
+  | 'agents'
+  | 'user'
+  | 'tools'
+  | 'memory'
+  | 'heartbeat'
+
 export type BlogPost = {
   _path?: string
   _id?: string
@@ -14,6 +24,8 @@ export type BlogPost = {
   author?: string
   /** Short first-person note shown above the article body. */
   authorIntro?: string
+  /** Case-study posts: which spec files were materially changed (see useAgentFiles). */
+  filesTouched?: AgentFileId[]
 }
 
 /** Base query: all posts under content/posts, newest first; hides drafts outside dev. */
