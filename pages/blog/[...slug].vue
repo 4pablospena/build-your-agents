@@ -111,6 +111,8 @@ useSeoMeta({
             <FilesTouchedStrip
               v-if="post.filesTouched?.length"
               :file-ids="post.filesTouched"
+              headline="Archivos relacionados"
+              aria-label="Archivos relacionados de la spec"
               layout="horizontal"
               compact
               class="mb-8 lg:hidden"
@@ -125,6 +127,8 @@ useSeoMeta({
         <FilesTouchedStrip
           v-if="post.filesTouched?.length"
           :file-ids="post.filesTouched"
+          headline="Archivos relacionados"
+          aria-label="Archivos relacionados de la spec"
           class="hidden shrink-0 lg:block"
         />
       </div>

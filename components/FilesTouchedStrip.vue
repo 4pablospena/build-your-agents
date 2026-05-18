@@ -8,8 +8,15 @@ const props = withDefaults(
     layout?: 'vertical' | 'horizontal'
     /** Shorter labels on cards. */
     compact?: boolean
+    headline?: string
+    ariaLabel?: string
   }>(),
-  { layout: 'vertical', compact: false }
+  {
+    layout: 'vertical',
+    compact: false,
+    headline: 'Files touched',
+    ariaLabel: 'Spec files touched in this post'
+  }
 )
 
 const { files, byId } = useAgentFiles()
@@ -21,10 +28,10 @@ const touched = computed(() => orderedFilesTouched(props.fileIds, files, byId))
   <aside
     v-if="touched.length"
     :class="['fts', `fts--${layout}`, { 'fts--compact': compact }]"
-    aria-label="Spec files touched in this case study"
+    :aria-label="ariaLabel"
   >
     <header class="fts__head">
-      <span class="fts__label">Files touched</span>
+      <span class="fts__label">{{ headline }}</span>
       <span class="fts__count" aria-hidden="true">{{ touched.length }}</span>
     </header>
     <ul class="fts__list" role="list">
