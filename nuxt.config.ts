@@ -18,7 +18,16 @@ function blogPrerenderRoutes(): string[] {
   // origin (or NUXT_PUBLIC_SITE_URL at runtime) to emit canonical URLs.
   // Vercel CDN caches the dynamic response via the `s-maxage` header set
   // inside server/routes/rss.xml.ts.
-  const routes = ['/blog', '/examples', '/changelog', '/openclaw']
+  const routes = [
+    '/blog',
+    '/examples',
+    '/changelog',
+    '/openclaw',
+    '/tools',
+    '/tools/validate',
+    '/tools/cursor-rules',
+    '/tools/search'
+  ]
   try {
     const dir = join(process.cwd(), 'content', 'posts')
     for (const f of readdirSync(dir)) {

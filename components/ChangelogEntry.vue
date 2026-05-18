@@ -14,10 +14,18 @@ const dateLabel = computed(() => formatChangelogDate(props.entry.date))
 const headline = computed(() => props.entry.title || props.entry.reason)
 
 const postHref = computed(() => changelogPostHref(props.entry.post))
+
+const entryAnchor = computed(() =>
+  props.entry._path ? changelogSlugFromPath(props.entry._path) : undefined
+)
 </script>
 
 <template>
-  <article v-if="file" :class="['cl-entry', `cl-entry--${file.color}`]">
+  <article
+    v-if="file"
+    :id="entryAnchor"
+    :class="['cl-entry', `cl-entry--${file.color}`]"
+  >
     <header class="cl-entry__head">
       <time class="cl-entry__date" :datetime="entry.date">{{ dateLabel }}</time>
       <NuxtLink

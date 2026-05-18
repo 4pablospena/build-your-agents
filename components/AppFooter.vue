@@ -33,10 +33,11 @@ const repoUrl = 'https://github.com/4pablospena/build-your-agents'
           <a href="/#file-tools">TOOLS.md</a>
         </div>
         <div class="ft__col">
-          <h4 class="ft__h">Principles</h4>
-          <span>No black box.</span>
-          <span>Markdown is the API.</span>
-          <span>Version your soul.</span>
+          <h4 class="ft__h">Tools</h4>
+          <NuxtLink to="/tools">All tools</NuxtLink>
+          <NuxtLink to="/tools/validate">Validator</NuxtLink>
+          <NuxtLink to="/tools/cursor-rules">Cursor rules</NuxtLink>
+          <NuxtLink to="/tools/search">Search</NuxtLink>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Follow</h4>

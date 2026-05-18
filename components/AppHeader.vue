@@ -12,6 +12,7 @@ defineProps<{
     | 'examples-page'
     | 'changelog-page'
     | 'openclaw-page'
+    | 'tools-page'
 }>()
 
 const navLinks: { label: string; to: string; id: string }[] = [
