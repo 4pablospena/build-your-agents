@@ -27,10 +27,21 @@ const steps = [
   <section class="qs">
     <div class="bya-container">
       <header class="qs__head">
-        <span class="bya-eyebrow">06 / Get started</span>
+        <span class="bya-eyebrow">06 / Overview</span>
         <h2 class="bya-h2">
-          From spec to <span class="qs__hl">running agent.</span>
+          Four steps at a <span class="qs__hl">glance.</span>
         </h2>
+        <p class="qs__lede">
+          This is the short version. For fill order, time estimates, and saved
+          progress, use the interactive checklist on
+          <NuxtLink class="qs__link" to="/start">/start</NuxtLink>.
+        </p>
+        <div class="qs__cta">
+          <NuxtLink class="bya-btn" to="/start">
+            Follow the interactive checklist
+            <span aria-hidden="true">→</span>
+          </NuxtLink>
+        </div>
       </header>
 
       <div class="qs__grid">
@@ -56,6 +67,20 @@ const steps = [
     var(--paper);
 }
 .qs__head { margin-bottom: 48px; max-width: 720px; }
+.qs__lede {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  margin: 16px 0 0;
+  max-width: 52ch;
+}
+.qs__link {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: inherit;
+}
+.qs__cta { margin-top: 22px; }
 .qs__hl {
   display: inline-block;
   background: var(--acid);

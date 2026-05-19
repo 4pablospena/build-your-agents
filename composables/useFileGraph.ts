@@ -1,6 +1,6 @@
 // Relationship explorer state — SSR-safe via useState. No changes to useAgentFiles.
 
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 
 export type FileGraphRole = 'selected' | 'reads' | 'readBy'
 

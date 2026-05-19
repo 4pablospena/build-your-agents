@@ -1,7 +1,7 @@
 // Decision table + tool priority — mirrors templates/AGENTS.md and TOOLS.md.
 // Shared by DecisionRules.vue and the file-placement wizard (FileGraph).
 
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 
 export type DecisionRule = {
   when: string

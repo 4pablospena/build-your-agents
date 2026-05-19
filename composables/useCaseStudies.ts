@@ -2,7 +2,8 @@
 // aligned with useBlogPostListQuery(); file metadata comes from useAgentFiles().
 
 import type { AgentFile } from './useAgentFiles.types'
-import type { AgentFileId, BlogPost } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
+import type { BlogPost } from './useBlogPosts'
 
 export const CASE_STUDY_TAG = 'case-study'
 

@@ -1,9 +1,7 @@
 <script setup lang="ts">
 const year = new Date().getFullYear()
-
-// External repository URL. Hardcoded for Ola 0; can be moved into runtimeConfig
-// in Ola 1 alongside the RSS feed.
-const repoUrl = 'https://github.com/4pablospena/build-your-agents'
+const { files } = useAgentFiles()
+const { repoUrl, issuesUrl, footerSpecLinks, footerFollowLinks, toolsNav } = useSiteNav()
 </script>
 
 <template>
@@ -17,40 +15,55 @@ const repoUrl = 'https://github.com/4pablospena/build-your-agents'
       <div class="ft__cols">
         <div class="ft__col">
           <h4 class="ft__h">Spec</h4>
-          <a href="/#architecture">Architecture</a>
-          <a href="/#files">The 7 files</a>
-          <a href="/#session-loop">Session loop</a>
-          <NuxtLink to="/start">Reading map</NuxtLink>
-          <NuxtLink to="/examples">Examples</NuxtLink>
-          <NuxtLink to="/openclaw">OpenClaw &amp; MCPs</NuxtLink>
-          <NuxtLink to="/docs">Markdown templates</NuxtLink>
+          <template v-for="link in footerSpecLinks" :key="link.id">
+            <a v-if="link.to.startsWith('/#')" :href="link.to">{{ link.label }}</a>
+            <NuxtLink v-else :to="link.to">{{ link.label }}</NuxtLink>
+          </template>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Files</h4>
-          <a href="/#file-soul">SOUL.md</a>
-          <a href="/#file-agents">AGENTS.md</a>
-          <a href="/#file-memory">MEMORY.md</a>
-          <a href="/#file-tools">TOOLS.md</a>
+          <a
+            v-for="f in files"
+            :key="f.id"
+            :href="`/#file-${f.id}`"
+          >{{ f.filename }}</a>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Tools</h4>
           <NuxtLink to="/tools">All tools</NuxtLink>
-          <NuxtLink to="/tools/validate">Validator</NuxtLink>
-          <NuxtLink to="/tools/cursor-rules">Cursor rules</NuxtLink>
-          <NuxtLink to="/tools/search">Search</NuxtLink>
+          <NuxtLink
+            v-for="tool in toolsNav"
+            :key="tool.id"
+            :to="tool.path"
+          >{{ tool.label }}</NuxtLink>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Follow</h4>
-          <NuxtLink to="/blog">Blog</NuxtLink>
+          <NuxtLink
+            v-for="link in footerFollowLinks"
+            :key="link.id"
+            :to="link.to"
+          >{{ link.label }}</NuxtLink>
           <a :href="repoUrl" target="_blank" rel="noopener noreferrer">
             GitHub
+            <span class="ft__ext" aria-hidden="true">↗</span>
+          </a>
+          <a
+            :href="issuesUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Issues
             <span class="ft__ext" aria-hidden="true">↗</span>
           </a>
           <a href="/rss.xml" type="application/rss+xml" target="_blank" rel="noopener noreferrer">
             RSS
             <span class="ft__ext" aria-hidden="true">↗</span>
           </a>
-          <NuxtLink to="/changelog">Changelog</NuxtLink>
+          <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer">
+            Sitemap
+            <span class="ft__ext" aria-hidden="true">↗</span>
+          </a>
         </div>
       </div>
     </div>
@@ -114,23 +127,6 @@ const repoUrl = 'https://github.com/4pablospena/build-your-agents'
   margin-left: 2px;
   font-size: 0.72rem;
   opacity: 0.7;
-}
-.ft__soon {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: not-allowed;
-  opacity: 0.55;
-}
-.ft__badge {
-  font-size: 0.62rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 2px 6px;
-  border: 1px solid var(--paper);
-  color: var(--lemon);
-  border-color: var(--lemon);
-  line-height: 1;
 }
 
 .ft__meta {

@@ -21,6 +21,8 @@ useHead({
       ]"
     />
 
+    <NewHereStrip />
+
     <AudienceFit />
 
     <ArchitectureMap />

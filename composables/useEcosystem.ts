@@ -1,7 +1,7 @@
 // Ecosystem bridge: maps the seven-file spec to OpenClaw, Cursor, and MCP
 // workflows. Data lives here — pages/components only render.
 
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 
 export type EcosystemLane = {
   id: 'openclaw' | 'cursor' | 'mcp'

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Top navigation. Props in, events up. Thin presentation only.
+// Top navigation. Data from useSiteNav — thin presentation only.
 defineProps<{
   active?:
     | 'top'
@@ -13,20 +13,10 @@ defineProps<{
     | 'changelog-page'
     | 'openclaw-page'
     | 'tools-page'
+    | 'help-page'
 }>()
 
-const navLinks: { label: string; to: string; id: string }[] = [
-  { label: 'Overview', to: '/#top', id: 'top' },
-  { label: 'Architecture', to: '/#architecture', id: 'architecture' },
-  { label: 'The 7 files', to: '/#files', id: 'files' },
-  { label: 'Session', to: '/#session-loop', id: 'session-loop' },
-  { label: 'Start', to: '/start', id: 'start-page' },
-  { label: 'Examples', to: '/examples', id: 'examples-page' },
-  { label: 'OpenClaw', to: '/openclaw', id: 'openclaw-page' },
-  { label: 'Blog', to: '/blog', id: 'blog-page' },
-  { label: 'Docs', to: '/docs', id: 'docs-page' },
-  { label: 'Changelog', to: '/changelog', id: 'changelog-page' }
-]
+const { headerLinks } = useSiteNav()
 
 const NAV_ID = 'hdr-primary-nav'
 const menuOpen = ref(false)
@@ -74,7 +64,7 @@ onMounted(() => {
         aria-label="Primary"
       >
         <NuxtLink
-          v-for="l in navLinks"
+          v-for="l in headerLinks"
           :key="l.id"
           :to="l.to"
           :class="['hdr__link', { 'is-active': active === l.id }]"
@@ -84,8 +74,8 @@ onMounted(() => {
         </NuxtLink>
       </nav>
 
-      <NuxtLink class="bya-btn hdr__cta" to="/#files" @click="closeMenu">
-        <span>Read the spec</span>
+      <NuxtLink class="bya-btn hdr__cta" to="/start" @click="closeMenu">
+        <span>Start checklist</span>
         <span aria-hidden="true">→</span>
       </NuxtLink>
     </div>
@@ -160,8 +150,9 @@ onMounted(() => {
   justify-self: center;
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
   flex-wrap: wrap;
+  max-width: 100%;
 }
 .hdr__cta {
   grid-column: 3;
@@ -170,9 +161,9 @@ onMounted(() => {
 .hdr__link {
   font-family: var(--mono);
   text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  padding: 8px 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  padding: 8px 10px;
   border: var(--stroke) solid transparent;
   text-decoration: none;
   color: var(--ink);
@@ -215,6 +206,7 @@ onMounted(() => {
     padding: 14px 12px;
     border: none;
     border-bottom: 2px solid var(--paper-2);
+    font-size: 0.8rem;
   }
   .hdr__link:last-of-type {
     border-bottom: none;

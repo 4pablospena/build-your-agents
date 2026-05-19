@@ -1,7 +1,7 @@
 // Build a single .cursor/rules markdown bundle from the seven spec files.
 
 import type { AgentFile } from './useAgentFiles.types'
-import type { AgentFileId } from './useBlogPosts'
+import type { AgentFileId } from './useAgentFiles.types'
 
 const BUNDLE_FILENAME = 'build-your-agents.cursor-rules.md'
 
@@ -13,7 +13,7 @@ export function buildCursorRulesMarkdown(
   const parts = [
     '---',
     'description: Generated from build-your-agents seven-file spec',
-    'globs:',
+    'globs: "**/*"',
     'alwaysApply: true',
     '---',
     '',
@@ -52,36 +52,53 @@ export function downloadTextFile(filename: string, content: string) {
   URL.revokeObjectURL(url)
 }
 
+function defaultSelectedIds(files: AgentFile[]): AgentFileId[] {
+  return files.map((f) => f.id as AgentFileId)
+}
+
 export function useCursorRulesGenerator() {
   const { files } = useAgentFiles()
-  const selected = ref<AgentFileId[]>(
-    files.map((f) => f.id as AgentFileId)
+  const selected = useState<AgentFileId[]>(
+    'bya-cursor-rules-selected',
+    () => defaultSelectedIds(files)
   )
 
+  function selectedIds(): AgentFileId[] {
+    return Array.isArray(selected.value) ? selected.value : defaultSelectedIds(files)
+  }
+
+  function isSelected(fileId: AgentFileId): boolean {
+    return selectedIds().includes(fileId)
+  }
+
   const preview = computed(() =>
-    buildCursorRulesMarkdown(files, selected.value)
+    buildCursorRulesMarkdown(files, selectedIds())
   )
 
   function toggle(fileId: AgentFileId) {
-    if (selected.value.includes(fileId)) {
-      selected.value = selected.value.filter((id) => id !== fileId)
+    const cur = selectedIds()
+    if (cur.includes(fileId)) {
+      selected.value = cur.filter((id) => id !== fileId)
     } else {
-      selected.value = [...selected.value, fileId]
+      selected.value = [...cur, fileId]
     }
   }
 
   function selectAll() {
-    selected.value = files.map((f) => f.id as AgentFileId)
+    selected.value = defaultSelectedIds(files)
   }
 
   function download() {
-    if (!selected.value.length) return
+    if (!selectedIds().length) return
     downloadTextFile(BUNDLE_FILENAME, preview.value)
   }
 
+  const hasSelection = computed(() => selectedIds().length > 0)
+
   return {
     files,
-    selected,
+    isSelected,
+    hasSelection,
     preview,
     toggle,
     selectAll,

@@ -1,5 +1,15 @@
+/** Agent file ids that match `useAgentFiles().files[].id`. */
+export type AgentFileId =
+  | 'soul'
+  | 'identity'
+  | 'agents'
+  | 'user'
+  | 'tools'
+  | 'memory'
+  | 'heartbeat'
+
 export type AgentFile = {
-  id: string
+  id: AgentFileId
   filename: string
   tagline: string
   role: string
@@ -16,5 +26,5 @@ export type AgentTier = {
   number: 1 | 2 | 3 | 4
   label: string
   sublabel: string
-  fileIds: string[]
+  fileIds: AgentFileId[]
 }

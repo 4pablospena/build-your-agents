@@ -10,6 +10,10 @@ Seven markdown files. No black box. No vendor lock-in. This site documents the a
   <a href="templates/">Templates</a>
   ·
   <a href=".cursor/next-steps.md">Roadmap</a>
+  ·
+  <a href="docs/SUPPORT.md">Support</a>
+  ·
+  <a href="CONTRIBUTING.md">Contributing</a>
 </p>
 
 ---
@@ -19,12 +23,10 @@ Seven markdown files. No black box. No vendor lock-in. This site documents the a
 | File | Role |
 |------|------|
 | **SOUL.md** | Who the agent is — voice, values, hard limits |
-| **IDENTITY.md** | Where it lives — metadata, models, routing |
 | **AGENTS.md** | How it operates — workflows, decision rules, escalation |
-| **USER.md** | Who it serves — preferences, projects, “do not do” |
-| **TOOLS.md** | What it can reach — skills, MCPs, selection order |
 | **MEMORY.md** | Evergreen facts — one line per fact, supersede only |
-| **HEARTBEAT.md** | Scheduled tasks — what may run alone vs needs confirmation |
+
+Full roles, memory layers, and session read order: **[`templates/README.md`](templates/README.md)** (canonical reading map, also at `/templates/README.md` after build).
 
 Plain `.md` you version in git, drop into a folder, and point any capable model at as system context or workspace rules.
 
@@ -34,12 +36,21 @@ Plain `.md` you version in git, drop into a folder, and point any capable model 
 
 | Route | What you get |
 |-------|----------------|
-| [`/`](pages/index.vue) | Landing — architecture map, file cards, session loop, decision rules |
-| [`/docs`](pages/docs.vue) | Per-file templates — preview, copy, download, curl loop |
-| [`/start`](pages/start.vue) | **Guided checklist** — fill order, time estimates, progress saved in the browser |
+| [`/`](pages/index.vue) | Landing — architecture, file graph, session loop, decision rules |
+| [`/start`](pages/start.vue) | **Guided checklist** — fill order, time estimates, progress in the browser |
+| [`/docs`](pages/docs.vue) | Per-file templates — preview, copy, download, ZIP, curl loop |
+| [`/examples`](pages/examples.vue) | Case studies from the blog (`case-study` tag) |
+| [`/openclaw`](pages/openclaw.vue) | Map the seven files to OpenClaw / Cursor / MCPs |
+| [`/changelog`](pages/changelog.vue) | Living spec history (`content/changelog/`) |
+| [`/help`](pages/help.vue) | FAQ, utilities, GitHub Issues |
+| [`/tools`](pages/tools/index.vue) | Validator, Cursor rules export, global search |
+| [`/tools/validate`](pages/tools/validate.vue) | Paste `.md` — check required `##` sections |
+| [`/tools/cursor-rules`](pages/tools/cursor-rules.vue) | Download merged `.cursor/rules` bundle |
+| [`/tools/search`](pages/tools/search.vue) | Search blog + changelog |
 | [`/blog`](pages/blog/index.vue) | Journal — tags, search, pagination |
 | [`/blog/<slug>`](pages/blog/) | Single post from `content/posts/*.md` |
 | [`/rss.xml`](server/routes/rss.xml.ts) | RSS 2.0 feed (blog posts, newest first) |
+| [`/sitemap.xml`](server/routes/sitemap.xml.ts) | Sitemap for static routes + published posts |
 | [`/templates/*.md`](public/templates/) | Raw markdown — curl-friendly |
 | [`/templates/build-your-agents.zip`](public/templates/build-your-agents.zip) | All templates in one archive (~7 KB) |
 
@@ -72,8 +83,17 @@ Turns [`templates/README.md`](templates/README.md) into an interactive reading m
 
 ### Footer & navigation
 
-- Header: Overview · Architecture · The 7 files · Session · **Start** · Blog · Docs
-- Footer **Follow** column: Blog, GitHub, RSS (Changelog coming in a later release)
+- Navigation: [`composables/useSiteNav.ts`](composables/useSiteNav.ts) · prerender/sitemap: [`config/staticRoutes.ts`](config/staticRoutes.ts)
+- Header: Architecture · The 7 files · Session · **Start** · Docs · Examples · Tools · **Help** · Blog · Changelog
+- Footer: Spec · all **7 files** · Tools · Follow (Blog, GitHub, RSS, Changelog, Help, Issues)
+- OpenClaw: `/openclaw` (footer + home “New here?” strip — not in the main header)
+
+### Getting help
+
+- **[`/help`](pages/help.vue)** — FAQ, links to `/start` and `/docs`, utilities under `/tools`
+- **[`docs/SUPPORT.md`](docs/SUPPORT.md)** — repo index (FAQ text only in `useSiteNav.ts` / `/help`)
+- **GitHub Issues** — [open with a template](https://github.com/4pablospena/build-your-agents/issues/new/choose) (bug, question, spec change)
+- **Contributing** — [`CONTRIBUTING.md`](CONTRIBUTING.md) (templates + changelog policy)
 
 ---
 
@@ -142,7 +162,8 @@ Copy [`.env.example`](.env.example) to `.env` for local overrides:
 
 | Variable | Purpose |
 |----------|---------|
-| `NUXT_PUBLIC_SITE_URL` | Public site URL **without** trailing slash. Used for Open Graph (`og:url`, `og:image`), the curl `BASE` on `/docs`, and canonical links in `/rss.xml`. |
+| `NUXT_PUBLIC_SITE_URL` | Public site URL **without** trailing slash. Used for Open Graph (`og:url`, `og:image`), the curl `BASE` on `/docs`, canonical links in `/rss.xml` and `/sitemap.xml`. |
+| `NUXT_PUBLIC_REPO_URL` | GitHub repo URL for footer, `/help`, and issue links (defaults to this repository). |
 
 On Vercel, set the same variable in **Production** and redeploy after changes.
 
@@ -201,19 +222,29 @@ build-your-agents/
 │   ├── index.vue               # landing
 │   ├── docs.vue                # templates + zip + curl
 │   ├── start.vue               # guided checklist
+│   ├── help.vue                # FAQ + support
+│   ├── examples.vue            # case studies
+│   ├── changelog.vue           # spec history
+│   ├── openclaw.vue            # ecosystem map
+│   ├── tools/                  # validator, cursor-rules, search
 │   └── blog/
 │       ├── index.vue
 │       └── [...slug].vue
 ├── server/
 │   └── routes/
-│       └── rss.xml.ts          # dynamic RSS 2.0 feed
+│       ├── rss.xml.ts          # dynamic RSS 2.0 feed
+│       └── sitemap.xml.ts      # sitemap
 ├── content/posts/*.md
 ├── components/                 # AppHeader, HeroSection, FileCard, …
 ├── composables/
 │   ├── useAgentFiles.ts        # seven-file spec (single source of truth)
 │   ├── useAgentFiles.types.ts
 │   ├── useBlogPosts.ts
-│   └── useStartJourney.ts      # journey order + localStorage progress
+│   ├── useStartJourney.ts      # journey order + localStorage progress
+│   ├── useSiteNav.ts           # header/footer/help navigation
+│   └── (see config/staticRoutes.ts)
+├── config/
+│   └── staticRoutes.ts         # prerender + sitemap route list
 ├── templates/*.md              # canonical agent files + README
 ├── scripts/
 │   ├── sync-templates.mjs
@@ -231,9 +262,9 @@ Route views stay thin; feature UI lives in components; shared data in composable
 
 ## Roadmap
 
-Planned improvements are tracked in [`.cursor/next-steps.md`](.cursor/next-steps.md) — examples hub (`/examples`), changelog, OpenClaw bridge, blog ↔ docs cross-links, and more.
+**Shipped (waves 0–8):** ZIP + RSS, `/start`, `/examples`, `/changelog`, `/openclaw`, `FileGraph`, blog ↔ docs links, `/tools/*`, and support UX (`/help`, `useSiteNav`, GitHub issue templates).
 
-**Shipped (waves 0–2):** footer hooks, dynamic curl origin, hero case-study CTA, ZIP download, RSS feed, guided `/start` journey.
+Current and future work: [`.cursor/next-steps.md`](.cursor/next-steps.md).
 
 ---
 

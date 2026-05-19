@@ -1,0 +1,48 @@
+name: Site bug
+description: Broken page, layout, build, or deployment on the Nuxt site
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Check the live site **/help** for FAQs first, or [docs/SUPPORT.md](https://github.com/4pablospena/build-your-agents/blob/main/docs/SUPPORT.md) for a repo index of routes and utilities.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect vs what you saw?
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL or route
+      placeholder: e.g. /docs, /start, /help
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where did you see this?
+      options:
+        - Production (deployed site)
+        - Local dev (pnpm dev)
+        - pnpm build / generate
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to '...'
+        2. Click '...'
+    validations:
+      required: false
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or logs
+    validations:
+      required: false

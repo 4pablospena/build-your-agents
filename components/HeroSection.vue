@@ -32,14 +32,18 @@ const stats = [
         </p>
 
         <div class="hero__cta-row bya-rise bya-rise-4">
-          <a class="bya-btn" href="#architecture">
-            See the architecture
-            <span aria-hidden="true">↘</span>
-          </a>
+          <NuxtLink class="bya-btn" to="/start">
+            Start the checklist
+            <span aria-hidden="true">→</span>
+          </NuxtLink>
           <NuxtLink class="bya-btn bya-btn--ghost" to="/examples">
             See a real case
             <span aria-hidden="true">↗</span>
           </NuxtLink>
+          <a class="bya-btn bya-btn--ghost" href="#architecture">
+            Browse the architecture
+            <span aria-hidden="true">↘</span>
+          </a>
         </div>
       </div>
 

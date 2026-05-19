@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AgentFileId } from '~/composables/useBlogPosts'
+import type { AgentFileId } from '~/composables/useAgentFiles.types'
 
 const gen = useCursorRulesGenerator()
 
@@ -17,7 +17,6 @@ useHead({
 
 <template>
   <ToolsShell
-    active="cursor-rules"
     eyebrow="Cursor"
     title="Export .cursor/rules in one click."
     lede="Bundles the selected spec files into a single markdown file. Save it as `.cursor/rules` or merge into your existing project rules."
@@ -30,7 +29,7 @@ useHead({
             <label class="tcr__file">
               <input
                 type="checkbox"
-                :checked="gen.selected.includes(f.id as AgentFileId)"
+                :checked="gen.isSelected(f.id as AgentFileId)"
                 @change="gen.toggle(f.id as AgentFileId)"
               />
               <span class="tcr__sym" aria-hidden="true">{{ f.symbol }}</span>
@@ -47,7 +46,7 @@ useHead({
         <button
           type="button"
           class="bya-btn"
-          :disabled="!gen.selected.length"
+          :disabled="!gen.hasSelection"
           @click="gen.download"
         >
           Download {{ gen.bundleFilename }}
@@ -57,7 +56,9 @@ useHead({
           Place the file in your repo under
           <code class="tcr__code">.cursor/rules/</code> (or split per file).
           Regenerate whenever you update the seven <code class="tcr__code">.md</code>
-          sources.
+          sources. See
+          <NuxtLink class="tcr__link" to="/openclaw">/openclaw</NuxtLink>
+          for how the spec maps to Cursor and MCPs.
         </p>
       </div>
 
@@ -139,6 +140,10 @@ useHead({
   font-size: 0.78rem;
   line-height: 1.5;
   max-width: 56ch;
+}
+.tcr__link {
+  font-weight: 700;
+  text-decoration: underline;
 }
 .tcr__code {
   font-size: 0.92em;

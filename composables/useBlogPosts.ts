@@ -1,14 +1,6 @@
-export const BLOG_PAGE_SIZE = 6
+import type { AgentFileId } from './useAgentFiles.types'
 
-/** Agent file ids that match `useAgentFiles().files[].id`. */
-export type AgentFileId =
-  | 'soul'
-  | 'identity'
-  | 'agents'
-  | 'user'
-  | 'tools'
-  | 'memory'
-  | 'heartbeat'
+export const BLOG_PAGE_SIZE = 6
 
 export type BlogPost = {
   _path?: string

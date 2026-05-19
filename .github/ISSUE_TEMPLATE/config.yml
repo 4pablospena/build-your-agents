@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Help & FAQ on the site
+    url: https://github.com/4pablospena/build-your-agents/blob/main/docs/SUPPORT.md
+    about: Repo index (routes and utilities). Full FAQ lives on the deployed site at /help — not duplicated in SUPPORT.md.
