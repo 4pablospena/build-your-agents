@@ -1,7 +1,5 @@
 import type { AgentFileId } from './useAgentFiles.types'
 
-export type { AgentFileId } from './useAgentFiles.types'
-
 export const BLOG_PAGE_SIZE = 6
 
 export type BlogPost = {
