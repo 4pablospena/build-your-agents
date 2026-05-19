@@ -6,15 +6,15 @@ const props = defineProps<{
   index: number
 }>()
 
-const graph = useFileGraph()
+const { roleFor, isDimmed, select } = useFileGraph()
 const number = computed(() => String(props.index + 1).padStart(2, '0'))
 const showSource = ref(false)
 const sourcePanelId = computed(() => `fc-source-${props.file.id}`)
 
-const graphRole = computed(() => graph.roleFor(props.file.id))
+const graphRole = computed(() => roleFor(props.file.id))
 
 function onCardActivate() {
-  graph.select(props.file.id)
+  select(props.file.id)
 }
 
 function onCardClick(event: MouseEvent) {
@@ -31,7 +31,7 @@ function onCardClick(event: MouseEvent) {
       'fc',
       `fc--${file.color}`,
       {
-        'fc--graph-dim': graph.isDimmed(file.id),
+        'fc--graph-dim': isDimmed(file.id),
         'fc--graph-selected': graphRole === 'selected',
         'fc--graph-reads': graphRole === 'reads',
         'fc--graph-readby': graphRole === 'readBy'

@@ -18,7 +18,7 @@ useHead({
     lede="Indexed from @nuxt/content — type at least two characters. Arrow keys to move, Enter to open, Escape to close."
   >
     <div class="tsea">
-      <GlobalSearchCombobox autofocus />
+      <ToolsGlobalSearchCombobox autofocus />
 
       <p class="tsea__note">
         Results link to blog posts, changelog anchors, and other

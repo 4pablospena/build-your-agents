@@ -13,12 +13,18 @@ withDefaults(
 )
 
 const { files, tiers, byId } = useAgentFiles()
-const graph = useFileGraph()
+const {
+  roleFor,
+  isDimmed,
+  hasSelection,
+  select,
+  filenameToId
+} = useFileGraph()
 
 function chipClass(fid: string) {
-  const role = graph.roleFor(fid)
+  const role = roleFor(fid)
   return {
-    'tmap__chip--dim': graph.isDimmed(fid),
+    'tmap__chip--dim': isDimmed(fid),
     'tmap__chip--selected': role === 'selected',
     'tmap__chip--reads': role === 'reads',
     'tmap__chip--readby': role === 'readBy'
@@ -26,15 +32,15 @@ function chipClass(fid: string) {
 }
 
 function onChipClick(fid: string) {
-  graph.select(fid)
+  select(fid)
 }
 
 function depClass(filename: string) {
-  const id = graph.filenameToId(filename)
+  const id = filenameToId(filename)
   if (!id) return {}
-  const role = graph.roleFor(id)
+  const role = roleFor(id)
   return {
-    'tmap__flow-dep--dim': graph.isDimmed(id),
+    'tmap__flow-dep--dim': isDimmed(id),
     'tmap__flow-dep--selected': role === 'selected',
     'tmap__flow-dep--reads': role === 'reads',
     'tmap__flow-dep--readby': role === 'readBy'
@@ -42,9 +48,9 @@ function depClass(filename: string) {
 }
 
 function flowFromClass(fileId: string) {
-  const role = graph.roleFor(fileId)
+  const role = roleFor(fileId)
   return {
-    'tmap__flow-from--dim': graph.isDimmed(fileId),
+    'tmap__flow-from--dim': isDimmed(fileId),
     'tmap__flow-from--selected': role === 'selected'
   }
 }
@@ -118,7 +124,7 @@ const tierAccent: Record<number, string> = {
                 background: `var(--${byId(fid)!.color})`,
                 color: ['lemon','acid'].includes(byId(fid)!.color) ? 'var(--ink)' : 'var(--paper)'
               }"
-              :aria-current="graph.roleFor(fid) === 'selected' ? 'true' : undefined"
+              :aria-current="roleFor(fid) === 'selected' ? 'true' : undefined"
               @click="onChipClick(fid)"
             >
               <span class="tmap__chip-sym" aria-hidden="true">{{ byId(fid)!.symbol }}</span>
@@ -144,7 +150,7 @@ const tierAccent: Record<number, string> = {
             v-for="f in files.filter(f => f.reads.length > 0)"
             :key="f.id"
             class="tmap__flow-item"
-            :class="{ 'tmap__flow-item--dim': graph.hasSelection && graph.isDimmed(f.id) }"
+            :class="{ 'tmap__flow-item--dim': hasSelection && isDimmed(f.id) }"
           >
             <span
               class="tmap__flow-from"

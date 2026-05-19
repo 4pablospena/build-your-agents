@@ -2,7 +2,14 @@
 // Visual map of the seven files and their relationships.
 // Single responsibility: render the architecture overview as a brutalist SVG.
 const { files } = useAgentFiles()
-const graph = useFileGraph()
+const {
+  roleFor,
+  isDimmed,
+  isEdgeActive,
+  hasSelection,
+  select,
+  filenameToId
+} = useFileGraph()
 
 // Stable positions for the planet diagram
 const nodes = [
@@ -19,7 +26,7 @@ const edges = computed(() => {
   const list: { from: string; to: string }[] = []
   for (const f of files) {
     for (const dep of f.reads) {
-      const toId = graph.filenameToId(dep)
+      const toId = filenameToId(dep)
       if (toId) list.push({ from: f.id, to: toId })
     }
   }
@@ -29,9 +36,9 @@ const edges = computed(() => {
 const pos = (id: string) => nodes.find(n => n.id === id)!
 
 function nodeClass(id: string) {
-  const role = graph.roleFor(id)
+  const role = roleFor(id)
   return {
-    'arch__node--dim': graph.isDimmed(id),
+    'arch__node--dim': isDimmed(id),
     'arch__node--selected': role === 'selected',
     'arch__node--reads': role === 'reads',
     'arch__node--readby': role === 'readBy'
@@ -39,7 +46,7 @@ function nodeClass(id: string) {
 }
 
 function onNodeClick(id: string) {
-  graph.select(id)
+  select(id)
 }
 </script>
 
@@ -72,8 +79,8 @@ function onNodeClick(id: string) {
               :y2="pos(e.to).y"
               :class="[
                 'arch__wire',
-                { 'arch__wire--active': graph.isEdgeActive(e.from, e.to) },
-                { 'arch__wire--dim': graph.hasSelection && !graph.isEdgeActive(e.from, e.to) }
+                { 'arch__wire--active': isEdgeActive(e.from, e.to) },
+                { 'arch__wire--dim': hasSelection && !isEdgeActive(e.from, e.to) }
               ]"
               stroke-dasharray="1.5 1"
             />
@@ -93,7 +100,7 @@ function onNodeClick(id: string) {
             background: n.color,
             color: n.text
           }"
-          :aria-current="graph.roleFor(n.id) === 'selected' ? 'true' : undefined"
+          :aria-current="roleFor(n.id) === 'selected' ? 'true' : undefined"
           @click="onNodeClick(n.id)"
         >
           <span class="arch__node-label">{{ n.label }}</span>
@@ -116,16 +123,16 @@ function onNodeClick(id: string) {
           :key="f.id"
           class="arch__legend-item"
           :class="{
-            'arch__legend-item--dim': graph.isDimmed(f.id),
-            'arch__legend-item--selected': graph.roleFor(f.id) === 'selected',
-            'arch__legend-item--reads': graph.roleFor(f.id) === 'reads',
-            'arch__legend-item--readby': graph.roleFor(f.id) === 'readBy'
+            'arch__legend-item--dim': isDimmed(f.id),
+            'arch__legend-item--selected': roleFor(f.id) === 'selected',
+            'arch__legend-item--reads': roleFor(f.id) === 'reads',
+            'arch__legend-item--readby': roleFor(f.id) === 'readBy'
           }"
           role="button"
           tabindex="0"
-          @click="graph.select(f.id)"
-          @keydown.enter.prevent="graph.select(f.id)"
-          @keydown.space.prevent="graph.select(f.id)"
+          @click="select(f.id)"
+          @keydown.enter.prevent="select(f.id)"
+          @keydown.space.prevent="select(f.id)"
         >
           <span :class="['arch__dot', `arch__dot--${f.color}`]" aria-hidden="true">{{ f.symbol }}</span>
           <span class="arch__legend-name">{{ f.filename }}</span>
