@@ -23,14 +23,12 @@ const dateLabel = computed(() => {
   <article
     class="group flex h-full flex-col overflow-hidden rounded-lg border-[3px] border-ink bg-paper shadow-[6px_6px_0_0_#0a0a0a] transition-transform hover:-translate-y-0.5"
   >
-    <NuxtLink :to="`/blog/${slug}`" class="block shrink-0 border-b-[3px] border-ink bg-paper-2 aspect-[1200/630] overflow-hidden">
+    <NuxtLink :to="`/blog/${slug}`" class="block shrink-0 border-b-[3px] border-ink bg-paper-2 overflow-hidden">
       <img
         v-if="post.cover"
         :src="post.cover"
         :alt="post.title || 'Cover'"
-        class="h-full w-full object-cover"
-        width="600"
-        height="315"
+        class="w-full h-auto object-contain"
         loading="lazy"
       />
       <div
