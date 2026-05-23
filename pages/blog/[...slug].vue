@@ -85,14 +85,12 @@ useSeoMeta({
         <div class="min-w-0 flex-1">
           <div
             v-if="post.cover"
-            class="aspect-[1200/630] max-h-[min(42vh,420px)] border-b-[3px] border-ink bg-paper-2"
+            class="border-b-[3px] border-ink bg-paper-2"
           >
             <img
               :src="post.cover"
               :alt="post.title || 'Cover'"
-              class="h-full w-full object-cover"
-              width="1200"
-              height="630"
+              class="w-full h-auto object-contain"
               fetchpriority="high"
             />
           </div>
