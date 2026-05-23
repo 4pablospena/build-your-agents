@@ -1,6 +1,6 @@
 ---
 title: "Odín: the case that made everything click"
-description: "Origin story: four months configuring a CRM for a client at Resizes, one honest question about knowledge transfer, and ten minutes that replaced two full days of bulk configuration work. This is what pushed me to study agentic AI seriously."
+description: "Origin story: four months configuring a CRM for a client at Resizes, one honest question about knowledge transfer, and five minutes that replaced one full day of bulk configuration work. This is what pushed me to study agentic AI seriously."
 date: 2026-05-23
 tags: [agents, case-study, knowledge-transfer, origin, openclaw]
 cover: "/images/posts/odin-cover.png"
@@ -71,7 +71,7 @@ It worked. That was the surprising part. The knowledge was there—scattered acr
 
 What we did not realise at the time was that we were accumulating technical debt inside the agent. Every new task added another memory entry. There was no ownership model—the same piece of information might appear three times in slightly different forms. There were no guardrails, no defined scope, no explicit stopping conditions. The agent would do what we asked, but we were never entirely sure it would do exactly that and nothing else.
 
-That messy first version is what produced the ten-minute result. And it is also what made it clear that the approach did not scale. Odín worked because the task was contained and we were watching closely. It would not have survived a more complex brief, a longer run, or a session we were not present for. Correcting those problems—properly—is what eventually led to the way we build agents now.
+That messy first version is what produced the five-minute result. And it is also what made it clear that the approach did not scale. Odín worked because the task was contained and we were watching closely. It would not have survived a more complex brief, a longer run, or a session we were not present for. Correcting those problems—properly—is what eventually led to the way we build agents now.
 
 ---
 
@@ -87,7 +87,7 @@ This was not a demo that ran once and could not be reproduced. It was the result
 
 _Odín processing a 59-row Excel file and creating one CRM opportunity per row, with stages assigned by service type — from a single Discord message._
 
-The first time we watched it execute in real time what would have taken days, there was a moment of silence. The kind that means something has shifted.
+The first time we watched it execute in real time what would have taken a full day, there was a moment of silence. The kind that means something has shifted.
 
 ---
 
@@ -115,7 +115,7 @@ That question did not have a short answer. It opened into harder ones: how do yo
 
 Those are the questions this site and this work are built around. Odín was not the answer—it was the moment the questions became unavoidable. And the only way to answer them properly was to keep building, keep observing, and keep documenting what held and what did not.
 
-> The ten minutes were not the result. The ten minutes were the proof that the questions were worth asking.
+> The five minutes were not the result. The five minutes were the proof that the questions were worth asking.
 
 ---
 
