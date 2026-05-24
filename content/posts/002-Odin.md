@@ -65,7 +65,7 @@ No structured files, no tiered architecture, no separation between identity and 
 
 ![The same pattern reduced to its most mechanical form — save this to memory, confirmed](/images/posts/odin-memory-02.png)
 
-*The recurring pattern: complete a step, save it to memory. Session after session, the same reflex. It worked — until it didn't.*
+_The recurring pattern: complete a step, save it to memory. Session after session, the same reflex. It worked — until it didn't._
 
 It worked. That was the surprising part. The knowledge was there—scattered across memory entries and session notes rather than organised in any principled way—but it was there. The agent could find it and use it. Badly structured context still beats no context.
 
@@ -119,4 +119,4 @@ Those are the questions this site and this work are built around. Odín was not 
 
 ---
 
-_Odín was the start. The case studies that came after are documented at [build-your-agents.vercel.app](https://build-your-agents.vercel.app)._
+_Odín was the start. The case studies that came after are documented at [build-your-agents.com](https://build-your-agents.com)._
