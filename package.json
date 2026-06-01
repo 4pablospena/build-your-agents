@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs && nuxt build",
+    "build": "node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs && env NITRO_PRESET=node-server nuxt build",
     "build:dash": "node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs && env NITRO_PRESET=node-server nuxt build",
     "dev": "nuxt prepare && nuxt dev",
     "generate": "node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs && nuxt generate",
