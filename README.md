@@ -192,7 +192,7 @@ Use this for **Resizes Dash** (or any cluster that runs a Node container). Verce
 
 ### Build the image
 
-The [Dockerfile](Dockerfile) runs `pnpm build` with `NITRO_PRESET=node-server` and starts:
+**Dash / Railpack** runs `pnpm run build`, which sets `NITRO_PRESET=node-server` (see `package.json`). The [Dockerfile](Dockerfile) uses `pnpm run build:dash` (same preset) and starts:
 
 ```text
 node .output/server/index.mjs
@@ -215,9 +215,10 @@ docker run --rm build-your-agents:local ls -la .output/server/index.mjs
 
 ### Cluster / Argo CD
 
-1. **Build and push** the image to your registry (CI or manual `docker push`).
-2. Set the chart **image tag** to that new build. Sync Argo CD.
-3. Do **not** expect a fix from Helm alone if the pod logs `Cannot find module '.output/server/index.mjs'` — rebuild the image.
+1. Push to `main` → Dash builds and pushes to ECR (new **image tag** each deploy).
+2. In Helm values: set `base.name` and `image.tag` to the new tag (must start with a letter, e.g. `pablospena-build-your-agents-main-…`, not `4pablospena-…`). Merge the Dash PR if GitOps updates `platform-eks-production`.
+3. If the tag is unchanged but the image was rebuilt, delete the pod or set `image.pullPolicy: Always` so the node pulls fresh layers.
+4. Pod logs should show `Listening on http://0.0.0.0:3000`. If you see `Cannot find module '.output/server/index.mjs'`, the image was built without `NITRO_PRESET=node-server` — redeploy after the `build` script fix on `main`.
 
 | Setting | Value |
 |---------|--------|
