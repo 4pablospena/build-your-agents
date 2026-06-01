@@ -76,9 +76,9 @@ export default defineNuxtConfig({
     }
   },
 
-  // Explicit preset so CI/Vercel always emit the serverless bundle Nitro expects
+  // Vercel: default `vercel` preset (.vercel/output). Dash/Docker: NITRO_PRESET=node-server (.output/server/index.mjs).
   nitro: {
-    preset: 'vercel'
+    preset: process.env.NITRO_PRESET || 'vercel'
   },
 
   // Avoid Vite 7 pre-transform trying to resolve `#app-manifest` on cold dev

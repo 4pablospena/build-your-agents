@@ -113,7 +113,7 @@ Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/
 
 ## Stack
 
-- **Nuxt 3** — SSR, file-based routing, Nitro `vercel` preset
+- **Nuxt 3** — SSR, file-based routing; Nitro preset `vercel` (Vercel) or `node-server` (Dash / Docker via `NITRO_PRESET`)
 - **Vue 3** — `<script setup lang="ts">`, Composition API
 - **Single source of truth** — [`composables/useAgentFiles.ts`](composables/useAgentFiles.ts) for all seven-file metadata and markdown bodies
 - **Content** — `@nuxt/content` v2 for the blog
@@ -126,7 +126,8 @@ Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/
 ```bash
 pnpm install
 pnpm dev          # http://localhost:3000
-pnpm build        # sync templates → zip → og.png → production build
+pnpm build        # sync templates → zip → og.png → production build (Vercel preset)
+pnpm build:dash   # same pipeline, Nitro node-server → .output/server/index.mjs
 pnpm generate     # static export (.vercel/output/static)
 ```
 
@@ -146,7 +147,7 @@ Every `build`, `generate`, and `postinstall` runs:
 | 1 | `scripts/sync-templates.mjs` | `templates/*.md` → `public/templates/` |
 | 2 | `scripts/build-zip.mjs` | `public/templates/build-your-agents.zip` |
 | 3 | `scripts/generate-og.mjs` | `public/og.png` (1200×630 from `assets/og-card.svg`) |
-| 4 | `nuxt build` / `nuxt generate` | `.vercel/output/…` |
+| 4 | `nuxt build` / `nuxt generate` | `.vercel/output/…` (default) or `.output/server/index.mjs` (`NITRO_PRESET=node-server`) |
 
 Verify the ZIP after a build:
 
@@ -182,6 +183,54 @@ On Vercel, set the same variable in **Production** and redeploy after changes.
 Nitro uses `preset: 'vercel'`. Static prerender includes `/blog` and each published post (`draft: true` omitted). `/rss.xml` is **not** prerendered — it resolves the live origin at request time so feed URLs stay canonical when `NUXT_PUBLIC_SITE_URL` is set.
 
 Validate the feed after deploy: [validator.w3.org/feed](https://validator.w3.org/feed/)
+
+---
+
+## Deploy (Dash / Kubernetes)
+
+Use this for **Resizes Dash** (or any cluster that runs a Node container). Vercel stays on the section above — same repo, different build output.
+
+### Build the image
+
+The [Dockerfile](Dockerfile) runs `pnpm build` with `NITRO_PRESET=node-server` and starts:
+
+```text
+node .output/server/index.mjs
+```
+
+Local smoke test:
+
+```bash
+docker build -t build-your-agents:local .
+docker run --rm -p 3000:3000 \
+  -e NUXT_PUBLIC_SITE_URL=http://localhost:3000 \
+  build-your-agents:local
+```
+
+Open http://localhost:3000. Inside the image, verify the entrypoint exists:
+
+```bash
+docker run --rm build-your-agents:local ls -la .output/server/index.mjs
+```
+
+### Cluster / Argo CD
+
+1. **Build and push** the image to your registry (CI or manual `docker push`).
+2. Set the chart **image tag** to that new build. Sync Argo CD.
+3. Do **not** expect a fix from Helm alone if the pod logs `Cannot find module '.output/server/index.mjs'` — rebuild the image.
+
+| Setting | Value |
+|---------|--------|
+| Container port | `3000` |
+| `HOST` | `0.0.0.0` (set in Dockerfile) |
+| `NUXT_PUBLIC_SITE_URL` | Public URL served by Dash ingress (**no** trailing slash) |
+| `NUXT_PUBLIC_REPO_URL` | Optional |
+
+Liveness/readiness: HTTP `GET /` on port 3000.
+
+### Two production URLs
+
+You can run **Vercel and Dash** at the same time. Set `NUXT_PUBLIC_SITE_URL` per environment to that host’s canonical URL (OG tags, RSS, sitemap, `/docs` curl base).
 
 ---
 
