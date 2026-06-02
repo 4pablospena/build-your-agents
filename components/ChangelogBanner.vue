@@ -36,7 +36,7 @@ const fileMeta = computed(() => {
           {{ fileMeta.filename }}
         </NuxtLink>
         <span aria-hidden="true">·</span>
-        <NuxtLink class="cl-banner__cta" to="/changelog">
+        <NuxtLink class="cl-banner__cta" to="/docs#changelog">
           see changelog
           <span aria-hidden="true">→</span>
         </NuxtLink>

@@ -12,6 +12,7 @@
     "dev": "nuxt prepare && nuxt dev",
     "generate": "node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs && nuxt generate",
     "preview": "nuxt preview",
+    "test": "node --experimental-strip-types --test tests/agentConfigurator.renderer.test.mjs",
     "postinstall": "nuxt prepare && node scripts/sync-templates.mjs && node scripts/build-zip.mjs && node scripts/generate-og.mjs"
   },
   "devDependencies": {

@@ -2,9 +2,12 @@
 
 import { CONFIGURATOR_SECTIONS } from './useAgentConfigurator.sections'
 import { generateConfiguredAgentFiles } from './useAgentConfigurator.renderer'
-import type { AgentFileId } from './useAgentFiles.types'
 import type { ConfiguratorAnswers } from './useAgentConfigurator.types'
-import { downloadTextFile } from './useCursorRulesGenerator'
+import {
+  buildCursorRulesMarkdown,
+  downloadTextFile
+} from './useCursorRulesGenerator'
+import type { AgentFileId } from './useAgentFiles.types'
 import { validateMarkdownSections } from './useMarkdownValidator'
 
 const STORAGE_KEY = 'bya:configure:answers:v1'
@@ -13,6 +16,7 @@ export function useAgentConfigurator() {
   const { files, byId } = useAgentFiles()
   const sections = CONFIGURATOR_SECTIONS
 
+  const viewMode = ref<'form' | 'guide'>('form')
   const current = ref(0)
   const answers = ref<ConfiguratorAnswers>({})
   const showExport = ref(false)
@@ -128,6 +132,21 @@ export function useAgentConfigurator() {
     for (const f of files) downloadFile(f.id)
   }
 
+  function downloadCursorRules() {
+    const ids = files.map((f) => f.id as AgentFileId)
+    const md = buildCursorRulesMarkdown(files, ids)
+    downloadTextFile('build-your-agents.cursor-rules.md', md)
+  }
+
+  function openStepByFileId(fileId: AgentFileId) {
+    const idx = sections.findIndex((s) => s.id === fileId)
+    if (idx >= 0) {
+      viewMode.value = 'form'
+      current.value = idx
+      showExport.value = false
+    }
+  }
+
   function goToSection(index: number) {
     current.value = Math.max(0, Math.min(index, sections.length - 1))
     showExport.value = false
@@ -149,6 +168,7 @@ export function useAgentConfigurator() {
     sections,
     files,
     byId,
+    viewMode,
     current,
     section,
     answers,
@@ -169,6 +189,8 @@ export function useAgentConfigurator() {
     copyToClipboard,
     downloadFile,
     downloadAll,
+    downloadCursorRules,
+    openStepByFileId,
     resetDraft,
     goToSection,
     next,

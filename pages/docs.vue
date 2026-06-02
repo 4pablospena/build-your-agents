@@ -92,7 +92,7 @@ function templateHref(filename: string) {
 
           <div class="docs__cta-row bya-rise bya-rise-4">
             <NuxtLink class="bya-btn" to="/configure">
-              Configure with questionnaire
+              Build your agent
               <span aria-hidden="true">↗</span>
             </NuxtLink>
             <NuxtLink class="bya-btn bya-btn--ghost" to="/#files">
@@ -250,13 +250,12 @@ function templateHref(filename: string) {
         </h2>
         <p class="docs__start-lede">
           Use the cards above to grab each file, or the ZIP / curl block below
-          for all seven at once. For fill order, time estimates, and saved
-          progress in your browser, follow the interactive checklist — not a
-          second copy of the steps here.
+          for all seven at once. To generate filled files from a questionnaire,
+          use Build instead of editing blanks by hand.
         </p>
         <div class="docs__start-cta">
-          <NuxtLink class="bya-btn" to="/start">
-            Fill order &amp; track progress
+          <NuxtLink class="bya-btn" to="/configure">
+            Build with questionnaire
             <span aria-hidden="true">→</span>
           </NuxtLink>
           <a
@@ -336,6 +335,10 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
         </div>
       </div>
     </section>
+
+    <DocsEcosystemSection />
+    <DocsChangelogSection />
+    <DocsHelpSection />
 
     <AppFooter />
   </main>

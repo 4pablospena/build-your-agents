@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const year = new Date().getFullYear()
 const { files } = useAgentFiles()
-const { repoUrl, issuesUrl, footerSpecLinks, footerFollowLinks, toolsNav } = useSiteNav()
+const { repoUrl, issuesUrl, footerSpecLinks, footerFollowLinks } = useSiteNav()
 </script>
 
 <template>
@@ -27,15 +27,6 @@ const { repoUrl, issuesUrl, footerSpecLinks, footerFollowLinks, toolsNav } = use
             :key="f.id"
             :href="`/#file-${f.id}`"
           >{{ f.filename }}</a>
-        </div>
-        <div class="ft__col">
-          <h4 class="ft__h">Tools</h4>
-          <NuxtLink to="/tools">All tools</NuxtLink>
-          <NuxtLink
-            v-for="tool in toolsNav"
-            :key="tool.id"
-            :to="tool.path"
-          >{{ tool.label }}</NuxtLink>
         </div>
         <div class="ft__col">
           <h4 class="ft__h">Follow</h4>

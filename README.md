@@ -20,11 +20,11 @@ Seven markdown files. No black box. No vendor lock-in. This site documents the a
 
 ## The seven files
 
-| File | Role |
-|------|------|
-| **SOUL.md** | Who the agent is — voice, values, hard limits |
+| File          | Role                                                    |
+| ------------- | ------------------------------------------------------- |
+| **SOUL.md**   | Who the agent is — voice, values, hard limits           |
 | **AGENTS.md** | How it operates — workflows, decision rules, escalation |
-| **MEMORY.md** | Evergreen facts — one line per fact, supersede only |
+| **MEMORY.md** | Evergreen facts — one line per fact, supersede only     |
 
 Full roles, memory layers, and session read order: **[`templates/README.md`](templates/README.md)** (canonical reading map, also at `/templates/README.md` after build).
 
@@ -34,26 +34,17 @@ Plain `.md` you version in git, drop into a folder, and point any capable model 
 
 ## Site map
 
-| Route | What you get |
-|-------|----------------|
-| [`/`](pages/index.vue) | Landing — architecture, file graph, session loop, decision rules |
-| [`/start`](pages/start.vue) | **Guided checklist** — fill order, time estimates, progress in the browser |
-| [`/configure`](pages/configure.vue) | **Agent configurator** — questionnaire → filled seven-file markdown, download |
-| [`/docs`](pages/docs.vue) | Per-file templates — preview, copy, download, ZIP, curl loop |
-| [`/examples`](pages/examples.vue) | Case studies from the blog (`case-study` tag) |
-| [`/openclaw`](pages/openclaw.vue) | Map the seven files to OpenClaw / Cursor / MCPs |
-| [`/changelog`](pages/changelog.vue) | Living spec history (`content/changelog/`) |
-| [`/help`](pages/help.vue) | FAQ, utilities, GitHub Issues |
-| [`/tools`](pages/tools/index.vue) | Validator, Cursor rules export, global search |
-| [`/tools/validate`](pages/tools/validate.vue) | Paste `.md` — check required `##` sections |
-| [`/tools/cursor-rules`](pages/tools/cursor-rules.vue) | Download merged `.cursor/rules` bundle |
-| [`/tools/search`](pages/tools/search.vue) | Search blog + changelog |
-| [`/blog`](pages/blog/index.vue) | Journal — tags, search, pagination |
-| [`/blog/<slug>`](pages/blog/) | Single post from `content/posts/*.md` |
-| [`/rss.xml`](server/routes/rss.xml.ts) | RSS 2.0 feed (blog posts, newest first) |
-| [`/sitemap.xml`](server/routes/sitemap.xml.ts) | Sitemap for static routes + published posts |
-| [`/templates/*.md`](public/templates/) | Raw markdown — curl-friendly |
-| [`/templates/build-your-agents.zip`](public/templates/build-your-agents.zip) | All templates in one archive (~7 KB) |
+| Route                                                                        | What you get                                                                  |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [`/`](pages/index.vue)                                                       | Landing — architecture, file graph, session loop, decision rules              |
+| [`/configure`](pages/configure.vue)                                          | **Agent configurator** — questionnaire → filled seven-file markdown, download |
+| [`/docs`](pages/docs.vue)                                                    | Per-file templates — preview, copy, download, ZIP, curl loop                  |
+| [`/blog`](pages/blog/index.vue)                                              | Journal — tags, search, pagination                                            |
+| [`/blog/<slug>`](pages/blog/)                                                | Single post from `content/posts/*.md`                                         |
+| [`/rss.xml`](server/routes/rss.xml.ts)                                       | RSS 2.0 feed (blog posts, newest first)                                       |
+| [`/sitemap.xml`](server/routes/sitemap.xml.ts)                               | Sitemap for static routes + published posts                                   |
+| [`/templates/*.md`](public/templates/)                                       | Raw markdown — curl-friendly                                                  |
+| [`/templates/build-your-agents.zip`](public/templates/build-your-agents.zip) | All templates in one archive (~7 KB)                                          |
 
 ---
 
@@ -68,20 +59,10 @@ Interactive questionnaire that maps your answers onto the official templates in 
 - Export: copy, per-file download, or all seven — validated against [`useAgentFiles()`](composables/useAgentFiles.ts) sections
 - Logic in [`useAgentConfigurator.renderer.ts`](composables/useAgentConfigurator.renderer.ts)
 
-### Guided journey (`/start`)
-
-Turns [`templates/README.md`](templates/README.md) into an interactive reading map:
-
-- Checklist in recommended fill order: **SOUL → IDENTITY → AGENTS → USER → TOOLS → MEMORY → HEARTBEAT**
-- ~27 minutes total for a first pass (per-step estimates)
-- Each step links to its card on [`/docs`](pages/docs.vue) and its anchor on the home page (`#file-<id>`)
-- Progress stored in `localStorage` — refresh the tab, nothing is lost
-- Data from [`useAgentFiles()`](composables/useAgentFiles.ts) + journey metadata in [`useStartJourney.ts`](composables/useStartJourney.ts)
-
 ### Distribution (`/docs`)
 
 - **Download all 7** — one-click ZIP (`build-your-agents.zip`, 8 files including README)
-- **Curl loop** — `BASE` uses `NUXT_PUBLIC_SITE_URL` in production (falls back to `YOUR_ORIGIN` locally)
+- **Curl loop** — `BASE` uses `NUXT_PUBLIC_SITE_URL` when set (falls back to `YOUR_ORIGIN` locally)
 - Per-file **Download**, **Open raw**, **Copy**, and inline preview
 
 ### Blog & feed
@@ -94,14 +75,13 @@ Turns [`templates/README.md`](templates/README.md) into an interactive reading m
 ### Footer & navigation
 
 - Navigation: [`composables/useSiteNav.ts`](composables/useSiteNav.ts) · prerender/sitemap: [`config/staticRoutes.ts`](config/staticRoutes.ts)
-- Header: Architecture · The 7 files · Session · **Start** · Docs · Examples · Tools · **Help** · Blog · Changelog
-- Footer: Spec · all **7 files** · Tools · Follow (Blog, GitHub, RSS, Changelog, Help, Issues)
-- OpenClaw: `/openclaw` (footer + home “New here?” strip — not in the main header)
+- Header: Home · Build · Templates · Learn · Blog · Help (+ Build agent CTA)
+- Footer: Spec (Build, Templates, Architecture, The 7 files, Session loop) · Follow (Blog, Case studies, Changelog, Ecosystem, Issues)
 
 ### Getting help
 
-- **[`/help`](pages/help.vue)** — FAQ, links to `/start` and `/docs`, utilities under `/tools`
-- **[`docs/SUPPORT.md`](docs/SUPPORT.md)** — repo index (FAQ text only in `useSiteNav.ts` / `/help`)
+- **Docs Help section** — `/docs#help` (FAQ + how to get support)
+- **[`docs/SUPPORT.md`](docs/SUPPORT.md)** — repo index (routes and utilities)
 - **GitHub Issues** — [open with a template](https://github.com/4pablospena/build-your-agents/issues/new/choose) (bug, question, spec change)
 - **Contributing** — [`CONTRIBUTING.md`](CONTRIBUTING.md) (templates + changelog policy)
 
@@ -111,11 +91,11 @@ Turns [`templates/README.md`](templates/README.md) into an interactive reading m
 
 **Brutalist colorful** — thick black strokes, saturated palette, hard shadows, asymmetric layout.
 
-| Token | Fonts |
-|-------|--------|
-| Display | Archivo Black |
-| Body / quotes | Fraunces |
-| UI / code | Space Mono |
+| Token         | Fonts         |
+| ------------- | ------------- |
+| Display       | Archivo Black |
+| Body / quotes | Fraunces      |
+| UI / code     | Space Mono    |
 
 Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/css/main.css). The blog uses Tailwind + `@tailwindcss/typography` with Preflight scoped so prose does not clash with the main design system.
 
@@ -123,7 +103,7 @@ Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/
 
 ## Stack
 
-- **Nuxt 3** — SSR, file-based routing; Nitro preset `vercel` on Vercel (`VERCEL=1`), `node-server` elsewhere (Dash / Docker)
+- **Nuxt 3** — SSR, file-based routing
 - **Vue 3** — `<script setup lang="ts">`, Composition API
 - **Single source of truth** — [`composables/useAgentFiles.ts`](composables/useAgentFiles.ts) for all seven-file metadata and markdown bodies
 - **Content** — `@nuxt/content` v2 for the blog
@@ -136,9 +116,8 @@ Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/
 ```bash
 pnpm install
 pnpm dev          # http://localhost:3000
-pnpm build        # sync → zip → og → nuxt build (vercel preset when VERCEL=1, else node-server)
-pnpm build:dash   # same as build — explicit name for Dash/Docker docs
-pnpm generate     # static export (.vercel/output/static)
+pnpm build        # sync templates → zip → og.png → production build
+pnpm generate     # static export
 ```
 
 Use [pnpm](https://pnpm.io/) — the repo pins `pnpm@9.15.9` under `packageManager`. Enable via Corepack:
@@ -152,12 +131,12 @@ corepack prepare pnpm@9.15.9 --activate
 
 Every `build`, `generate`, and `postinstall` runs:
 
-| Step | Script | Output |
-|------|--------|--------|
-| 1 | `scripts/sync-templates.mjs` | `templates/*.md` → `public/templates/` |
-| 2 | `scripts/build-zip.mjs` | `public/templates/build-your-agents.zip` |
-| 3 | `scripts/generate-og.mjs` | `public/og.png` (1200×630 from `assets/og-card.svg`) |
-| 4 | `nuxt build` / `nuxt generate` | `.vercel/output/…` on Vercel, or `.output/server/index.mjs` on Dash/Docker |
+| Step | Script                         | Output                                                                     |
+| ---- | ------------------------------ | -------------------------------------------------------------------------- |
+| 1    | `scripts/sync-templates.mjs`   | `templates/*.md` → `public/templates/`                                     |
+| 2    | `scripts/build-zip.mjs`        | `public/templates/build-your-agents.zip`                                   |
+| 3    | `scripts/generate-og.mjs`      | `public/og.png` (1200×630 from `assets/og-card.svg`)                       |
+| 4    | `nuxt build` / `nuxt generate` | Nuxt production output                                         |
 
 Verify the ZIP after a build:
 
@@ -171,77 +150,10 @@ unzip -tq public/templates/build-your-agents.zip
 
 Copy [`.env.example`](.env.example) to `.env` for local overrides:
 
-| Variable | Purpose |
-|----------|---------|
+| Variable               | Purpose                                                                                                                                                               |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `NUXT_PUBLIC_SITE_URL` | Public site URL **without** trailing slash. Used for Open Graph (`og:url`, `og:image`), the curl `BASE` on `/docs`, canonical links in `/rss.xml` and `/sitemap.xml`. |
-| `NUXT_PUBLIC_REPO_URL` | GitHub repo URL for footer, `/help`, and issue links (defaults to this repository). |
-
-On Vercel, set the same variable in **Production** and redeploy after changes.
-
----
-
-## Deploy (Vercel)
-
-1. Import the repo — Vercel detects **pnpm** from `pnpm-lock.yaml`.
-2. **Build command:** `pnpm run build`
-3. **Node.js:** 20.x or 22.x (`engines.node` in `package.json`)
-4. **Environment:** `NUXT_PUBLIC_SITE_URL=https://your-domain.com` (no trailing slash)
-5. Deploy
-
-`sharp` is a runtime dependency so `generate-og.mjs` succeeds on Vercel’s build image.
-
-Nitro uses `preset: 'vercel'`. Static prerender includes `/blog` and each published post (`draft: true` omitted). `/rss.xml` is **not** prerendered — it resolves the live origin at request time so feed URLs stay canonical when `NUXT_PUBLIC_SITE_URL` is set.
-
-Validate the feed after deploy: [validator.w3.org/feed](https://validator.w3.org/feed/)
-
----
-
-## Deploy (Dash / Kubernetes)
-
-Use this for **Resizes Dash** (or any cluster that runs a Node container). Vercel stays on the section above — same repo, different build output.
-
-### Build the image
-
-**Dash / Railpack** runs `pnpm run build` (aliases `build:dash`). Without `VERCEL=1`, `nuxt.config` uses Nitro preset `node-server`. The [Dockerfile](Dockerfile) runs the same and starts:
-
-```text
-node .output/server/index.mjs
-```
-
-Local smoke test:
-
-```bash
-docker build -t build-your-agents:local .
-docker run --rm -p 3000:3000 \
-  -e NUXT_PUBLIC_SITE_URL=http://localhost:3000 \
-  build-your-agents:local
-```
-
-Open http://localhost:3000. Inside the image, verify the entrypoint exists:
-
-```bash
-docker run --rm build-your-agents:local ls -la .output/server/index.mjs
-```
-
-### Cluster / Argo CD
-
-1. Push to `main` → Dash builds and pushes to ECR (new **image tag** each deploy).
-2. In Helm values: set `base.name` and `image.tag` to the new tag (must start with a letter, e.g. `pablospena-build-your-agents-main-…`, not `4pablospena-…`). Merge the Dash PR if GitOps updates `platform-eks-production`.
-3. If the tag is unchanged but the image was rebuilt, delete the pod or set `image.pullPolicy: Always` so the node pulls fresh layers.
-4. Pod logs should show `Listening on http://0.0.0.0:3000`. If you see `Cannot find module '.output/server/index.mjs'`, the image was built with the Vercel preset — redeploy after `nitro.preset` defaults to `node-server` off Vercel.
-
-| Setting | Value |
-|---------|--------|
-| Container port | `3000` |
-| `HOST` | `0.0.0.0` (set in Dockerfile) |
-| `NUXT_PUBLIC_SITE_URL` | Public URL served by Dash ingress (**no** trailing slash) |
-| `NUXT_PUBLIC_REPO_URL` | Optional |
-
-Liveness/readiness: HTTP `GET /` on port 3000.
-
-### Two production URLs
-
-You can run **Vercel and Dash** at the same time. Set `NUXT_PUBLIC_SITE_URL` per environment to that host’s canonical URL (OG tags, RSS, sitemap, `/docs` curl base).
+| `NUXT_PUBLIC_REPO_URL` | GitHub repo URL for footer and issue links (defaults to this repository).                                                                                            |
 
 ---
 
@@ -251,10 +163,10 @@ Posts live under `content/posts/*.md` with YAML frontmatter:
 
 `title`, `description`, `date`, `tags`, optional `cover`, optional `draft`, optional `author` / `authorIntro`.
 
-| Mode | Drafts |
-|------|--------|
-| `pnpm dev` | Visible in index and directly reachable |
-| `pnpm build` / production | Excluded from listings, 404 if visited, not prerendered |
+| Mode                      | Drafts                                                  |
+| ------------------------- | ------------------------------------------------------- |
+| `pnpm dev`                | Visible in index and directly reachable                 |
+| Production build          | Excluded from listings, 404 if visited, not prerendered |
 
 Helpers: [`composables/useBlogPosts.ts`](composables/useBlogPosts.ts) — `useBlogPostListQuery()`, reading time, prev/next navigation.
 
@@ -280,13 +192,8 @@ build-your-agents/
 ├── nuxt.config.ts              # head, OG, RSS autodiscovery, prerender hooks
 ├── pages/
 │   ├── index.vue               # landing
-│   ├── docs.vue                # templates + zip + curl
-│   ├── start.vue               # guided checklist
-│   ├── help.vue                # FAQ + support
-│   ├── examples.vue            # case studies
-│   ├── changelog.vue           # spec history
-│   ├── openclaw.vue            # ecosystem map
-│   ├── tools/                  # validator, cursor-rules, search
+│   ├── docs.vue                # templates + zip + curl + help/changelog/ecosystem sections
+│   ├── configure.vue           # agent questionnaire → filled templates + Cursor bundle
 │   └── blog/
 │       ├── index.vue
 │       └── [...slug].vue
@@ -300,8 +207,7 @@ build-your-agents/
 │   ├── useAgentFiles.ts        # seven-file spec (single source of truth)
 │   ├── useAgentFiles.types.ts
 │   ├── useBlogPosts.ts
-│   ├── useStartJourney.ts      # journey order + localStorage progress
-│   ├── useSiteNav.ts           # header/footer/help navigation
+│   ├── useSiteNav.ts           # header/footer navigation, FAQ, support links
 │   └── (see config/staticRoutes.ts)
 ├── config/
 │   └── staticRoutes.ts         # prerender + sitemap route list
@@ -322,7 +228,7 @@ Route views stay thin; feature UI lives in components; shared data in composable
 
 ## Roadmap
 
-**Shipped (waves 0–8):** ZIP + RSS, `/start`, `/examples`, `/changelog`, `/openclaw`, `FileGraph`, blog ↔ docs links, `/tools/*`, and support UX (`/help`, `useSiteNav`, GitHub issue templates).
+**Shipped (waves 0–8):** ZIP + RSS, `FileGraph`, `/configure` agent configurator, merged docs/help/changelog/ecosystem sections, and support UX (FAQ in `useSiteNav`, GitHub issue templates).
 
 Current and future work: [`.cursor/next-steps.md`](.cursor/next-steps.md).
 

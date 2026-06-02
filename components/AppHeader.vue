@@ -8,12 +8,10 @@ defineProps<{
     | 'session-loop'
     | 'docs-page'
     | 'blog-page'
-    | 'start-page'
     | 'configure-page'
     | 'examples-page'
     | 'changelog-page'
     | 'openclaw-page'
-    | 'tools-page'
     | 'help-page'
 }>()
 
@@ -75,8 +73,8 @@ onMounted(() => {
         </NuxtLink>
       </nav>
 
-      <NuxtLink class="bya-btn hdr__cta" to="/start" @click="closeMenu">
-        <span>Start checklist</span>
+      <NuxtLink class="bya-btn hdr__cta" to="/configure" @click="closeMenu">
+        <span>Build agent</span>
         <span aria-hidden="true">→</span>
       </NuxtLink>
     </div>

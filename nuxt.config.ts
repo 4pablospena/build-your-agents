@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { SITE_REDIRECTS } from './config/redirects'
 import { STATIC_PUBLIC_ROUTES } from './config/staticRoutes'
 
 function isDraftPostFile(absPath: string): boolean {
@@ -83,6 +84,13 @@ export default defineNuxtConfig({
       process.env.NITRO_PRESET ||
       (process.env.VERCEL ? 'vercel' : 'node-server')
   },
+
+  routeRules: Object.fromEntries(
+    Object.entries(SITE_REDIRECTS).map(([path, to]) => [
+      path,
+      { redirect: { to, statusCode: 301 } }
+    ])
+  ),
 
   // Avoid Vite 7 pre-transform trying to resolve `#app-manifest` on cold dev
   // (see nuxt/nuxt#33606). This site does not rely on experimental app manifest.
