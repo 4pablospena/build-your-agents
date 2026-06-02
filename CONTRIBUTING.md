@@ -7,7 +7,7 @@ Thanks for helping improve **build/your/agents**. This repo ships two things:
 
 ## Before you open a PR
 
-1. Read **`/help`** on the deployed site (FAQ lives in code: `composables/useSiteNav.ts`). Repo index: [`docs/SUPPORT.md`](docs/SUPPORT.md).
+1. Skim the Help section on `/docs` (FAQ lives in code: `composables/useSiteNav.ts`). Repo index: [`docs/SUPPORT.md`](docs/SUPPORT.md).
 2. Open a [GitHub Issue](https://github.com/4pablospena/build-your-agents/issues/new/choose) if you are unsure which template fits.
 
 ## Changing the agent templates

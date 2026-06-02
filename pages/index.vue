@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Route view: thin composition surface. Wires sections together; no logic here.
 useHead({
   title: 'Build your own agents — a seven-file architecture'
 })
@@ -21,23 +20,15 @@ useHead({
       ]"
     />
 
-    <NewHereStrip />
-
     <AudienceFit />
 
     <ArchitectureMap />
 
-    <TierMap />
-
     <FileGraph />
-
-    <FilesGrid />
 
     <SessionLoop />
 
     <DecisionRules />
-
-    <QuickStart />
 
     <MarqueeBar
       :items="[

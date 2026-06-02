@@ -6,9 +6,8 @@ import {
   changelogSlugFromPath,
   type ChangelogEntry
 } from './useChangelog'
-import { toolsNav } from './useToolsNav'
 
-export type SearchResultKind = 'blog' | 'changelog' | 'tool'
+export type SearchResultKind = 'blog' | 'changelog'
 
 export type SearchResult = {
   id: string
@@ -71,30 +70,10 @@ async function buildSearchIndex(): Promise<SearchIndex> {
       kind: 'changelog',
       title,
       excerpt: entry.reason,
-      to: `/changelog#${changelogSlugFromPath(entry._path)}`,
+      to: `/docs#changelog`,
       score: 0
     })
   }
-
-  for (const tool of toolsNav) {
-    items.push({
-      id: `tool:${tool.id}`,
-      kind: 'tool',
-      title: tool.title,
-      excerpt: tool.description,
-      to: tool.path,
-      score: 0
-    })
-  }
-
-  items.push({
-    id: 'tool:hub',
-    kind: 'tool',
-    title: 'Tools hub',
-    excerpt: 'Markdown validator, Cursor rules export, global search',
-    to: '/tools',
-    score: 0
-  })
 
   return { items }
 }
@@ -108,20 +87,19 @@ export function useGlobalSearch() {
   function search(query: string, limit = 12): SearchResult[] {
     const q = query.trim()
     if (q.length < 2 || !index.value) return []
-
     const tokens = tokenize(q)
     if (!tokens.length) return []
 
-    return index.value.items
+    const scored = index.value.items
       .map((item) => {
-        const blob = `${item.title} ${item.excerpt} ${item.to}`
-        const score = scoreText(blob, tokens)
-        return { ...item, score }
+        const blob = `${item.title} ${item.excerpt}`
+        return { ...item, score: scoreText(blob, tokens) }
       })
       .filter((item) => item.score > 0)
       .sort((a, b) => b.score - a.score)
-      .slice(0, limit)
+
+    return scored.slice(0, limit)
   }
 
-  return { index, pending, search }
+  return { search, pending }
 }

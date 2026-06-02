@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import type { AgentFileId } from '~/composables/useAgentFiles.types'
+import ConfiguratorGuide from '~/components/configure/ConfiguratorGuide.vue'
+import ConfiguratorPasteValidate from '~/components/configure/ConfiguratorPasteValidate.vue'
 
 const {
   sections,
   files,
   byId,
+  viewMode,
   current,
   section,
   showExport,
@@ -21,6 +24,8 @@ const {
   copyToClipboard,
   downloadFile,
   downloadAll,
+  downloadCursorRules,
+  openStepByFileId,
   resetDraft,
   goToSection,
   next,
@@ -69,7 +74,34 @@ const previewMd = computed(() => {
       />
     </div>
 
-    <nav class="cfg__nav" aria-label="Questionnaire sections">
+    <div class="cfg__modes" role="tablist" aria-label="Build mode">
+      <button
+        type="button"
+        role="tab"
+        class="cfg__mode"
+        :class="{ 'cfg__mode--on': viewMode === 'form' }"
+        :aria-selected="viewMode === 'form'"
+        @click="viewMode = 'form'"
+      >
+        Questionnaire
+      </button>
+      <button
+        type="button"
+        role="tab"
+        class="cfg__mode"
+        :class="{ 'cfg__mode--on': viewMode === 'guide' }"
+        :aria-selected="viewMode === 'guide'"
+        @click="viewMode = 'guide'; showExport = false"
+      >
+        Fill order
+      </button>
+    </div>
+
+    <nav
+      v-show="viewMode === 'form'"
+      class="cfg__nav"
+      aria-label="Questionnaire sections"
+    >
       <button
         v-for="(s, i) in sections"
         :key="s.id"
@@ -131,7 +163,12 @@ const previewMd = computed(() => {
         <button type="button" class="cfg__btn" @click="downloadAll">
           Download all 7
         </button>
+        <button type="button" class="cfg__btn cfg__btn--ghost" @click="downloadCursorRules">
+          Cursor rules bundle
+        </button>
       </div>
+
+      <ConfiguratorPasteValidate />
 
       <ul class="cfg__validation" aria-label="Section validation">
         <li
@@ -162,7 +199,11 @@ const previewMd = computed(() => {
       </button>
     </section>
 
-    <div class="cfg__main bya-container">
+    <div v-if="viewMode === 'guide'" class="cfg__main bya-container">
+      <ConfiguratorGuide :filled="filled" @open-step="openStepByFileId" />
+    </div>
+
+    <div v-else class="cfg__main bya-container">
       <header class="cfg__section-head">
         <span
           class="cfg__badge"
@@ -233,27 +274,49 @@ const previewMd = computed(() => {
       </form>
     </div>
 
-    <footer class="cfg__footer" :class="`cfg__footer--${section.color}`">
-      <button
-        type="button"
-        class="cfg__footer-btn cfg__footer-btn--ghost"
-        :disabled="current === 0"
-        @click="prev"
-      >
-        ← Previous
-      </button>
-      <p class="cfg__footer-meta">
-        <span :class="`cfg__footer-step cfg__footer-step--${section.color}`">{{ current + 1 }}</span>
-        / 7 · {{ section.file }}
-      </p>
-      <button
-        type="button"
-        class="cfg__footer-btn"
-        :class="`cfg__footer-btn--${section.color}`"
-        @click="next"
-      >
-        {{ current < sections.length - 1 ? 'Next →' : 'Export ↗' }}
-      </button>
+    <footer
+      class="cfg__footer"
+      :class="viewMode === 'form' ? `cfg__footer--${section.color}` : 'cfg__footer--ink'"
+    >
+      <template v-if="viewMode === 'form'">
+        <button
+          type="button"
+          class="cfg__footer-btn cfg__footer-btn--ghost"
+          :disabled="current === 0"
+          @click="prev"
+        >
+          ← Previous
+        </button>
+        <p class="cfg__footer-meta">
+          <span :class="`cfg__footer-step cfg__footer-step--${section.color}`">{{ current + 1 }}</span>
+          / 7 · {{ section.file }}
+        </p>
+        <button
+          type="button"
+          class="cfg__footer-btn"
+          :class="`cfg__footer-btn--${section.color}`"
+          @click="next"
+        >
+          {{ current < sections.length - 1 ? 'Next →' : 'Export ↗' }}
+        </button>
+      </template>
+      <template v-else>
+        <button
+          type="button"
+          class="cfg__footer-btn cfg__footer-btn--ghost"
+          @click="viewMode = 'form'"
+        >
+          ← Questionnaire
+        </button>
+        <p class="cfg__footer-meta">Fill order · 7 steps</p>
+        <button
+          type="button"
+          class="cfg__footer-btn cfg__footer-btn--lemon"
+          @click="showExport = true"
+        >
+          Export ↗
+        </button>
+      </template>
     </footer>
   </div>
 </template>
@@ -339,6 +402,31 @@ const previewMd = computed(() => {
 .cfg__bar-fill--acid { background: var(--acid); }
 .cfg__bar-fill--grape { background: var(--grape); }
 .cfg__bar-fill--ink { background: var(--lemon); }
+
+.cfg__modes {
+  display: flex;
+  gap: 0;
+  background: var(--ink);
+  border-bottom: 2px solid #222;
+}
+.cfg__mode {
+  flex: 1;
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  color: #666;
+  border: none;
+  border-right: 2px solid #333;
+  cursor: pointer;
+}
+.cfg__mode--on {
+  background: var(--paper);
+  color: var(--ink);
+}
 
 .cfg__nav {
   display: flex;

@@ -2,17 +2,8 @@
 
 export const STATIC_PUBLIC_ROUTES = [
   '/',
-  '/start',
   '/configure',
-  '/help',
   '/docs',
-  '/examples',
-  '/openclaw',
-  '/changelog',
-  '/tools',
-  '/tools/validate',
-  '/tools/cursor-rules',
-  '/tools/search',
   '/blog'
 ] as const
 

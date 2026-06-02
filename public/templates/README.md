@@ -39,8 +39,7 @@ When this repo is deployed (set `NUXT_PUBLIC_SITE_URL` to your public origin):
 
 | Path | Purpose |
 |------|---------|
-| `/start` | Interactive checklist — recommended fill order with local progress |
-| `/docs` | Per-file preview, copy, download, and **build-your-agents.zip** |
-| `/help` | FAQ, utilities, and how to open a GitHub Issue |
+| `/configure` | Questionnaire that generates all seven filled files |
+| `/docs` | Per-file preview, copy, download, and **build-your-agents.zip** (plus Help/Changelog/Ecosystem sections) |
 
 Relative URLs work on any host; absolute curl examples on `/docs` use your configured site URL in production.
