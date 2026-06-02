@@ -1,11 +1,11 @@
 ---
 title: "Odín: the case that made everything click"
-description: "Origin story: four months configuring a CRM for a client at Resizes, one honest question about knowledge transfer, and five minutes that replaced one full day of bulk configuration work. This is what pushed me to study agentic AI seriously."
+description: "Origin story: four months configuring a CRM for a client, one honest question about knowledge transfer, and five minutes that replaced one full day of bulk configuration work. This is what pushed me to study agentic AI seriously."
 date: 2026-05-23
 tags: [agents, case-study, knowledge-transfer, origin, openclaw]
 cover: "/images/posts/odin-cover.png"
 author: "Pablo Suárez Peña"
-authorIntro: "I build and refine AI agents with OpenClaw—professionally at Resizes, and on personal projects where I can take more risk. Odín was not a planned experiment. It was the moment that forced me to take agentic AI seriously—and this is the account of how it happened."
+authorIntro: "I build and refine AI agents with OpenClaw—in client work and on personal projects where I can take more risk. Odín was not a planned experiment. It was the moment that forced me to take agentic AI seriously—and this is the account of how it happened."
 ---
 
 Not a lab experiment, not a proof of concept. A real client, a real constraint, and the right question asked at the right moment.
@@ -14,7 +14,7 @@ Not a lab experiment, not a proof of concept. A real client, a real constraint, 
 
 ## Four months inside a CRM
 
-The starting point was as ordinary as they come: a client, a CRM we were customising for them at Resizes, and the need to automate processes that were consuming time nobody had.
+The starting point was as ordinary as they come: a client, a CRM we were customising for them, and the need to automate processes that were consuming time nobody had.
 
 I spent roughly four months learning that CRM properly—its logic, its limits, its shortcuts, its edge cases. Not learning to use it: learning _why_ it worked the way it did, what each configuration decision implied downstream, and how to map its technical possibilities onto the client's actual requirements.
 
@@ -95,7 +95,7 @@ The first time we watched it execute in real time what would have taken a full d
 
 The Odín build was brief. The lessons were not.
 
-**Accumulated knowledge can be transferred—and an agent can work with it.** The four months of CRM configuration at Resizes were not wasted when we handed the work to an agent. The field dependencies, the label hierarchies, the flow logic — all of it had been described to Odín in scattered session notes, but it was there. The agent could retrieve it and act on it. That was the first proof that the learning curve does not have to be walked twice.
+**Accumulated knowledge can be transferred—and an agent can work with it.** The four months of CRM configuration were not wasted when we handed the work to an agent. The field dependencies, the label hierarchies, the flow logic — all of it had been described to Odín in scattered session notes, but it was there. The agent could retrieve it and act on it. That was the first proof that the learning curve does not have to be walked twice.
 
 **Knowledge alone is not enough—it needs a specification.** Early on, we gave Odín access to everything and told it to load the data. Without a clear order of operations, it would occasionally apply labels before the relevant fields existed, or configure flows that referenced contacts that had not been imported yet. The knowledge was correct. The sequence was not. Adding an explicit step order — field creation first, then data load, then labels, then flows — was what made the output reliable.
 

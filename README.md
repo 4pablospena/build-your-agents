@@ -38,6 +38,7 @@ Plain `.md` you version in git, drop into a folder, and point any capable model 
 |-------|----------------|
 | [`/`](pages/index.vue) | Landing — architecture, file graph, session loop, decision rules |
 | [`/start`](pages/start.vue) | **Guided checklist** — fill order, time estimates, progress in the browser |
+| [`/configure`](pages/configure.vue) | **Agent configurator** — questionnaire → filled seven-file markdown, download |
 | [`/docs`](pages/docs.vue) | Per-file templates — preview, copy, download, ZIP, curl loop |
 | [`/examples`](pages/examples.vue) | Case studies from the blog (`case-study` tag) |
 | [`/openclaw`](pages/openclaw.vue) | Map the seven files to OpenClaw / Cursor / MCPs |
@@ -57,6 +58,15 @@ Plain `.md` you version in git, drop into a folder, and point any capable model 
 ---
 
 ## Highlights
+
+### Agent configurator (`/configure`)
+
+Interactive questionnaire that maps your answers onto the official templates in [`templates/`](templates/) (same `##` sections as [`/docs`](pages/docs.vue)):
+
+- Seven steps aligned with fill order: **SOUL → IDENTITY → AGENTS → USER → TOOLS → MEMORY → HEARTBEAT**
+- Draft saved in `localStorage` (`bya:configure:answers:v1`)
+- Export: copy, per-file download, or all seven — validated against [`useAgentFiles()`](composables/useAgentFiles.ts) sections
+- Logic in [`useAgentConfigurator.renderer.ts`](composables/useAgentConfigurator.renderer.ts)
 
 ### Guided journey (`/start`)
 
@@ -113,7 +123,7 @@ Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/
 
 ## Stack
 
-- **Nuxt 3** — SSR, file-based routing; Nitro preset `vercel` (Vercel) or `node-server` (Dash / Docker via `NITRO_PRESET`)
+- **Nuxt 3** — SSR, file-based routing; Nitro preset `vercel` on Vercel (`VERCEL=1`), `node-server` elsewhere (Dash / Docker)
 - **Vue 3** — `<script setup lang="ts">`, Composition API
 - **Single source of truth** — [`composables/useAgentFiles.ts`](composables/useAgentFiles.ts) for all seven-file metadata and markdown bodies
 - **Content** — `@nuxt/content` v2 for the blog
@@ -126,8 +136,8 @@ Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/
 ```bash
 pnpm install
 pnpm dev          # http://localhost:3000
-pnpm build        # sync templates → zip → og.png → production build (Vercel preset)
-pnpm build:dash   # same pipeline, Nitro node-server → .output/server/index.mjs
+pnpm build        # sync → zip → og → nuxt build (vercel preset when VERCEL=1, else node-server)
+pnpm build:dash   # same as build — explicit name for Dash/Docker docs
 pnpm generate     # static export (.vercel/output/static)
 ```
 
@@ -147,7 +157,7 @@ Every `build`, `generate`, and `postinstall` runs:
 | 1 | `scripts/sync-templates.mjs` | `templates/*.md` → `public/templates/` |
 | 2 | `scripts/build-zip.mjs` | `public/templates/build-your-agents.zip` |
 | 3 | `scripts/generate-og.mjs` | `public/og.png` (1200×630 from `assets/og-card.svg`) |
-| 4 | `nuxt build` / `nuxt generate` | `.vercel/output/…` (default) or `.output/server/index.mjs` (`NITRO_PRESET=node-server`) |
+| 4 | `nuxt build` / `nuxt generate` | `.vercel/output/…` on Vercel, or `.output/server/index.mjs` on Dash/Docker |
 
 Verify the ZIP after a build:
 
@@ -192,7 +202,7 @@ Use this for **Resizes Dash** (or any cluster that runs a Node container). Verce
 
 ### Build the image
 
-**Dash / Railpack** runs `pnpm run build`, which sets `NITRO_PRESET=node-server` (see `package.json`). The [Dockerfile](Dockerfile) uses `pnpm run build:dash` (same preset) and starts:
+**Dash / Railpack** runs `pnpm run build` (aliases `build:dash`). Without `VERCEL=1`, `nuxt.config` uses Nitro preset `node-server`. The [Dockerfile](Dockerfile) runs the same and starts:
 
 ```text
 node .output/server/index.mjs
@@ -218,7 +228,7 @@ docker run --rm build-your-agents:local ls -la .output/server/index.mjs
 1. Push to `main` → Dash builds and pushes to ECR (new **image tag** each deploy).
 2. In Helm values: set `base.name` and `image.tag` to the new tag (must start with a letter, e.g. `pablospena-build-your-agents-main-…`, not `4pablospena-…`). Merge the Dash PR if GitOps updates `platform-eks-production`.
 3. If the tag is unchanged but the image was rebuilt, delete the pod or set `image.pullPolicy: Always` so the node pulls fresh layers.
-4. Pod logs should show `Listening on http://0.0.0.0:3000`. If you see `Cannot find module '.output/server/index.mjs'`, the image was built without `NITRO_PRESET=node-server` — redeploy after the `build` script fix on `main`.
+4. Pod logs should show `Listening on http://0.0.0.0:3000`. If you see `Cannot find module '.output/server/index.mjs'`, the image was built with the Vercel preset — redeploy after `nitro.preset` defaults to `node-server` off Vercel.
 
 | Setting | Value |
 |---------|--------|

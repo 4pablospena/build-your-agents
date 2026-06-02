@@ -6,12 +6,12 @@ tags: [agents, b2b, case-study, openclaw, odoo]
 filesTouched: [soul, identity, agents, user, tools, memory, heartbeat]
 cover: "/images/posts/sabrina-cover.png"
 author: "Pablo Suárez Peña"
-authorIntro: "I build and refine AI agents with OpenClaw—professionally at Resizes, and on personal projects where I can take more risk. This case study is how we turned a B2B prospecting spec into seven files Sabrina can run inside; I publish notes like this to clarify my own thinking and in case they help someone facing a similar filing problem."
+authorIntro: "I build and refine AI agents with OpenClaw—in client work and on personal projects where I can take more risk. This case study is how we turned a B2B prospecting spec into seven files Sabrina can run inside; I publish notes like this to clarify my own thinking and in case they help someone facing a similar filing problem."
 ---
 
 A walkthrough of every decision along the way — what went where, what broke in the first draft, and what the spec alone could not tell us.
 
-Sabrina is being built for [Resizes](https://resiz.es), where the commercial team needs qualified B2B leads in Odoo without manually chaining LinkedIn search, enrichment, and CRM updates after every command.
+Sabrina is being built for a commercial team that needs qualified B2B leads in Odoo without manually chaining LinkedIn search, enrichment, and CRM updates after every command.
 
 ---
 

@@ -76,9 +76,12 @@ export default defineNuxtConfig({
     }
   },
 
-  // Vercel: default `vercel` preset (.vercel/output). Dash/Docker: NITRO_PRESET=node-server (.output/server/index.mjs).
+  // Vercel sets VERCEL=1 → `vercel` preset. Dash/Railpack/Docker → `node-server` (.output/server/index.mjs).
+  // Override anytime with NITRO_PRESET.
   nitro: {
-    preset: process.env.NITRO_PRESET || 'vercel'
+    preset:
+      process.env.NITRO_PRESET ||
+      (process.env.VERCEL ? 'vercel' : 'node-server')
   },
 
   // Avoid Vite 7 pre-transform trying to resolve `#app-manifest` on cold dev

@@ -3,6 +3,7 @@
 export const STATIC_PUBLIC_ROUTES = [
   '/',
   '/start',
+  '/configure',
   '/help',
   '/docs',
   '/examples',

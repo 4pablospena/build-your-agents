@@ -91,7 +91,11 @@ function templateHref(filename: string) {
           </p>
 
           <div class="docs__cta-row bya-rise bya-rise-4">
-            <NuxtLink class="bya-btn" to="/#files">
+            <NuxtLink class="bya-btn" to="/configure">
+              Configure with questionnaire
+              <span aria-hidden="true">↗</span>
+            </NuxtLink>
+            <NuxtLink class="bya-btn bya-btn--ghost" to="/#files">
               Back to the spec
               <span aria-hidden="true">↖</span>
             </NuxtLink>
