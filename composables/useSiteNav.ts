@@ -36,6 +36,7 @@ export function useSiteNav() {
 
   const useLinks: SiteNavLink[] = [
     { label: 'Start', to: '/start', id: 'start-page' },
+    { label: 'Configure', to: '/configure', id: 'configure-page' },
     { label: 'Docs', to: '/docs', id: 'docs-page' },
     { label: 'Examples', to: '/examples', id: 'examples-page' },
     { label: 'Tools', to: '/tools', id: 'tools-page' }

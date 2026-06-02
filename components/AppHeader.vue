@@ -9,6 +9,7 @@ defineProps<{
     | 'docs-page'
     | 'blog-page'
     | 'start-page'
+    | 'configure-page'
     | 'examples-page'
     | 'changelog-page'
     | 'openclaw-page'

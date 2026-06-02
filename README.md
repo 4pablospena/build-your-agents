@@ -38,6 +38,7 @@ Plain `.md` you version in git, drop into a folder, and point any capable model 
 |-------|----------------|
 | [`/`](pages/index.vue) | Landing — architecture, file graph, session loop, decision rules |
 | [`/start`](pages/start.vue) | **Guided checklist** — fill order, time estimates, progress in the browser |
+| [`/configure`](pages/configure.vue) | **Agent configurator** — questionnaire → filled seven-file markdown, download |
 | [`/docs`](pages/docs.vue) | Per-file templates — preview, copy, download, ZIP, curl loop |
 | [`/examples`](pages/examples.vue) | Case studies from the blog (`case-study` tag) |
 | [`/openclaw`](pages/openclaw.vue) | Map the seven files to OpenClaw / Cursor / MCPs |
@@ -57,6 +58,15 @@ Plain `.md` you version in git, drop into a folder, and point any capable model 
 ---
 
 ## Highlights
+
+### Agent configurator (`/configure`)
+
+Interactive questionnaire that maps your answers onto the official templates in [`templates/`](templates/) (same `##` sections as [`/docs`](pages/docs.vue)):
+
+- Seven steps aligned with fill order: **SOUL → IDENTITY → AGENTS → USER → TOOLS → MEMORY → HEARTBEAT**
+- Draft saved in `localStorage` (`bya:configure:answers:v1`)
+- Export: copy, per-file download, or all seven — validated against [`useAgentFiles()`](composables/useAgentFiles.ts) sections
+- Logic in [`useAgentConfigurator.renderer.ts`](composables/useAgentConfigurator.renderer.ts)
 
 ### Guided journey (`/start`)
 

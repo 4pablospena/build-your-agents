@@ -86,6 +86,9 @@ useHead({
               See finish line
               <span aria-hidden="true">↘</span>
             </a>
+            <NuxtLink class="bya-btn bya-btn--ghost" to="/configure">
+              Configure with questionnaire
+            </NuxtLink>
             <NuxtLink class="bya-btn bya-btn--ghost" to="/docs">
               Open templates
             </NuxtLink>
