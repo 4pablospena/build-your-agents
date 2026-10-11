@@ -15,9 +15,9 @@ const props = withDefaults(
 <template>
   <div class="bya-marquee" role="presentation">
     <div class="bya-marquee__track">
-      <span v-for="(t, i) in [...props.items, ...props.items]" :key="i">
+      <span v-for="(t, i) in [...props.items, ...props.items]" :key="i" :class="{ 'bya-marquee__duplicate': i >= props.items.length }" :aria-hidden="i >= props.items.length ? true : undefined">
         {{ t }}
-        <span class="bya-marquee__star">★</span>
+        <span class="bya-marquee__separator" aria-hidden="true">/</span>
       </span>
     </div>
   </div>

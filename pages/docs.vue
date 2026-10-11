@@ -65,10 +65,6 @@ function templateHref(filename: string) {
     <ChangelogBanner />
 
     <section class="docs__hero">
-      <div class="docs__deco docs__deco--a" aria-hidden="true">MARKDOWN</div>
-      <div class="docs__deco docs__deco--b" aria-hidden="true">TEMPLATE</div>
-      <div class="docs__deco docs__deco--c" aria-hidden="true">★</div>
-      <div class="docs__deco docs__deco--d" aria-hidden="true">DOWNLOAD</div>
 
       <div class="bya-container docs__hero-grid">
         <div class="docs__lead">
@@ -93,15 +89,15 @@ function templateHref(filename: string) {
           <div class="docs__cta-row bya-rise bya-rise-4">
             <NuxtLink class="bya-btn" to="/configure">
               Build your agent
-              <span aria-hidden="true">↗</span>
+
             </NuxtLink>
             <NuxtLink class="bya-btn bya-btn--ghost" to="/#files">
               Back to the spec
-              <span aria-hidden="true">↖</span>
+
             </NuxtLink>
             <a class="bya-btn bya-btn--ghost" href="#docs-templates">
               Jump to files
-              <span aria-hidden="true">↓</span>
+
             </a>
           </div>
 
@@ -125,8 +121,8 @@ function templateHref(filename: string) {
             </div>
             <div class="docs__poster-footer">
               <span>downloadable</span>
-              <span>↳ same as landing data</span>
-              <span>↳ fill &amp; ship</span>
+              <span> same as landing data</span>
+              <span> fill &amp; ship</span>
             </div>
           </div>
         </aside>
@@ -256,7 +252,7 @@ function templateHref(filename: string) {
         <div class="docs__start-cta">
           <NuxtLink class="bya-btn" to="/configure">
             Build with questionnaire
-            <span aria-hidden="true">→</span>
+
           </NuxtLink>
           <a
             class="bya-btn bya-btn--ghost"
@@ -265,7 +261,7 @@ function templateHref(filename: string) {
             rel="noopener noreferrer"
           >
             Reading map (README.md)
-            <span aria-hidden="true">↗</span>
+
           </a>
         </div>
       </div>
@@ -290,7 +286,7 @@ function templateHref(filename: string) {
             download="build-your-agents.zip"
           >
             Download all 7
-            <span aria-hidden="true">↓</span>
+
           </a>
           <p class="docs__bundle-zip-meta">
             <code class="docs__inline-code">build-your-agents.zip</code>
@@ -321,7 +317,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
         <div class="docs__bundle-cta">
           <NuxtLink class="bya-btn bya-btn--ghost" to="/">
             Back to overview
-            <span aria-hidden="true">↖</span>
+
           </NuxtLink>
           <a
             class="bya-btn bya-btn--ghost"
@@ -330,7 +326,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
             rel="noopener noreferrer"
           >
             Open SOUL.md raw
-            <span aria-hidden="true">↗</span>
+
           </a>
         </div>
       </div>
@@ -358,52 +354,10 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   position: relative;
   padding: 100px 0 0;
   overflow: hidden;
-  border-bottom: var(--stroke-fat) solid var(--ink);
-  background:
-    radial-gradient(780px 380px at 78% 8%, rgba(255, 61, 0, 0.16), transparent 58%),
-    radial-gradient(640px 360px at 12% 72%, rgba(37, 99, 255, 0.14), transparent 58%),
-    var(--paper);
+  border-bottom: var(--stroke-fat) solid var(--line);
+  background: var(--paper);
 }
 
-.docs__deco {
-  position: absolute;
-  font-family: var(--display);
-  text-transform: uppercase;
-  color: transparent;
-  -webkit-text-stroke: 2px var(--ink);
-  font-size: clamp(2.5rem, 8vw, 7rem);
-  letter-spacing: -0.02em;
-  pointer-events: none;
-  user-select: none;
-  opacity: 0.5;
-  z-index: 0;
-}
-.docs__deco--a {
-  top: 5%;
-  left: -3%;
-  transform: rotate(-7deg);
-}
-.docs__deco--b {
-  bottom: 22%;
-  right: -4%;
-  transform: rotate(5deg);
-  -webkit-text-stroke-color: var(--hot);
-}
-.docs__deco--c {
-  top: 10%;
-  right: 6%;
-  font-size: 5rem;
-  color: var(--lemon);
-  -webkit-text-stroke: 3px var(--ink);
-  transform: rotate(12deg);
-  opacity: 0.95;
-}
-.docs__deco--d {
-  bottom: 14%;
-  left: 4%;
-  -webkit-text-stroke-color: var(--grape);
-  opacity: 0.32;
-}
 
 .docs__hero-grid {
   display: grid;
@@ -418,20 +372,8 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 .docs__title {
   margin: 22px 0 26px;
 }
-.docs__title-accent {
-  display: inline-block;
-  background: var(--acid);
-  padding: 0 14px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 8px 8px 0 0 var(--ink);
-  transform: rotate(-1.4deg);
-  margin: 4px 0;
-}
-.docs__title-stamp {
-  display: inline-block;
-  color: var(--hot);
-  -webkit-text-stroke: 2px var(--ink);
-}
+.docs__title-accent { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
+.docs__title-stamp { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 
 .docs__lede {
   margin: 0 0 28px;
@@ -452,7 +394,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   font-family: var(--mono);
   font-size: 0.82em;
   padding: 2px 6px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
   background: var(--paper);
 }
 
@@ -480,11 +422,8 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 .docs__poster {
   width: 100%;
   max-width: 400px;
-  background: var(--paper);
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow-lg);
-  padding: 20px;
-  transform: rotate(2.2deg);
+  box-shadow: none;
+  transform: none;
 }
 .docs__poster-grid {
   display: grid;
@@ -497,13 +436,13 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   text-transform: uppercase;
   font-size: 0.88rem;
   padding: 12px 10px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 4px 4px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
   text-align: left;
 }
 .docs__poster-tag--hot {
   background: var(--hot);
-  color: var(--paper);
+  color: var(--ink);
 }
 .docs__poster-tag--sky {
   background: var(--sky);
@@ -514,7 +453,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 }
 .docs__poster-tag--pink {
   background: var(--pink);
-  color: var(--paper);
+  color: var(--ink);
 }
 .docs__poster-tag--acid {
   background: var(--acid);
@@ -547,7 +486,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   gap: 0;
   padding: 0;
   list-style: none;
-  border-top: var(--stroke-fat) solid var(--ink);
+  border-top: var(--stroke-fat) solid var(--line);
   background: var(--ink);
   color: var(--paper);
 }
@@ -577,7 +516,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 .docs__grid-wrap {
   padding: 72px 0 80px;
   background: var(--paper);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 .docs__section-head {
   margin-bottom: 44px;
@@ -589,11 +528,11 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 .docs__section-hl {
   display: inline-block;
   background: var(--pink);
-  color: var(--paper);
+  color: var(--ink);
   padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 6px 6px 0 0 var(--ink);
-  transform: rotate(-0.9deg);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
+  transform: none;
 }
 
 .docs__grid {
@@ -603,8 +542,8 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 }
 
 .docs__card {
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow-lg);
+  border: var(--stroke-fat) solid var(--line);
+  box-shadow: none;
   padding: 22px 22px 18px;
   display: flex;
   flex-direction: column;
@@ -613,7 +552,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 }
 .docs__card--hot {
   background: var(--hot);
-  color: var(--paper);
+  color: var(--ink);
 }
 .docs__card--sky {
   background: var(--sky);
@@ -625,7 +564,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 }
 .docs__card--pink {
   background: var(--pink);
-  color: var(--paper);
+  color: var(--ink);
 }
 .docs__card--acid {
   background: var(--acid);
@@ -688,34 +627,34 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 .bya-btn--on-color {
   background: var(--paper) !important;
   color: var(--ink) !important;
-  border-color: var(--ink) !important;
-  box-shadow: 4px 4px 0 0 var(--ink) !important;
+  border-color: var(--line) !important;
+  box-shadow: none;
 }
 .bya-btn--on-color:hover {
-  box-shadow: 7px 7px 0 0 var(--ink) !important;
+  box-shadow: none;
 }
 
 .bya-btn--ghost-on-color {
   background: rgba(246, 241, 228, 0.2) !important;
   color: var(--paper) !important;
   border-color: var(--paper) !important;
-  box-shadow: 4px 4px 0 0 var(--paper) !important;
+  box-shadow: none;
 }
 .docs__card--lemon .bya-btn--ghost-on-color,
 .docs__card--acid .bya-btn--ghost-on-color {
   color: var(--ink) !important;
-  border-color: var(--ink) !important;
-  box-shadow: 4px 4px 0 0 var(--ink) !important;
+  border-color: var(--line) !important;
+  box-shadow: none;
   background: rgba(10, 10, 10, 0.08) !important;
 }
 .bya-btn--ghost-on-color:hover {
-  box-shadow: 7px 7px 0 0 currentColor !important;
+  box-shadow: none;
 }
 
 .docs__copy-btn.is-copied {
   background: var(--acid) !important;
   color: var(--ink) !important;
-  border-color: var(--ink) !important;
+  border-color: var(--line) !important;
 }
 
 /* Preview panel (FileCard-style) */
@@ -724,11 +663,11 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   display: flex;
   flex-direction: column;
   gap: 0;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 .docs__card--lemon .docs__src,
 .docs__card--acid .docs__src {
-  border-color: var(--ink);
+  border-color: var(--line);
 }
 
 .docs__src-toggle {
@@ -777,7 +716,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 }
 
 .docs__src-body {
-  border-top: 2px solid var(--ink);
+  border-top: 2px solid var(--line);
   overflow: hidden;
 }
 .docs__src-bar {
@@ -836,26 +775,15 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 /* ----- Start CTA ----- */
 .docs__start {
   padding: 72px 0 88px;
-  background:
-    radial-gradient(520px 260px at 88% 0%, rgba(200, 255, 0, 0.28), transparent 55%),
-    var(--paper-2);
-  border-bottom: var(--stroke-fat) solid var(--ink);
-}
-.docs__start-inner {
-  max-width: 720px;
-}
-.docs__start-inner .bya-eyebrow {
-  margin-bottom: 12px;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
 }
 .docs__start-hl {
   display: inline-block;
   background: var(--acid);
   padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 6px 6px 0 0 var(--ink);
-  transform: rotate(-0.85deg);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
+  transform: none;
 }
 .docs__start-lede {
   font-family: var(--mono);
@@ -876,7 +804,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   padding: 64px 0 96px;
   background: var(--ink);
   color: var(--paper);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 .docs__bundle-inner {
   max-width: 800px;
@@ -895,8 +823,8 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   background: var(--hot);
   padding: 0 12px;
   border: var(--stroke) solid var(--paper);
-  box-shadow: 6px 6px 0 0 var(--lemon);
-  transform: rotate(-0.9deg);
+  box-shadow: none;
+  transform: none;
 }
 .docs__bundle-lede {
   font-family: var(--mono);
@@ -915,22 +843,22 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   background: var(--paper);
   color: var(--ink);
   border: var(--stroke-fat) solid var(--paper);
-  box-shadow: 8px 8px 0 0 var(--hot);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   gap: 12px;
   align-items: flex-start;
   max-width: 560px;
-  transform: rotate(-0.6deg);
+  transform: none;
 }
 .docs__bundle-zip-btn {
   background: var(--hot);
-  color: var(--paper);
-  border-color: var(--ink);
-  box-shadow: 6px 6px 0 0 var(--ink);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: none;
 }
 .docs__bundle-zip-btn:hover {
-  box-shadow: 10px 10px 0 0 var(--ink);
+  box-shadow: none;
 }
 .docs__bundle-zip-meta {
   font-family: var(--mono);
@@ -941,7 +869,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
 }
 .docs__bundle-zip-meta .docs__inline-code {
   background: rgba(10, 10, 10, 0.08);
-  border-color: var(--ink);
+  border-color: var(--line);
   color: var(--ink);
 }
 .docs__bundle-sub {
@@ -976,10 +904,10 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
   background: transparent;
   color: var(--paper);
   border-color: var(--paper);
-  box-shadow: 4px 4px 0 0 var(--paper);
+  box-shadow: none;
 }
 .docs__bundle .bya-btn--ghost:hover {
-  box-shadow: 7px 7px 0 0 var(--paper);
+  box-shadow: none;
 }
 
 @media (max-width: 920px) {
@@ -988,7 +916,7 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
     gap: 36px;
   }
   .docs__poster {
-    transform: rotate(1deg);
+    transform: none;
     margin-inline: auto;
   }
   .docs__stats {
@@ -999,4 +927,15 @@ BASE=<span class="c-str">"{{ siteOrigin }}"</span>
     border-top: var(--stroke-fat) solid var(--paper);
   }
 }
+
+.docs__hero { padding-top: 70px; }
+.docs__title { font-size: clamp(62px, 9vw, 132px); }
+.docs__poster { border: 0; background: var(--lemon); border-radius: 100px 100px 24px 24px; padding: 48px 24px 30px; }
+.docs__tag { border: 0; border-radius: 48px; font-family: var(--body); font-size: 13px; font-weight: 800; }
+.docs__card { border-radius: 28px; overflow: hidden; border-width: 1px; }
+.docs__card-title { font-family: var(--body); font-weight: 800; }
+.docs__bundle .bya-btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.docs__bundle .bya-btn:hover { background: var(--lemon); }
+@media (max-width: 600px) { .docs__hero { padding-top: 40px; } .docs__title { font-size: clamp(50px, 14vw, 80px); } }
+
 </style>

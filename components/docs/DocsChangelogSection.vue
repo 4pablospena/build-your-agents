@@ -74,17 +74,11 @@ const byDate = computed(() => {
 .dcl {
   padding: 72px 0;
   background: var(--paper);
-  border-top: var(--stroke-fat) solid var(--ink);
+  border-top: var(--stroke-fat) solid var(--line);
   scroll-margin-top: 5.5rem;
 }
 .dcl__head { margin-bottom: 32px; max-width: 720px; }
-.dcl__hl {
-  display: inline-block;
-  background: var(--grape);
-  color: var(--paper);
-  padding: 0 10px;
-  border: var(--stroke) solid var(--ink);
-}
+.dcl__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 .dcl__lede {
   font-family: var(--mono);
   font-size: 0.84rem;

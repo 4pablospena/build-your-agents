@@ -53,7 +53,7 @@ const { decisionRules: rules, toolPriority: priority } = useDecisionRules()
 .rules {
   padding: 96px 0;
   background: var(--paper);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 .rules__grid {
   display: grid;
@@ -63,23 +63,15 @@ const { decisionRules: rules, toolPriority: priority } = useDecisionRules()
 }
 
 .rules__title { margin: 14px 0 12px; }
-.rules__hl {
-  display: inline-block;
-  background: var(--sky);
-  color: var(--paper);
-  padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 6px 6px 0 0 var(--ink);
-  transform: rotate(-1deg);
-}
+.rules__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 
 .rules__table {
   margin-top: 28px;
   width: 100%;
   border-collapse: collapse;
-  border: var(--stroke-fat) solid var(--ink);
+  border: var(--stroke-fat) solid var(--line);
   background: var(--paper);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   table-layout: fixed;
 }
 .rules__table thead tr {
@@ -101,7 +93,7 @@ const { decisionRules: rules, toolPriority: priority } = useDecisionRules()
 }
 
 .rules__tr {
-  border-top: var(--stroke) solid var(--ink);
+  border-top: var(--stroke) solid var(--line);
 }
 .rules__when,
 .rules__do {
@@ -113,7 +105,7 @@ const { decisionRules: rules, toolPriority: priority } = useDecisionRules()
 .rules__when {
   font-weight: 700;
   background: var(--lemon);
-  border-right: var(--stroke) solid var(--ink);
+  border-right: var(--stroke) solid var(--line);
   width: 38%;
 }
 .rules__tr:nth-child(odd) .rules__when {
@@ -127,12 +119,12 @@ const { decisionRules: rules, toolPriority: priority } = useDecisionRules()
 .rules__priority {
   position: sticky;
   top: 6rem;
-  border: var(--stroke-fat) solid var(--ink);
+  border: var(--stroke-fat) solid var(--line);
   background: var(--hot);
-  color: var(--paper);
+  color: var(--ink);
   padding: 24px;
-  box-shadow: var(--shadow-lg);
-  transform: rotate(1.5deg);
+  box-shadow: none;
+  transform: none;
 }
 .rules__priority .bya-chip {
   background: var(--paper);
@@ -154,7 +146,7 @@ const { decisionRules: rules, toolPriority: priority } = useDecisionRules()
   padding: 12px;
   background: var(--paper);
   color: var(--ink);
-  border: var(--stroke) solid var(--ink);
+  border: var(--stroke) solid var(--line);
 }
 .rules__rank {
   font-family: var(--display);

@@ -14,11 +14,11 @@ const props = withDefaults(
 )
 
 const { byId } = useAgentFiles()
-const graph = useFileGraph()
-const wizard = useFilePlacementWizard()
+const graph = reactive(useFileGraph())
+const wizard = reactive(useFilePlacementWizard())
 
 function chipStyle(color: string) {
-  const onPaper = ['lemon', 'acid'].includes(color)
+  const onPaper = ['lemon', 'acid', 'hot', 'pink'].includes(color)
   return {
     background: `var(--${color})`,
     color: onPaper ? 'var(--ink)' : 'var(--paper)'
@@ -80,7 +80,7 @@ function resultHref(fileId: AgentFileId) {
                 graph.readsIds.map((id) => byId(id)?.filename).join(', ')
               }}</strong>
             </template>
-            <template v-else>standalone — nothing listed in reads ↳</template>
+            <template v-else>standalone — nothing listed in reads </template>
             <template v-if="graph.readByIds.length">
               · read by
               <strong>{{
@@ -182,7 +182,7 @@ function resultHref(fileId: AgentFileId) {
           </ol>
           <p v-else class="fgraph__empty">
             No strong match — try a decision-rule chip or different keywords
-            (personality → SOUL, cron → HEARTBEAT, MCP → TOOLS).
+            (personality SOUL, cron HEARTBEAT, MCP TOOLS).
           </p>
         </div>
       </div>
@@ -194,7 +194,7 @@ function resultHref(fileId: AgentFileId) {
 .fgraph {
   padding: 72px 0;
   background: var(--paper-2);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
   scroll-margin-top: 5.5rem;
 }
 .fgraph__head {
@@ -204,14 +204,7 @@ function resultHref(fileId: AgentFileId) {
 .fgraph__head .bya-eyebrow {
   margin-bottom: 12px;
 }
-.fgraph__hl {
-  display: inline-block;
-  background: var(--acid);
-  padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 5px 5px 0 0 var(--ink);
-  transform: rotate(-0.8deg);
-}
+.fgraph__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 .fgraph__lede {
   font-family: var(--mono);
   font-size: 0.86rem;
@@ -226,7 +219,7 @@ function resultHref(fileId: AgentFileId) {
   font-size: 0.9em;
   padding: 1px 5px;
   background: var(--paper);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 
 .fgraph__explorer {
@@ -237,9 +230,9 @@ function resultHref(fileId: AgentFileId) {
   gap: 14px;
   padding: 14px 18px;
   margin-bottom: 28px;
-  border: var(--stroke-fat) solid var(--ink);
+  border: var(--stroke-fat) solid var(--line);
   background: var(--lemon);
-  box-shadow: var(--shadow);
+  box-shadow: none;
 }
 .fgraph__explorer-main {
   display: flex;
@@ -252,8 +245,8 @@ function resultHref(fileId: AgentFileId) {
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 3px 3px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
   font-family: var(--display);
   text-transform: uppercase;
   font-size: 0.88rem;
@@ -271,19 +264,19 @@ function resultHref(fileId: AgentFileId) {
   text-transform: uppercase;
   padding: 8px 12px;
   background: var(--paper);
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 3px 3px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
   cursor: pointer;
 }
 .fgraph__clear:hover {
   background: var(--hot);
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .fgraph__wizard {
-  border: var(--stroke-fat) solid var(--ink);
+  border: var(--stroke-fat) solid var(--line);
   background: var(--paper);
-  box-shadow: var(--shadow-lg);
+  box-shadow: none;
   padding: 24px 22px;
 }
 .fgraph__wizard-title {
@@ -306,7 +299,7 @@ function resultHref(fileId: AgentFileId) {
   font-size: 0.86rem;
   line-height: 1.5;
   padding: 12px 14px;
-  border: var(--stroke) solid var(--ink);
+  border: var(--stroke) solid var(--line);
   background: var(--paper-2);
   resize: vertical;
   min-height: 88px;
@@ -338,7 +331,7 @@ function resultHref(fileId: AgentFileId) {
   font-family: var(--mono);
   font-size: 0.72rem;
   padding: 6px 10px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
   background: var(--paper-2);
   cursor: pointer;
   text-align: left;
@@ -346,7 +339,7 @@ function resultHref(fileId: AgentFileId) {
 .fgraph__chip--on {
   background: var(--sky);
   color: var(--paper);
-  box-shadow: 3px 3px 0 0 var(--ink);
+  box-shadow: none;
 }
 .fgraph__chip--prio {
   display: inline-flex;
@@ -362,7 +355,7 @@ function resultHref(fileId: AgentFileId) {
 .fgraph__results {
   margin-top: 22px;
   padding-top: 18px;
-  border-top: 2px dashed var(--ink);
+  border-top: 2px dashed var(--line);
 }
 .fgraph__results-head {
   display: flex;
@@ -378,7 +371,7 @@ function resultHref(fileId: AgentFileId) {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 4px 8px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
   background: transparent;
   cursor: pointer;
 }
@@ -395,8 +388,8 @@ function resultHref(fileId: AgentFileId) {
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 4px 4px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
   text-decoration: none;
   font-family: var(--display);
   text-transform: uppercase;
@@ -405,7 +398,7 @@ function resultHref(fileId: AgentFileId) {
 }
 .fgraph__result-link:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 0 var(--ink);
+  box-shadow: none;
 }
 .fgraph__result-score {
   font-family: var(--mono);
@@ -423,7 +416,7 @@ function resultHref(fileId: AgentFileId) {
   margin: 2px 4px 2px 0;
   padding: 2px 6px;
   background: var(--lemon);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 .fgraph__result-reasons {
   margin: 0;

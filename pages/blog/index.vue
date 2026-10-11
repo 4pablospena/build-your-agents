@@ -81,19 +81,19 @@ function pageQuery(target: number) {
     <AppHeader active="blog-page" />
 
     <main class="mx-auto w-full max-w-6xl px-4 pb-20 pt-8 sm:px-6 lg:px-8">
-      <div class="mb-10 flex flex-col gap-6 border-b-[3px] border-ink pb-8 sm:flex-row sm:items-end sm:justify-between">
+      <div class="mb-10 flex flex-col gap-6 border-b border-line pb-8 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p class="font-mono text-xs uppercase tracking-[0.25em] text-ink/70">Journal</p>
-          <h1 class="mt-2 font-display text-4xl text-ink sm:text-5xl">Blog</h1>
+          <h1 class="mt-2 font-display text-[clamp(80px,12vw,160px)] uppercase leading-none font-normal text-ink">Field notes.</h1>
           <p class="mt-3 max-w-xl font-serif text-base leading-relaxed text-ink/90">
             Longer notes on agents, specs, and practice. Filter by tag or search titles and descriptions.
           </p>
         </div>
         <NuxtLink
           to="/"
-          class="inline-flex items-center gap-2 self-start rounded border-2 border-ink bg-paper-2 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wide hover:bg-hot hover:text-paper"
+          class="inline-flex items-center gap-2 self-start rounded border border-line bg-paper-2 px-4 py-2 font-mono text-xs font-bold uppercase tracking-wide hover:bg-hot hover:text-paper"
         >
-          ← Back to site
+          Back to site
         </NuxtLink>
       </div>
 
@@ -104,19 +104,19 @@ function pageQuery(target: number) {
             v-model="qInput"
             type="search"
             autocomplete="off"
-            class="rounded border-2 border-ink bg-paper px-3 py-2 font-mono text-sm text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-sky"
+            class="rounded border border-line bg-paper px-3 py-2 font-mono text-sm text-ink placeholder:text-ink/40 focus:outline-none focus:ring-2 focus:ring-sky"
             placeholder="Title or description…"
             @input="scheduleSearch"
           />
         </label>
         <div v-if="tag" class="flex items-center gap-2 font-mono text-sm">
           <span>Filtered by</span>
-          <span class="rounded border-2 border-ink bg-lemon px-2 py-1 font-bold">{{ tag }}</span>
+          <span class="rounded border border-line bg-lemon px-2 py-1 font-bold">{{ tag }}</span>
           <NuxtLink to="/blog" class="underline decoration-2 underline-offset-2 hover:text-sky"> Clear </NuxtLink>
         </div>
       </div>
 
-      <p v-if="!paged.length" class="rounded border-2 border-dashed border-ink/40 bg-paper-2 px-4 py-8 text-center font-mono text-sm text-ink/80">
+      <p v-if="!paged.length" class="rounded border border-dashed border-line/40 bg-paper-2 px-4 py-8 text-center font-mono text-sm text-ink/80">
         No posts match. Try another search or
         <NuxtLink class="font-bold underline" to="/blog">reset filters</NuxtLink>.
       </p>
@@ -132,23 +132,23 @@ function pageQuery(target: number) {
 
       <nav
         v-if="totalPages > 1"
-        class="mt-12 flex flex-wrap items-center justify-center gap-3 border-t-[3px] border-ink pt-8 font-mono text-sm"
+        class="mt-12 flex flex-wrap items-center justify-center gap-3 border-t-[3px] border-line pt-8 font-mono text-sm"
         aria-label="Pagination"
       >
         <NuxtLink
           v-if="page > 1"
           :to="pageQuery(page - 1)"
-          class="rounded border-2 border-ink bg-paper px-3 py-2 hover:bg-acid"
+          class="rounded border border-line bg-paper px-3 py-2 hover:bg-acid"
         >
-          ← Newer
+          Newer
         </NuxtLink>
         <span class="px-2 text-ink/80"> Page {{ safePage }} / {{ totalPages }} </span>
         <NuxtLink
           v-if="page < totalPages"
           :to="pageQuery(page + 1)"
-          class="rounded border-2 border-ink bg-paper px-3 py-2 hover:bg-acid"
+          class="rounded border border-line bg-paper px-3 py-2 hover:bg-acid"
         >
-          Older →
+          Older
         </NuxtLink>
       </nav>
     </main>

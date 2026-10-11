@@ -28,193 +28,55 @@ function closeMenu() {
   menuOpen.value = false
 }
 
-onMounted(() => {
-  const onKey = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') closeMenu()
-  }
-  window.addEventListener('keydown', onKey)
-  onUnmounted(() => window.removeEventListener('keydown', onKey))
-})
+const onKey = (event: KeyboardEvent) => {
+  if (event.key === 'Escape') closeMenu()
+}
+onMounted(() => window.addEventListener('keydown', onKey))
+onUnmounted(() => window.removeEventListener('keydown', onKey))
 </script>
 
 <template>
   <header class="hdr">
     <div class="bya-container hdr__shell">
-      <NuxtLink class="hdr__brand" to="/#top" aria-label="Build your own agents">
-        <span class="hdr__mark" aria-hidden="true">◣◥</span>
-        <span class="hdr__name">build/your/agents</span>
+      <NuxtLink class="hdr__brand" to="/#top" aria-label="Build your own agents" @click="closeMenu">
+        BUILD/YOUR/AGENTS
       </NuxtLink>
-
-      <button
-        type="button"
-        class="hdr__menu-btn"
-        :aria-expanded="menuOpen"
-        :aria-controls="NAV_ID"
-        :aria-label="menuOpen ? 'Close menu' : 'Open menu'"
-        @click="toggleMenu"
-      >
-        <span class="hdr__menu-icon" aria-hidden="true" />
+      <button type="button" class="hdr__menu-btn" :aria-expanded="menuOpen" :aria-controls="NAV_ID" @click="toggleMenu">
+        {{ menuOpen ? 'Close' : 'Menu' }}
       </button>
-
-      <nav
-        :id="NAV_ID"
-        class="hdr__nav"
-        :class="{ 'is-open': menuOpen }"
-        aria-label="Primary"
-      >
-        <NuxtLink
-          v-for="l in headerLinks"
-          :key="l.id"
-          :to="l.to"
-          :class="['hdr__link', { 'is-active': active === l.id }]"
-          @click="closeMenu"
-        >
-          {{ l.label }}
+      <nav :id="NAV_ID" class="hdr__nav" :class="{ 'is-open': menuOpen }" aria-label="Primary">
+        <NuxtLink v-for="link in headerLinks" :key="link.id" :to="link.to" :class="['hdr__link', { 'is-active': active === link.id }]" :aria-current="active === link.id ? 'page' : undefined" @click="closeMenu">
+          {{ link.label }}
         </NuxtLink>
       </nav>
-
-      <NuxtLink class="bya-btn hdr__cta" to="/configure" @click="closeMenu">
-        <span>Build agent</span>
-        <span aria-hidden="true">→</span>
-      </NuxtLink>
+      <NuxtLink class="bya-btn hdr__cta" to="/configure" @click="closeMenu">Build agent</NuxtLink>
     </div>
   </header>
 </template>
 
 <style scoped>
-.hdr {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--paper);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+.hdr { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 1px solid var(--ink); }
+.hdr__shell { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 20px; min-height: 84px; }
+.hdr__brand { font-family: var(--display); font-size: 26px; letter-spacing: -.02em; line-height: 1; text-decoration: none; }
+.hdr__nav { display: flex; justify-content: center; gap: 4px; }
+.hdr__link { padding: 9px 14px; border-radius: 48px; font-size: 13px; font-weight: 700; text-decoration: none; transition: background 150ms ease, color 150ms ease; }
+.hdr__link:hover { background: var(--lemon); }
+.hdr__link.is-active { background: var(--ink); color: var(--paper); }
+.hdr__cta { padding: 12px 24px; min-height: 44px; font-size: 13px; }
+.hdr__menu-btn { display: none; border: 1px solid currentColor; background: transparent; color: var(--ink); border-radius: 48px; min-height: 44px; padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer; }
+@media (max-width: 1000px) {
+  .hdr__shell { grid-template-columns: 1fr auto auto; gap: 12px; min-height: 76px; padding-block: 12px; }
+  .hdr__menu-btn { display: block; }
+  .hdr__nav { display: none; grid-column: 1 / -1; grid-row: 2; flex-wrap: wrap; justify-content: flex-start; padding-block: 12px; border-top: 1px solid var(--line); }
+  .hdr__nav.is-open { display: flex; animation: menu-open 150ms ease both; }
+  .hdr__cta { grid-column: 3; grid-row: 1; }
 }
-.hdr__shell {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: auto auto;
-  align-items: center;
-  column-gap: 24px;
-  row-gap: 0;
-  padding: 14px 0;
-}
-.hdr__brand {
-  grid-column: 1;
-  grid-row: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  font-family: var(--display);
-  text-transform: uppercase;
-  font-size: 1rem;
-  letter-spacing: 0.02em;
-  color: inherit;
-}
-.hdr__menu-btn {
-  display: none;
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: end;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  background: var(--paper);
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 3px 3px 0 0 var(--ink);
-  cursor: pointer;
-}
-.hdr__menu-icon {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--ink);
-  box-shadow: 0 -6px 0 var(--ink), 0 6px 0 var(--ink);
-}
-.hdr__mark {
-  display: inline-block;
-  background: var(--hot);
-  color: var(--paper);
-  padding: 6px 8px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 3px 3px 0 0 var(--ink);
-}
-.hdr__name { font-family: var(--mono); font-size: 0.92rem; }
-
-.hdr__nav {
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: center;
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-  flex-wrap: wrap;
-  max-width: 100%;
-}
-.hdr__cta {
-  grid-column: 3;
-  grid-row: 1;
-}
-.hdr__link {
-  font-family: var(--mono);
-  text-transform: uppercase;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  padding: 8px 10px;
-  border: var(--stroke) solid transparent;
-  text-decoration: none;
-  color: var(--ink);
-}
-.hdr__link:hover {
-  background: var(--acid);
-  border-color: var(--ink);
-}
-.hdr__link.is-active {
-  background: var(--ink);
-  color: var(--paper);
-}
-
-.hdr__cta { padding: 10px 16px; font-size: 0.82rem; }
-
-@media (max-width: 920px) {
-  .hdr__shell {
-    grid-template-columns: 1fr auto auto;
-    column-gap: 12px;
-  }
-  .hdr__menu-btn {
-    display: inline-flex;
-  }
-  .hdr__nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-self: stretch;
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    margin-top: 14px;
-    padding-top: 8px;
-    border-top: var(--stroke) solid var(--ink);
-  }
-  .hdr__nav.is-open {
-    display: flex;
-  }
-  .hdr__link {
-    padding: 14px 12px;
-    border: none;
-    border-bottom: 2px solid var(--paper-2);
-    font-size: 0.8rem;
-  }
-  .hdr__link:last-of-type {
-    border-bottom: none;
-  }
-}
-
-@media (min-width: 921px) {
-  .hdr__nav {
-    display: flex !important;
-  }
+@keyframes menu-open { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@media (max-width: 520px) {
+  .hdr__brand { font-size: 21px; }
+  .hdr__shell { grid-template-columns: 1fr auto; }
+  .hdr__cta { display: none; }
+  .hdr__nav { gap: 8px; }
+  .hdr__link { flex: 1 0 25%; text-align: center; }
 }
 </style>

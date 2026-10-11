@@ -127,10 +127,11 @@ const previewMd = computed(() => {
         :class="{ 'cfg__nav-export--on': showExport }"
         @click="showExport = !showExport"
       >
-        Export ↗
+        Export
       </button>
     </nav>
 
+    <Transition name="panel">
     <section v-if="showExport" class="cfg__export">
       <h2 class="cfg__export-title">Export markdown</h2>
       <p class="cfg__export-lede">
@@ -195,15 +196,18 @@ const previewMd = computed(() => {
         class="cfg__reset"
         @click="resetDraft"
       >
-        Clear saved draft ↺
+        Clear saved draft
       </button>
     </section>
 
-    <div v-if="viewMode === 'guide'" class="cfg__main bya-container">
+    </Transition>
+
+    <Transition name="step" mode="out-in">
+    <div v-if="viewMode === 'guide'" key="guide" class="cfg__main bya-container">
       <ConfiguratorGuide :filled="filled" @open-step="openStepByFileId" />
     </div>
 
-    <div v-else class="cfg__main bya-container">
+    <div v-else :key="section.id" class="cfg__main bya-container">
       <header class="cfg__section-head">
         <span
           class="cfg__badge"
@@ -235,7 +239,7 @@ const previewMd = computed(() => {
             [`cfg__field--${section.color}`]: (sectionAnswers[q.id] ?? '').trim().length > 0
           }"
         >
-          <legend class="cfg__field-label">
+          <legend :id="`${section.id}-${q.id}-label`" class="cfg__field-label">
             <span class="cfg__field-num" aria-hidden="true">
               {{ (sectionAnswers[q.id] ?? '').trim() ? '✓' : String(qi + 1).padStart(2, '0') }}
             </span>
@@ -245,6 +249,7 @@ const previewMd = computed(() => {
           <select
             v-if="q.type === 'select'"
             :id="`${section.id}-${q.id}`"
+            :aria-labelledby="`${section.id}-${q.id}-label`"
             class="cfg__input cfg__select"
             :value="sectionAnswers[q.id] ?? ''"
             @change="handleChange(q.id, ($event.target as HTMLSelectElement).value)"
@@ -255,6 +260,7 @@ const previewMd = computed(() => {
           <textarea
             v-else-if="q.multiline"
             :id="`${section.id}-${q.id}`"
+            :aria-labelledby="`${section.id}-${q.id}-label`"
             class="cfg__input cfg__textarea"
             :value="sectionAnswers[q.id] ?? ''"
             :placeholder="q.placeholder"
@@ -264,6 +270,7 @@ const previewMd = computed(() => {
           <input
             v-else
             :id="`${section.id}-${q.id}`"
+            :aria-labelledby="`${section.id}-${q.id}-label`"
             type="text"
             class="cfg__input"
             :value="sectionAnswers[q.id] ?? ''"
@@ -273,6 +280,8 @@ const previewMd = computed(() => {
         </fieldset>
       </form>
     </div>
+
+    </Transition>
 
     <footer
       class="cfg__footer"
@@ -285,7 +294,7 @@ const previewMd = computed(() => {
           :disabled="current === 0"
           @click="prev"
         >
-          ← Previous
+          Previous
         </button>
         <p class="cfg__footer-meta">
           <span :class="`cfg__footer-step cfg__footer-step--${section.color}`">{{ current + 1 }}</span>
@@ -297,7 +306,7 @@ const previewMd = computed(() => {
           :class="`cfg__footer-btn--${section.color}`"
           @click="next"
         >
-          {{ current < sections.length - 1 ? 'Next →' : 'Export ↗' }}
+          {{ current < sections.length - 1 ? 'Next' : 'Export' }}
         </button>
       </template>
       <template v-else>
@@ -306,7 +315,7 @@ const previewMd = computed(() => {
           class="cfg__footer-btn cfg__footer-btn--ghost"
           @click="viewMode = 'form'"
         >
-          ← Questionnaire
+          Questionnaire
         </button>
         <p class="cfg__footer-meta">Fill order · 7 steps</p>
         <button
@@ -314,7 +323,7 @@ const previewMd = computed(() => {
           class="cfg__footer-btn cfg__footer-btn--lemon"
           @click="showExport = true"
         >
-          Export ↗
+          Export
         </button>
       </template>
     </footer>
@@ -344,9 +353,6 @@ const previewMd = computed(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
-  background: var(--ink);
-  color: var(--paper);
   border-bottom: var(--stroke-fat) solid var(--hot);
 }
 .cfg__header--hot { border-bottom-color: var(--hot); }
@@ -368,7 +374,6 @@ const previewMd = computed(() => {
 .cfg__header-title {
   margin: 4px 0 0;
   font-family: var(--display);
-  font-size: 1.15rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -383,7 +388,6 @@ const previewMd = computed(() => {
 }
 .cfg__header-stat-value {
   font-family: var(--display);
-  font-size: 1.6rem;
   line-height: 1;
 }
 
@@ -405,36 +409,23 @@ const previewMd = computed(() => {
 
 .cfg__modes {
   display: flex;
-  gap: 0;
-  background: var(--ink);
-  border-bottom: 2px solid #222;
 }
 .cfg__mode {
-  flex: 1;
-  padding: 10px 16px;
   font-family: var(--mono);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   background: transparent;
-  color: #666;
-  border: none;
-  border-right: 2px solid #333;
+  border-right: 2px solid var(--line);
   cursor: pointer;
-}
-.cfg__mode--on {
-  background: var(--paper);
-  color: var(--ink);
 }
 
 .cfg__nav {
   display: flex;
-  gap: 8px;
   overflow-x: auto;
   padding: 8px 24px;
-  background: var(--ink);
-  border-bottom: 2px solid #222;
+  border-bottom: 2px solid var(--line);
 }
 .cfg__nav-btn {
   flex-shrink: 0;
@@ -445,8 +436,8 @@ const previewMd = computed(() => {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background: transparent;
-  color: #666;
-  border: 2px solid #333;
+  color: var(--muted);
+  border: 2px solid var(--line);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -454,15 +445,15 @@ const previewMd = computed(() => {
 .cfg__nav-btn--hot:not(.cfg__nav-btn--active):hover { border-color: var(--hot); color: var(--hot); }
 .cfg__nav-btn--active.cfg__nav-btn--sky { background: var(--sky); color: var(--paper); border-color: var(--sky); }
 .cfg__nav-btn--active.cfg__nav-btn--lemon { background: var(--lemon); color: var(--ink); border-color: var(--lemon); }
-.cfg__nav-btn--active.cfg__nav-btn--pink { background: var(--pink); color: var(--paper); border-color: var(--pink); }
+.cfg__nav-btn--active.cfg__nav-btn--pink { background: var(--pink); color: var(--ink); border-color: var(--pink); }
 .cfg__nav-btn--active.cfg__nav-btn--acid { background: var(--acid); color: var(--ink); border-color: var(--acid); }
 .cfg__nav-btn--active.cfg__nav-btn--grape { background: var(--grape); color: var(--paper); border-color: var(--grape); }
 .cfg__nav-btn--active.cfg__nav-btn--ink { background: var(--lemon); color: var(--ink); border-color: var(--lemon); }
 .cfg__nav-btn--sky:not(.cfg__nav-btn--active) { color: var(--sky); border-color: var(--sky); }
 .cfg__nav-btn--hot:not(.cfg__nav-btn--active) { color: var(--hot); border-color: var(--hot); }
-.cfg__nav-btn--lemon:not(.cfg__nav-btn--active) { color: var(--lemon); border-color: var(--lemon); }
+.cfg__nav-btn--lemon:not(.cfg__nav-btn--active) { color: var(--accent); border-color: var(--lemon); }
 .cfg__nav-btn--pink:not(.cfg__nav-btn--active) { color: var(--pink); border-color: var(--pink); }
-.cfg__nav-btn--acid:not(.cfg__nav-btn--active) { color: var(--acid); border-color: var(--acid); }
+.cfg__nav-btn--acid:not(.cfg__nav-btn--active) { color: var(--accent); border-color: var(--acid); }
 .cfg__nav-btn--grape:not(.cfg__nav-btn--active) { color: var(--grape); border-color: var(--grape); }
 
 .cfg__nav-export {
@@ -475,7 +466,7 @@ const previewMd = computed(() => {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background: transparent;
-  color: var(--lemon);
+  color: var(--accent);
   border: 2px solid var(--lemon);
   cursor: pointer;
 }
@@ -487,17 +478,15 @@ const previewMd = computed(() => {
 .cfg__export {
   margin: 16px 24px;
   padding: 20px;
-  background: var(--ink);
-  color: var(--paper);
-  border: var(--stroke-fat) solid var(--lemon);
-  box-shadow: var(--shadow);
+  color: var(--ink);
+  box-shadow: none;
 }
 .cfg__export-title {
   margin: 0 0 8px;
   font-family: var(--display);
   font-size: 0.95rem;
   text-transform: uppercase;
-  color: var(--lemon);
+  color: var(--accent);
 }
 .cfg__export-lede {
   margin: 0 0 14px;
@@ -507,7 +496,7 @@ const previewMd = computed(() => {
   opacity: 0.9;
 }
 .cfg__export-lede :deep(a) {
-  color: var(--acid);
+  color: var(--accent);
   font-weight: 700;
 }
 .cfg__export-actions {
@@ -526,16 +515,16 @@ const previewMd = computed(() => {
   padding: 8px 14px;
   background: var(--acid);
   color: var(--ink);
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 3px 3px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
   cursor: pointer;
 }
 .cfg__btn--lemon { background: var(--lemon); }
 .cfg__btn--ghost {
   background: transparent;
-  color: var(--paper);
-  border-color: var(--paper);
-  box-shadow: 3px 3px 0 0 var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: none;
 }
 .cfg__validation {
   list-style: none;
@@ -549,16 +538,16 @@ const previewMd = computed(() => {
 }
 .cfg__validation li {
   padding: 4px 8px;
-  border: 2px solid #444;
+  border: 2px solid var(--line);
 }
-.cfg__validation--ok { border-color: var(--acid); color: var(--acid); }
+.cfg__validation--ok { border-color: var(--acid); color: var(--accent); }
 .cfg__validation--warn { border-color: var(--hot); color: var(--hot); }
 .cfg__validation-note {
   margin: 0 0 12px;
   font-family: var(--mono);
   font-size: 0.74rem;
 }
-.cfg__validation-note--ok { color: var(--acid); }
+.cfg__validation-note--ok { color: var(--accent); }
 .cfg__preview {
   margin: 0;
   padding: 14px;
@@ -569,7 +558,7 @@ const previewMd = computed(() => {
   line-height: 1.55;
   background: #0a0a0a;
   color: var(--acid);
-  border: 2px solid #333;
+  border: 2px solid var(--line);
 }
 .cfg__reset {
   margin-top: 12px;
@@ -578,8 +567,8 @@ const previewMd = computed(() => {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background: transparent;
-  color: var(--paper);
-  border: 2px solid #555;
+  color: var(--ink);
+  border: 2px solid var(--line);
   padding: 6px 10px;
   cursor: pointer;
 }
@@ -596,21 +585,17 @@ const previewMd = computed(() => {
   margin-bottom: 28px;
 }
 .cfg__badge {
-  width: 52px;
-  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--display);
-  font-size: 1rem;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 4px 4px 0 0 var(--ink);
+  box-shadow: none;
   flex-shrink: 0;
 }
-.cfg__badge--hot { background: var(--hot); color: var(--paper); }
+.cfg__badge--hot { background: var(--hot); color: var(--ink); }
 .cfg__badge--sky { background: var(--sky); color: var(--paper); }
 .cfg__badge--lemon { background: var(--lemon); color: var(--ink); }
-.cfg__badge--pink { background: var(--pink); color: var(--paper); }
+.cfg__badge--pink { background: var(--pink); color: var(--ink); }
 .cfg__badge--acid { background: var(--acid); color: var(--ink); }
 .cfg__badge--grape { background: var(--grape); color: var(--paper); }
 .cfg__badge--ink { background: var(--ink); color: var(--paper); }
@@ -626,14 +611,13 @@ const previewMd = computed(() => {
 .cfg__section-title {
   margin: 4px 0 0;
   font-family: var(--display);
-  font-size: clamp(1.2rem, 3vw, 1.55rem);
   text-transform: uppercase;
   line-height: 1.1;
 }
 .cfg__section-sub {
   margin: 4px 0 0;
-  font-family: var(--serif);
-  font-style: italic;
+  font-family: var(--body);
+  font-style: normal;
   font-size: 0.95rem;
   opacity: 0.8;
 }
@@ -655,9 +639,9 @@ const previewMd = computed(() => {
 }
 .cfg__section-progress-val--hot { color: var(--hot); }
 .cfg__section-progress-val--sky { color: var(--sky); }
-.cfg__section-progress-val--lemon { color: var(--lemon); }
+.cfg__section-progress-val--lemon { color: var(--accent); }
 .cfg__section-progress-val--pink { color: var(--pink); }
-.cfg__section-progress-val--acid { color: var(--acid); }
+.cfg__section-progress-val--acid { color: var(--accent); }
 .cfg__section-progress-val--grape { color: var(--grape); }
 .cfg__section-progress-val--ink { color: var(--ink); }
 
@@ -671,22 +655,19 @@ const previewMd = computed(() => {
 }
 .cfg__field {
   margin: 0;
-  padding: 16px;
-  background: #fff;
-  border: var(--stroke) solid #ccc;
-  box-shadow: 4px 4px 0 0 #ccc;
+  box-shadow: none;
 }
 .cfg__field--filled {
-  border-color: var(--ink);
-  box-shadow: 4px 4px 0 0 var(--ink);
+  border-color: var(--line);
+  box-shadow: none;
 }
-.cfg__field--filled.cfg__field--hot { border-color: var(--hot); box-shadow: 4px 4px 0 0 var(--hot); }
-.cfg__field--filled.cfg__field--sky { border-color: var(--sky); box-shadow: 4px 4px 0 0 var(--sky); }
-.cfg__field--filled.cfg__field--lemon { border-color: var(--lemon); box-shadow: 4px 4px 0 0 var(--lemon); }
-.cfg__field--filled.cfg__field--pink { border-color: var(--pink); box-shadow: 4px 4px 0 0 var(--pink); }
-.cfg__field--filled.cfg__field--acid { border-color: var(--acid); box-shadow: 4px 4px 0 0 var(--acid); }
-.cfg__field--filled.cfg__field--grape { border-color: var(--grape); box-shadow: 4px 4px 0 0 var(--grape); }
-.cfg__field--filled.cfg__field--ink { border-color: var(--ink); box-shadow: 4px 4px 0 0 var(--ink); }
+.cfg__field--filled.cfg__field--hot { border-color: var(--hot); box-shadow: none; }
+.cfg__field--filled.cfg__field--sky { border-color: var(--sky); box-shadow: none; }
+.cfg__field--filled.cfg__field--lemon { border-color: var(--lemon); box-shadow: none; }
+.cfg__field--filled.cfg__field--pink { border-color: var(--pink); box-shadow: none; }
+.cfg__field--filled.cfg__field--acid { border-color: var(--acid); box-shadow: none; }
+.cfg__field--filled.cfg__field--grape { border-color: var(--grape); box-shadow: none; }
+.cfg__field--filled.cfg__field--ink { border-color: var(--line); box-shadow: none; }
 
 .cfg__field-label {
   display: flex;
@@ -694,8 +675,6 @@ const previewMd = computed(() => {
   gap: 10px;
   margin: 0 0 10px;
   padding: 0;
-  font-family: var(--display);
-  font-size: 0.78rem;
   line-height: 1.35;
   letter-spacing: 0.02em;
 }
@@ -708,24 +687,17 @@ const previewMd = computed(() => {
   justify-content: center;
   font-family: var(--mono);
   font-size: 0.65rem;
-  background: #eee;
-  color: #888;
-}
-.cfg__field--filled .cfg__field-num {
-  background: var(--ink);
-  color: var(--acid);
+  background: var(--paper-2);
+  color: var(--muted);
 }
 .cfg__input {
   width: 100%;
-  padding: 8px 10px;
-  font-family: var(--serif);
-  font-size: 0.9rem;
+  font-family: var(--body);
   background: var(--paper);
-  border: 2px solid #ccc;
   color: var(--ink);
   box-sizing: border-box;
 }
-.cfg__field--filled .cfg__input { border-color: var(--ink); }
+.cfg__field--filled .cfg__input { border-color: var(--line); }
 .cfg__textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
 .cfg__select {
   font-family: var(--mono);
@@ -741,9 +713,6 @@ const previewMd = computed(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
-  background: var(--ink);
-  color: var(--paper);
   border-top: var(--stroke-fat) solid var(--hot);
   z-index: 20;
 }
@@ -761,7 +730,6 @@ const previewMd = computed(() => {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 8px 16px;
   border: var(--stroke) solid var(--paper);
   cursor: pointer;
 }
@@ -771,12 +739,11 @@ const previewMd = computed(() => {
 }
 .cfg__footer-btn--ghost {
   background: transparent;
-  color: var(--paper);
 }
-.cfg__footer-btn--hot { background: var(--hot); color: var(--paper); border-color: var(--hot); }
+.cfg__footer-btn--hot { background: var(--hot); color: var(--ink); border-color: var(--hot); }
 .cfg__footer-btn--sky { background: var(--sky); color: var(--paper); border-color: var(--sky); }
 .cfg__footer-btn--lemon { background: var(--lemon); color: var(--ink); border-color: var(--lemon); }
-.cfg__footer-btn--pink { background: var(--pink); color: var(--paper); border-color: var(--pink); }
+.cfg__footer-btn--pink { background: var(--pink); color: var(--ink); border-color: var(--pink); }
 .cfg__footer-btn--acid { background: var(--acid); color: var(--ink); border-color: var(--acid); }
 .cfg__footer-btn--grape { background: var(--grape); color: var(--paper); border-color: var(--grape); }
 .cfg__footer-btn--ink { background: var(--lemon); color: var(--ink); border-color: var(--lemon); }
@@ -791,11 +758,11 @@ const previewMd = computed(() => {
 .cfg__footer-step { font-weight: 700; }
 .cfg__footer-step--hot { color: var(--hot); }
 .cfg__footer-step--sky { color: var(--sky); }
-.cfg__footer-step--lemon { color: var(--lemon); }
+.cfg__footer-step--lemon { color: var(--accent); }
 .cfg__footer-step--pink { color: var(--pink); }
-.cfg__footer-step--acid { color: var(--acid); }
+.cfg__footer-step--acid { color: var(--accent); }
 .cfg__footer-step--grape { color: var(--grape); }
-.cfg__footer-step--ink { color: var(--lemon); }
+.cfg__footer-step--ink { color: var(--accent); }
 
 @media (max-width: 640px) {
   .cfg__section-progress {
@@ -804,4 +771,43 @@ const previewMd = computed(() => {
     text-align: left;
   }
 }
+
+.cfg__header { padding: 28px 40px; background: var(--ink); color: var(--paper); }
+.cfg__header-title { font-size: 40px; line-height: 1.1; font-weight: 400; }
+.cfg__header-stat-value { font-size: 44px; }
+.cfg__modes { background: var(--paper); padding: 14px 24px; gap: 8px; border-bottom: 1px solid var(--ink); }
+.cfg__mode { flex: 0 1 auto; border: 1px solid var(--ink); border-radius: 80px; padding: 12px 24px; color: var(--ink); }
+.cfg__mode--on { background: var(--ink); color: var(--paper); }
+.cfg__nav { background: var(--paper); padding-block: 16px; gap: 8px; }
+.cfg__nav-btn, .cfg__nav-export { border-radius: 48px; padding: 10px 16px; border-width: 1px; color: var(--ink); }
+.cfg__nav-btn--active { background: var(--lemon); }
+.cfg__main { max-width: 960px; padding-block: 42px; }
+.cfg__section-title { font-size: clamp(32px, 5vw, 56px); font-weight: 400; }
+.cfg__badge { border-radius: 50%; width: 64px; height: 64px; font-size: 30px; border: none; }
+.cfg__field { border: 0; border-bottom: 1px solid var(--line); background: transparent; padding: 8px 0 22px; transition: border-color 150ms ease; }
+.cfg__field-label { font-family: var(--body); font-size: 15px; font-weight: 700; }
+.cfg__field-num { border-radius: 50%; }
+.cfg__input { min-height: 48px; padding: 14px 18px; border-radius: var(--radius-input); border: 1px solid var(--ink); font-size: 16px; transition: background 150ms ease, border-color 150ms ease; }
+.cfg__input:focus { background: #fffaf1; }
+.cfg__field--filled .cfg__field-num { background: var(--ink); color: var(--acid); }
+.cfg__footer { background: var(--ink); color: var(--paper); padding: 16px 24px; }
+.cfg__footer-btn { border-radius: 80px; padding: 12px 24px; min-height: 44px; border-width: 1px; transition: transform 150ms ease; }
+.cfg__footer-btn:active { transform: scale(.96); }
+.cfg__footer-btn--ghost { color: var(--paper); border-color: var(--paper); }
+.cfg__btn, .cfg__reset { border-radius: 48px; min-height: 44px; transition: transform 150ms ease; }
+.cfg__btn:active, .cfg__reset:active { transform: scale(.96); }
+.cfg__export { border-radius: 24px; background: var(--paper-2); border: 1px solid var(--ink); }
+@media (max-width: 600px) {
+  .cfg__header { padding: 24px 18px; }
+  .cfg__header-title { font-size: 32px; }
+  .cfg__main { padding-inline: 0; }
+  .cfg__footer { padding: 12px; gap: 10px; }
+  .cfg__footer-btn { padding: 10px 18px; }
+  .cfg__footer-meta { font-size: 10px; }
+  .cfg__export { margin-inline: 12px; padding: 18px; }
+}
+
+.cfg__section-progress-val { color: var(--ink); }
+.cfg__nav-btn--active.cfg__nav-btn--hot { background: var(--hot); color: var(--ink); }
+.cfg__footer-step { color: var(--lemon); }
 </style>

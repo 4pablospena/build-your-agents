@@ -20,7 +20,7 @@ const dateLabel = computed(() => {
 </script>
 
 <template>
-  <header class="border-b-[3px] border-ink pb-8">
+  <header class="border-b border-line pb-8">
     <p class="bya-eyebrow mb-4">Blog</p>
     <h1 class="font-display text-[clamp(1.75rem,5vw,3.25rem)] uppercase leading-[0.95] tracking-tight text-ink">
       {{ title }}
@@ -31,7 +31,7 @@ const dateLabel = computed(() => {
 
     <aside
       v-if="author || authorIntro"
-      class="relative mt-6 border-[3px] border-ink bg-paper-2 p-5 shadow-[6px_6px_0_0_#2563ff]"
+      class="relative mt-6 border border-line bg-paper-2 p-5 "
       aria-label="Author note"
     >
       <div class="absolute left-0 top-0 h-full w-1.5 bg-hot" aria-hidden="true" />
@@ -54,7 +54,7 @@ const dateLabel = computed(() => {
         v-for="t in tags"
         :key="t"
         :to="{ path: '/blog', query: { tag: t } }"
-        class="border-[3px] border-ink bg-sky px-2.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-paper shadow-[4px_4px_0_0_#0a0a0a] transition-transform hover:-translate-x-px hover:-translate-y-px hover:bg-ink hover:text-paper hover:shadow-[5px_5px_0_0_#ff3d00]"
+        class="border border-line bg-sky px-2.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide text-paper  transition-transform hover:-translate-x-px hover:-translate-y-px hover:bg-ink hover:text-paper "
       >
         {{ t }}
       </NuxtLink>

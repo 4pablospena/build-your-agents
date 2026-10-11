@@ -1,11 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <rect width="1200" height="630" fill="#f6f1e4"/>
-  <rect x="32" y="32" width="1136" height="566" fill="none" stroke="#0a0a0a" stroke-width="12"/>
-  <text x="72" y="260" fill="#0a0a0a" font-family="Georgia, Times New Roman, serif" font-size="68" font-weight="700">BUILD YOUR AGENTS</text>
-  <text x="72" y="340" fill="#0a0a0a" font-family="ui-monospace, Menlo, monospace" font-size="30">Seven files - one coherent agent - open spec</text>
-  <rect x="72" y="400" width="200" height="120" fill="#ff3d00" stroke="#0a0a0a" stroke-width="5"/>
-  <rect x="292" y="400" width="200" height="120" fill="#2563ff" stroke="#0a0a0a" stroke-width="5"/>
-  <rect x="512" y="400" width="200" height="120" fill="#ffd60a" stroke="#0a0a0a" stroke-width="5"/>
-  <rect x="732" y="400" width="200" height="120" fill="#c8ff00" stroke="#0a0a0a" stroke-width="5"/>
-  <rect x="952" y="400" width="176" height="120" fill="#0a0a0a" stroke="#0a0a0a" stroke-width="5"/>
+  <rect width="1200" height="630" fill="#ebe4d8"/>
+  <text x="60" y="64" fill="#080808" font-family="Helvetica,Arial,sans-serif" font-size="18" font-weight="700">BUILD/YOUR/AGENTS</text>
+  <text x="1140" y="64" text-anchor="end" fill="#080808" font-family="Helvetica,Arial,sans-serif" font-size="16">OPEN SPECIFICATION / VOL. 01</text>
+  <text x="600" y="240" text-anchor="middle" fill="#080808" font-family="Impact,Arial Black,sans-serif" font-size="150" font-weight="900" textLength="920" lengthAdjust="spacingAndGlyphs">BUILD YOUR</text>
+  <text x="600" y="391" text-anchor="middle" fill="#ff3d00" font-family="Impact,Arial Black,sans-serif" font-size="150" font-weight="900" textLength="1040" lengthAdjust="spacingAndGlyphs">OWN AGENTS.</text>
+  <text x="600" y="460" text-anchor="middle" fill="#080808" font-family="Helvetica,Arial,sans-serif" font-size="22">Seven plain-text files. Completely yours to change.</text>
+  <g transform="translate(60 507)">
+    <rect width="150" height="96" rx="24" fill="#ff3d00"/><rect x="155" width="150" height="96" rx="24" fill="#2563ff"/><rect x="310" width="150" height="96" rx="24" fill="#ffd60a"/><rect x="465" width="150" height="96" rx="24" fill="#ff2e93"/><rect x="620" width="150" height="96" rx="24" fill="#c8ff00"/><rect x="775" width="150" height="96" rx="24" fill="#6c2bd9"/><rect x="930" width="150" height="96" rx="24" fill="#080808"/>
+    <g font-family="Helvetica,Arial,sans-serif" font-size="15" font-weight="700" text-anchor="middle">
+      <text x="75" y="56" fill="#080808">SOUL</text><text x="230" y="56" fill="#ebe4d8">IDENTITY</text><text x="385" y="56" fill="#080808">AGENTS</text><text x="540" y="56" fill="#080808">USER</text><text x="695" y="56" fill="#080808">MEMORY</text><text x="850" y="56" fill="#ebe4d8">HEARTBEAT</text><text x="1005" y="56" fill="#ebe4d8">TOOLS</text>
+    </g>
+  </g>
 </svg>

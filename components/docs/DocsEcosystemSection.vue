@@ -5,7 +5,7 @@ import { ecosystemLanes } from '~/composables/useEcosystem'
 const { byId } = useAgentFiles()
 
 function fileChipStyle(color: string) {
-  const onPaper = ['lemon', 'acid'].includes(color)
+  const onPaper = ['lemon', 'acid', 'hot', 'pink'].includes(color)
   return {
     background: `var(--${color})`,
     color: onPaper ? 'var(--ink)' : 'var(--paper)'
@@ -35,15 +35,15 @@ function laneFileNote(laneId: string, fileId: AgentFileId): string {
       <ul class="deco__quick" aria-label="Summary">
         <li>
           <span class="deco__quick-k">OpenClaw</span>
-          <span>→ workspace folder the gateway reads each session</span>
+          <span>workspace folder the gateway reads each session</span>
         </li>
         <li>
           <span class="deco__quick-k">Cursor</span>
-          <span>→ rules / project docs from the same files</span>
+          <span>rules / project docs from the same files</span>
         </li>
         <li>
           <span class="deco__quick-k">MCP</span>
-          <span>→ TOOLS.md + AGENTS.md define what may be invoked</span>
+          <span>TOOLS.md + AGENTS.md define what may be invoked</span>
         </li>
       </ul>
 
@@ -96,17 +96,11 @@ function laneFileNote(laneId: string, fileId: AgentFileId): string {
 .deco {
   padding: 72px 0;
   background: var(--paper-2);
-  border-top: var(--stroke-fat) solid var(--ink);
+  border-top: var(--stroke-fat) solid var(--line);
   scroll-margin-top: 5.5rem;
 }
 .deco__head { margin-bottom: 24px; max-width: 640px; }
-.deco__hl {
-  display: inline-block;
-  background: var(--sky);
-  color: var(--paper);
-  padding: 0 10px;
-  border: var(--stroke) solid var(--ink);
-}
+.deco__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 .deco__lede {
   font-family: var(--mono);
   font-size: 0.84rem;
@@ -134,10 +128,10 @@ function laneFileNote(laneId: string, fileId: AgentFileId): string {
   gap: 16px;
 }
 .deco__lane {
-  border: var(--stroke-fat) solid var(--ink);
+  border: var(--stroke-fat) solid var(--line);
   padding: 16px;
   background: var(--paper);
-  box-shadow: var(--shadow);
+  box-shadow: none;
 }
 .deco__lane-title { margin: 0 0 4px; font-size: 0.95rem; }
 .deco__lane-tag {
@@ -165,7 +159,7 @@ function laneFileNote(laneId: string, fileId: AgentFileId): string {
   align-items: center;
   gap: 6px;
   padding: 4px 8px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
   text-decoration: none;
   font-family: var(--mono);
   font-size: 0.72rem;

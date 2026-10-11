@@ -45,14 +45,14 @@ const result = computed(() => {
 .cfg-paste {
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 2px dashed #444;
+  border-top: 2px dashed var(--line);
 }
 .cfg-paste__title {
   margin: 0 0 6px;
   font-family: var(--display);
   font-size: 0.82rem;
   text-transform: uppercase;
-  color: var(--lemon);
+  color: var(--accent);
 }
 .cfg-paste__lede {
   margin: 0 0 12px;
@@ -79,7 +79,7 @@ const result = computed(() => {
   padding: 8px;
   background: #0a0a0a;
   color: var(--paper);
-  border: 2px solid #444;
+  border: 2px solid var(--line);
   box-sizing: border-box;
 }
 .cfg-paste__area { margin-top: 8px; resize: vertical; }
@@ -91,8 +91,8 @@ const result = computed(() => {
   border: 2px solid;
 }
 .cfg-paste__result--ok {
-  border-color: var(--acid);
-  color: var(--acid);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 .cfg-paste__result--warn {
   border-color: var(--hot);

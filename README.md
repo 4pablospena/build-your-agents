@@ -89,15 +89,15 @@ Interactive questionnaire that maps your answers onto the official templates in 
 
 ## Design
 
-**Brutalist colorful** — thick black strokes, saturated palette, hard shadows, asymmetric layout.
+**Colourful poster design** — warm cream, black type, and the original saturated file palette. Oversized condensed headlines, rounded file tabs, and pill buttons draw on the supplied editorial reference.
 
-| Token         | Fonts         |
-| ------------- | ------------- |
-| Display       | Archivo Black |
-| Body / quotes | Fraunces      |
-| UI / code     | Space Mono    |
+| Role | Font |
+| --- | --- |
+| Display | Anton (the reference’s suggested alternative to Spektra) |
+| Body / UI | Helvetica Neue, Helvetica, Arial |
+| Code | IBM Plex Mono |
 
-Landing and spec pages use handcrafted tokens in [`assets/css/main.css`](assets/css/main.css). The blog uses Tailwind + `@tailwindcss/typography` with Preflight scoped so prose does not clash with the main design system.
+Shared tokens live in [`assets/css/main.css`](assets/css/main.css); the blog’s Tailwind theme uses the same palette. `AgentFileDeck` exposes a keyboard-operable file index. Page navigation, file selection, and configurator steps use short CSS/Vue transitions. `prefers-reduced-motion` disables animation and transitions globally.
 
 ---
 

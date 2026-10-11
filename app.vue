@@ -7,6 +7,6 @@ useHead({
 
 <template>
   <div class="bya-shell">
-    <NuxtPage />
+    <NuxtPage :transition="{ name: 'page', mode: 'out-in' }" />
   </div>
 </template>

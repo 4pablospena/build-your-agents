@@ -1,16 +1,16 @@
 <script setup lang="ts">
 // Visual map of the seven files and their relationships.
-// Single responsibility: render the architecture overview as a brutalist SVG.
+// Single responsibility: render the architecture overview as an interactive file graph.
 const { files } = useAgentFiles()
-const graph = useFileGraph()
+const graph = reactive(useFileGraph())
 
 // Stable positions for the planet diagram
 const nodes = [
-  { id: 'soul',      x: 50,  y: 18, label: 'SOUL',      color: 'var(--hot)',    text: 'var(--paper)' },
+  { id: 'soul',      x: 50,  y: 18, label: 'SOUL',      color: 'var(--hot)',    text: 'var(--ink)' },
   { id: 'identity',  x: 82,  y: 32, label: 'IDENTITY',  color: 'var(--sky)',    text: 'var(--paper)' },
   { id: 'agents',    x: 50,  y: 50, label: 'AGENTS',    color: 'var(--lemon)',  text: 'var(--ink)' },
   { id: 'tools',     x: 18,  y: 32, label: 'TOOLS',     color: 'var(--ink)',    text: 'var(--paper)' },
-  { id: 'user',      x: 18,  y: 72, label: 'USER',      color: 'var(--pink)',   text: 'var(--paper)' },
+  { id: 'user',      x: 18,  y: 72, label: 'USER',      color: 'var(--pink)',   text: 'var(--ink)' },
   { id: 'memory',    x: 50,  y: 84, label: 'MEMORY',    color: 'var(--acid)',   text: 'var(--ink)' },
   { id: 'heartbeat', x: 82,  y: 72, label: 'HEARTBEAT', color: 'var(--grape)',  text: 'var(--paper)' }
 ]
@@ -139,37 +139,22 @@ function onNodeClick(id: string) {
 <style scoped>
 .arch {
   padding: 96px 0;
-  background:
-    linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 
 .arch__head {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
   gap: 36px;
   align-items: end;
   margin-bottom: 56px;
 }
 .arch__head .bya-eyebrow { grid-column: 1 / -1; margin-bottom: 12px; }
-.arch__hl {
-  background: var(--lemon);
-  padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 5px 5px 0 0 var(--ink);
-  display: inline-block;
-  transform: rotate(-0.8deg);
-}
+.arch__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 
 .arch__board {
   position: relative;
   aspect-ratio: 16 / 9;
-  border: var(--stroke-fat) solid var(--ink);
-  background:
-    repeating-linear-gradient(90deg, transparent 0 39px, rgba(10,10,10,0.06) 39px 40px),
-    repeating-linear-gradient(0deg, transparent 0 39px, rgba(10,10,10,0.06) 39px 40px),
-    var(--paper);
-  box-shadow: var(--shadow-lg);
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -183,10 +168,7 @@ function onNodeClick(id: string) {
 .arch__node {
   position: absolute;
   transform: translate(-50%, -50%);
-  padding: 10px 14px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 5px 5px 0 0 var(--ink);
-  font-family: var(--display);
+  box-shadow: none;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-size: clamp(0.7rem, 1.2vw, 0.95rem);
@@ -194,17 +176,14 @@ function onNodeClick(id: string) {
   transition: transform 150ms ease, box-shadow 150ms ease;
 }
 .arch__node:hover {
-  transform: translate(calc(-50% - 3px), calc(-50% - 3px));
-  box-shadow: 8px 8px 0 0 var(--ink);
+  box-shadow: none;
 }
 .arch__node--dim {
   opacity: 0.32;
   filter: grayscale(0.4);
 }
 .arch__node--selected {
-  outline: 4px solid var(--paper);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 4px var(--ink), 8px 8px 0 0 var(--ink);
+  box-shadow: none;
   z-index: 3;
 }
 .arch__node--reads {
@@ -227,17 +206,12 @@ function onNodeClick(id: string) {
 
 .arch__sticker {
   position: absolute;
-  background: var(--paper);
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 4px 4px 0 0 var(--hot);
+  box-shadow: none;
   padding: 10px 14px;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  max-width: 220px;
   line-height: 1.4;
 }
-.arch__sticker--a { top: 6%; left: 6%; transform: rotate(-3deg); }
-.arch__sticker--b { bottom: 6%; right: 6%; transform: rotate(2.5deg); box-shadow: 4px 4px 0 0 var(--sky); }
+.arch__sticker--a { top: 6%; left: 6%; transform: none; }
+.arch__sticker--b { bottom: 6%; right: 6%; transform: none; box-shadow: none; }
 
 .arch__legend {
   list-style: none;
@@ -245,7 +219,6 @@ function onNodeClick(id: string) {
   margin: 56px 0 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 14px;
 }
 .arch__legend-item {
   display: grid;
@@ -253,21 +226,17 @@ function onNodeClick(id: string) {
   grid-template-rows: auto auto;
   column-gap: 12px;
   align-items: center;
-  border: var(--stroke) solid var(--ink);
-  padding: 12px 14px;
-  background: var(--paper);
-  box-shadow: 4px 4px 0 0 var(--ink);
+  box-shadow: none;
   cursor: pointer;
   transition: opacity 120ms ease, transform 120ms ease;
 }
 .arch__legend-item:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 0 var(--ink);
+  box-shadow: none;
 }
 .arch__legend-item--dim { opacity: 0.38; }
 .arch__legend-item--selected {
   background: var(--lemon);
-  box-shadow: 6px 6px 0 0 var(--hot);
+  box-shadow: none;
 }
 .arch__legend-item--reads { border-color: var(--hot); border-width: 3px; }
 .arch__legend-item--readby { border-color: var(--sky); border-width: 3px; }
@@ -275,26 +244,22 @@ function onNodeClick(id: string) {
   grid-row: 1 / span 2;
   width: 36px; height: 36px;
   display: grid; place-items: center;
-  border: var(--stroke) solid var(--ink);
   font-size: 1.2rem;
 }
-.arch__dot--hot   { background: var(--hot);   color: var(--paper); }
+.arch__dot--hot   { background: var(--hot);   color: var(--ink); }
 .arch__dot--sky   { background: var(--sky);   color: var(--paper); }
 .arch__dot--lemon { background: var(--lemon); }
-.arch__dot--pink  { background: var(--pink);  color: var(--paper); }
+.arch__dot--pink  { background: var(--pink);  color: var(--ink); }
 .arch__dot--acid  { background: var(--acid); }
 .arch__dot--grape { background: var(--grape); color: var(--paper); }
 .arch__dot--ink   { background: var(--ink);   color: var(--paper); }
 
 .arch__legend-name {
-  font-family: var(--display);
   text-transform: uppercase;
   font-size: 0.92rem;
 }
 .arch__legend-role {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: #444;
+  color: var(--muted);
 }
 
 @media (max-width: 920px) {
@@ -303,4 +268,20 @@ function onNodeClick(id: string) {
   .arch__node { font-size: 0.62rem; padding: 6px 8px; }
   .arch__sticker { display: none; }
 }
+
+.arch { background: var(--paper); }
+.arch__head { grid-template-columns: 1.2fr 1fr; }
+.arch__board { border: 1px solid var(--ink); border-radius: 60px; background: var(--paper); }
+.arch__node { border: 0; border-radius: 80px; padding: 16px 22px; font-family: var(--body); font-weight: 800; }
+.arch__node:hover { transform: translate(-50%, -50%) scale(1.08); }
+.arch__node--selected { outline: 3px solid var(--ink); outline-offset: 5px; }
+.arch__sticker { border: none; max-width: 220px; font-family: var(--body); font-size: 14px; background: transparent; }
+.arch__legend { gap: 0; }
+.arch__legend-item { border: none; border-bottom: 1px solid var(--line); background: transparent; padding: 18px 12px; }
+.arch__legend-item:hover { transform: none; background: var(--lemon); }
+.arch__dot { border: none; border-radius: 50%; }
+.arch__legend-name { font-family: var(--body); font-weight: 800; }
+.arch__legend-role { font-family: var(--body); font-size: 13px; }
+@media (max-width: 920px) { .arch__head { grid-template-columns: 1fr; } .arch__board { border-radius: 30px; } .arch__node { padding: 12px; font-size: 11px; } }
+
 </style>

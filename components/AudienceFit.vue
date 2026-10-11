@@ -57,29 +57,15 @@ const notFor = [
 
 <style scoped>
 .aud {
-  padding: 88px 0 72px;
-  background:
-    radial-gradient(520px 280px at 15% 20%, rgba(200, 255, 0, 0.22), transparent 55%),
-    radial-gradient(480px 260px at 92% 60%, rgba(255, 46, 147, 0.12), transparent 50%),
-    var(--paper);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 .aud__head {
-  max-width: 720px;
   margin-bottom: 40px;
 }
 .aud__title {
   margin: 14px 0 12px;
 }
-.aud__hl {
-  display: inline-block;
-  background: var(--hot);
-  color: var(--paper);
-  padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 6px 6px 0 0 var(--ink);
-  transform: rotate(-0.8deg);
-}
+.aud__hl { font-family: var(--display); font-style: normal; font-weight: 400; }
 .aud__lede {
   margin: 0;
 }
@@ -87,57 +73,57 @@ const notFor = [
 .aud__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
   align-items: stretch;
 }
 
 .aud__card {
   margin: 0;
-  padding: 24px;
   background: var(--paper);
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 .aud__card--yes {
-  box-shadow: var(--shadow-color);
+  box-shadow: none;
 }
 .aud__card--no {
-  border-color: var(--ink);
-  background: var(--paper-2);
+  border-color: var(--line);
 }
 
 .aud__card-title {
   margin: 0;
-  font-size: 1.15rem;
 }
 
 .aud__list {
   margin: 0;
   padding-left: 1.15rem;
   display: grid;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 0.86rem;
-  line-height: 1.5;
 }
 .aud__li {
   padding-left: 0.15rem;
 }
 
 .aud__foot {
-  margin: 40px 0 0;
   max-width: 62ch;
-  font-family: var(--serif);
-  font-size: 1.05rem;
   line-height: 1.5;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .aud__hl {
-    transform: none;
-  }
+  .aud__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 }
+
+.aud { background: var(--ink); color: var(--paper); padding: 90px 0; border: none; }
+.aud__head { max-width: 800px; margin: 0 auto 50px; text-align: center; }
+.aud__hl { color: var(--acid); }
+.aud__lede { margin-inline: auto; }
+.aud__grid { gap: 20px; }
+.aud__card { padding: 44px; border: none; color: var(--ink); }
+.aud__card--yes { background: var(--acid); border-radius: 80px 20px 20px 20px; }
+.aud__card--no { background: var(--pink); border-radius: 20px 20px 80px 20px; }
+.aud__card-title { font-size: 36px; }
+.aud__list { font-family: var(--body); font-size: 16px; line-height: 1.5; gap: 16px; }
+.aud__foot { font-family: var(--body); font-size: 14px; margin: 36px auto 0; text-align: center; color: var(--color-ash-taupe); }
+@media (max-width: 600px) { .aud__card { padding: 34px 28px; } .aud__grid { grid-template-columns: 1fr; } }
+
 </style>

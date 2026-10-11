@@ -38,7 +38,7 @@ const fileMeta = computed(() => {
         <span aria-hidden="true">·</span>
         <NuxtLink class="cl-banner__cta" to="/docs#changelog">
           see changelog
-          <span aria-hidden="true">→</span>
+
         </NuxtLink>
       </p>
     </div>
@@ -49,7 +49,7 @@ const fileMeta = computed(() => {
 .cl-banner {
   background: var(--lemon);
   color: var(--ink);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 .cl-banner__inner {
   padding: 10px 0;

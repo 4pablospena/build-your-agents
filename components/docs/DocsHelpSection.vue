@@ -42,7 +42,7 @@ const { faq, issuesUrl, repoUrl } = useSiteNav()
             rel="noopener noreferrer"
           >
             New issue
-            <span aria-hidden="true">↗</span>
+
           </a>
           <a
             class="bya-btn bya-btn--ghost"
@@ -51,7 +51,7 @@ const { faq, issuesUrl, repoUrl } = useSiteNav()
             rel="noopener noreferrer"
           >
             Repository
-            <span aria-hidden="true">↗</span>
+
           </a>
         </div>
       </div>
@@ -63,17 +63,11 @@ const { faq, issuesUrl, repoUrl } = useSiteNav()
 .dhelp {
   padding: 72px 0;
   background: var(--paper-2);
-  border-top: var(--stroke-fat) solid var(--ink);
+  border-top: var(--stroke-fat) solid var(--line);
   scroll-margin-top: 5.5rem;
 }
 .dhelp__head { margin-bottom: 32px; max-width: 640px; }
-.dhelp__hl {
-  display: inline-block;
-  background: var(--lemon);
-  padding: 0 10px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 4px 4px 0 0 var(--ink);
-}
+.dhelp__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 .dhelp__lede {
   font-family: var(--mono);
   font-size: 0.84rem;
@@ -82,11 +76,11 @@ const { faq, issuesUrl, repoUrl } = useSiteNav()
 }
 .dhelp__faq { margin: 0; }
 .dhelp__faq-item {
-  border: var(--stroke) solid var(--ink);
+  border: var(--stroke) solid var(--line);
   background: var(--paper);
   padding: 14px 16px;
   margin-bottom: 10px;
-  box-shadow: 4px 4px 0 0 var(--ink);
+  box-shadow: none;
 }
 .dhelp__faq-q {
   font-family: var(--display);
@@ -103,7 +97,7 @@ const { faq, issuesUrl, repoUrl } = useSiteNav()
 .dhelp__band {
   margin-top: 36px;
   padding: 20px;
-  border: var(--stroke-fat) solid var(--ink);
+  border: var(--stroke-fat) solid var(--line);
   background: var(--ink);
   color: var(--paper);
 }
@@ -119,6 +113,6 @@ const { faq, issuesUrl, repoUrl } = useSiteNav()
 .dhelp__band .bya-btn--ghost {
   color: var(--paper);
   border-color: var(--paper);
-  box-shadow: 3px 3px 0 0 var(--paper);
+  box-shadow: none;
 }
 </style>

@@ -44,11 +44,11 @@ const entryAnchor = computed(() =>
     <footer class="cl-entry__foot">
       <NuxtLink class="cl-entry__link" :to="`/docs#docs-card-${file.id}`">
         Template
-        <span aria-hidden="true">↗</span>
+
       </NuxtLink>
       <NuxtLink v-if="postHref" class="cl-entry__link" :to="postHref">
         Read post
-        <span aria-hidden="true">↗</span>
+
       </NuxtLink>
     </footer>
   </article>
@@ -59,18 +59,18 @@ const entryAnchor = computed(() =>
 
 <style scoped>
 .cl-entry {
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow);
+  border: var(--stroke-fat) solid var(--line);
+  box-shadow: none;
   padding: 20px 22px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   background: var(--paper);
 }
-.cl-entry--hot   { background: var(--hot);   color: var(--paper); }
+.cl-entry--hot   { background: var(--hot);   color: var(--ink); }
 .cl-entry--sky   { background: var(--sky);   color: var(--paper); }
 .cl-entry--lemon { background: var(--lemon); color: var(--ink); }
-.cl-entry--pink  { background: var(--pink);  color: var(--paper); }
+.cl-entry--pink  { background: var(--pink);  color: var(--ink); }
 .cl-entry--acid  { background: var(--acid);  color: var(--ink); }
 .cl-entry--grape { background: var(--grape); color: var(--paper); }
 .cl-entry--ink   { background: var(--ink);   color: var(--paper); }

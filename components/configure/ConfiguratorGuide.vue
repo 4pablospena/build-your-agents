@@ -49,7 +49,7 @@ function stepFilled(fileId: AgentFileId) {
           @click="emit('openStep', step.fileId)"
         >
           {{ stepFilled(step.fileId) ? 'Edit step' : 'Open step' }}
-          <span aria-hidden="true">→</span>
+
         </button>
       </li>
     </ol>
@@ -72,14 +72,14 @@ function stepFilled(fileId: AgentFileId) {
   gap: 12px;
 }
 .cfg-guide__step {
-  border: var(--stroke) solid #ccc;
-  background: #fff;
+  border: var(--stroke) solid var(--line);
+  background: var(--paper-2);
   padding: 14px;
-  box-shadow: 3px 3px 0 0 #ccc;
+  box-shadow: none;
 }
 .cfg-guide__step--done {
   border-color: var(--acid);
-  box-shadow: 3px 3px 0 0 var(--acid);
+  box-shadow: none;
 }
 .cfg-guide__step-head {
   display: grid;
@@ -121,8 +121,8 @@ function stepFilled(fileId: AgentFileId) {
   letter-spacing: 0.06em;
   padding: 6px 12px;
   background: var(--lemon);
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 2px 2px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
   cursor: pointer;
 }
 </style>

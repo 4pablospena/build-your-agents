@@ -50,7 +50,7 @@ const touched = computed(() => orderedFilesTouched(props.fileIds, files, byId))
           :to="`/docs#docs-card-${f.id}`"
           :aria-label="`Open ${f.filename} template`"
         >
-          <span aria-hidden="true">↗</span>
+
         </NuxtLink>
       </li>
     </ul>
@@ -115,28 +115,28 @@ const touched = computed(() => orderedFilesTouched(props.fileIds, files, byId))
   align-items: center;
   gap: 8px;
   padding: 8px 10px;
-  border: var(--stroke) solid var(--ink);
+  border: var(--stroke) solid var(--line);
   text-decoration: none;
   color: inherit;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  box-shadow: 3px 3px 0 0 var(--ink);
+  box-shadow: none;
   transition: transform 100ms ease, box-shadow 100ms ease;
 }
 .fts__chip:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 0 var(--ink);
+  box-shadow: none;
 }
 .fts--compact .fts__chip {
   padding: 6px 9px;
   font-size: 0.66rem;
 }
 
-.fts__chip--hot   { background: var(--hot);   color: var(--paper); }
+.fts__chip--hot   { background: var(--hot);   color: var(--ink); }
 .fts__chip--sky   { background: var(--sky);   color: var(--paper); }
 .fts__chip--lemon { background: var(--lemon); color: var(--ink); }
-.fts__chip--pink  { background: var(--pink);  color: var(--paper); }
+.fts__chip--pink  { background: var(--pink);  color: var(--ink); }
 .fts__chip--acid  { background: var(--acid);  color: var(--ink); }
 .fts__chip--grape { background: var(--grape); color: var(--paper); }
 .fts__chip--ink   { background: var(--ink);   color: var(--paper); }
@@ -156,19 +156,19 @@ const touched = computed(() => orderedFilesTouched(props.fileIds, files, byId))
   justify-content: center;
   min-width: 36px;
   padding: 0 8px;
-  border: var(--stroke) solid var(--ink);
+  border: var(--stroke) solid var(--line);
   border-left: none;
   background: var(--paper);
   color: var(--ink);
   text-decoration: none;
   font-size: 0.78rem;
-  box-shadow: 3px 3px 0 0 var(--ink);
+  box-shadow: none;
 }
 .fts__docs:hover {
   background: var(--acid);
 }
 .fts--horizontal .fts__docs {
-  border-left: var(--stroke) solid var(--ink);
+  border-left: var(--stroke) solid var(--line);
   min-width: 32px;
 }
 
@@ -176,7 +176,7 @@ const touched = computed(() => orderedFilesTouched(props.fileIds, files, byId))
 .fts--vertical.fts:not(.fts--compact) {
   padding: 16px 14px;
   background: var(--paper-2);
-  border-left: var(--stroke-fat) solid var(--ink);
+  border-left: var(--stroke-fat) solid var(--line);
   min-width: 148px;
   max-width: 180px;
 }

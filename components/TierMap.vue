@@ -13,7 +13,7 @@ withDefaults(
 )
 
 const { files, tiers, byId } = useAgentFiles()
-const graph = useFileGraph()
+const graph = reactive(useFileGraph())
 
 function chipClass(fid: string) {
   const role = graph.roleFor(fid)
@@ -101,7 +101,7 @@ const tierAccent: Record<number, string> = {
             <span class="tmap__tier-num" :style="{ color: tierAccent[tier.number] }">
               Tier {{ tier.number }}
             </span>
-            <span class="tmap__arrow" aria-hidden="true">→</span>
+
             <strong class="tmap__tier-label">{{ tier.label }}</strong>
             <p class="tmap__tier-sub">{{ tier.sublabel }}</p>
           </div>
@@ -116,7 +116,7 @@ const tierAccent: Record<number, string> = {
               :class="chipClass(fid)"
               :style="{
                 background: `var(--${byId(fid)!.color})`,
-                color: ['lemon','acid'].includes(byId(fid)!.color) ? 'var(--ink)' : 'var(--paper)'
+                color: ['lemon','acid','hot','pink'].includes(byId(fid)!.color) ? 'var(--ink)' : 'var(--paper)'
               }"
               :aria-current="graph.roleFor(fid) === 'selected' ? 'true' : undefined"
               @click="onChipClick(fid)"
@@ -132,7 +132,7 @@ const tierAccent: Record<number, string> = {
             v-if="tier.number < 4"
             class="tmap__connector"
             aria-hidden="true"
-          >↓</div>
+          ></div>
         </div>
       </div>
 
@@ -151,10 +151,10 @@ const tierAccent: Record<number, string> = {
               :class="flowFromClass(f.id)"
               :style="{
                 background: `var(--${f.color})`,
-                color: ['lemon','acid'].includes(f.color) ? 'var(--ink)' : 'var(--paper)'
+                color: ['lemon','acid','hot','pink'].includes(f.color) ? 'var(--ink)' : 'var(--paper)'
               }"
             >{{ f.filename }}</span>
-            <span class="tmap__flow-reads">reads ↳</span>
+            <span class="tmap__flow-reads">reads </span>
             <span
               v-for="r in f.reads"
               :key="r"
@@ -172,7 +172,7 @@ const tierAccent: Record<number, string> = {
 .tmap {
   padding: 96px 0;
   background: var(--paper);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 
 .tmap__head {
@@ -180,22 +180,14 @@ const tierAccent: Record<number, string> = {
   max-width: 820px;
 }
 .tmap__head .bya-eyebrow { margin-bottom: 14px; }
-.tmap__hl {
-  display: inline-block;
-  background: var(--grape);
-  color: var(--paper);
-  padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 6px 6px 0 0 var(--ink);
-  transform: rotate(-0.8deg);
-}
+.tmap__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 
 /* --- Stack of tier bands --- */
 .tmap__stack {
   display: flex;
   flex-direction: column;
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow-lg);
+  border: var(--stroke-fat) solid var(--line);
+  box-shadow: none;
   position: relative;
 }
 
@@ -204,7 +196,7 @@ const tierAccent: Record<number, string> = {
   display: grid;
   grid-template-columns: minmax(260px, 1fr) 1fr;
   gap: 0;
-  border-bottom: var(--stroke) solid var(--ink);
+  border-bottom: var(--stroke) solid var(--line);
 }
 .tmap__band:last-child { border-bottom: none; }
 
@@ -216,7 +208,7 @@ const tierAccent: Record<number, string> = {
   align-items: center;
   column-gap: 10px;
   padding: 28px 32px;
-  border-right: var(--stroke) solid var(--ink);
+  border-right: var(--stroke) solid var(--line);
 }
 .tmap__tier-num {
   font-family: var(--display);
@@ -267,15 +259,15 @@ const tierAccent: Record<number, string> = {
   column-gap: 10px;
   align-items: center;
   padding: 14px 18px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 5px 5px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
   text-decoration: none;
   transition: transform 120ms ease, box-shadow 120ms ease;
   min-width: 180px;
 }
 .tmap__chip:hover {
   transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0 0 var(--ink);
+  box-shadow: none;
 }
 .tmap__chip--dim {
   opacity: 0.35;
@@ -287,10 +279,10 @@ const tierAccent: Record<number, string> = {
   z-index: 2;
 }
 .tmap__chip--reads {
-  box-shadow: 0 0 0 3px var(--hot), 5px 5px 0 0 var(--ink);
+  box-shadow: none;
 }
 .tmap__chip--readby {
-  box-shadow: 0 0 0 3px var(--sky), 5px 5px 0 0 var(--ink);
+  box-shadow: none;
 }
 
 .tmap__chip-sym {
@@ -323,12 +315,12 @@ const tierAccent: Record<number, string> = {
   font-family: var(--display);
   font-size: 1.1rem;
   background: var(--paper);
-  border: var(--stroke) solid var(--ink);
+  border: var(--stroke) solid var(--line);
   width: 36px;
   height: 36px;
   display: grid;
   place-items: center;
-  box-shadow: 3px 3px 0 0 var(--ink);
+  box-shadow: none;
 }
 
 /* --- Dependency legend --- */
@@ -355,7 +347,7 @@ const tierAccent: Record<number, string> = {
   font-size: 0.82rem;
   text-transform: uppercase;
   padding: 4px 10px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 .tmap__flow-reads {
   opacity: 0.6;
@@ -364,7 +356,7 @@ const tierAccent: Record<number, string> = {
 .tmap__flow-dep {
   padding: 3px 8px;
   background: var(--paper-2);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 .tmap__flow-item--dim { opacity: 0.35; }
 .tmap__flow-from--selected {
@@ -379,7 +371,7 @@ const tierAccent: Record<number, string> = {
 
 @media (max-width: 920px) {
   .tmap__band { grid-template-columns: 1fr; }
-  .tmap__label-col { border-right: none; border-bottom: var(--stroke) solid var(--ink); }
+  .tmap__label-col { border-right: none; border-bottom: var(--stroke) solid var(--line); }
   .tmap__connector { display: none; }
 }
 </style>

@@ -73,19 +73,19 @@ useSeoMeta({
       <nav class="mb-8">
         <NuxtLink
           to="/blog"
-          class="inline-flex items-center gap-2 border-[3px] border-ink bg-paper px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.12em] text-ink shadow-[6px_6px_0_0_#0a0a0a] transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[8px_8px_0_0_#ff3d00]"
+          class="inline-flex items-center gap-2 border border-line bg-paper px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.12em] text-ink  transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 "
         >
-          ← All posts
+          All posts
         </NuxtLink>
       </nav>
 
-      <div class="flex max-w-4xl flex-col gap-0 border-[3px] border-ink bg-paper shadow-[10px_10px_0_0_#0a0a0a] lg:flex-row">
+      <div class="flex max-w-4xl flex-col gap-0 border border-line bg-paper  lg:flex-row">
         <div class="h-2 w-full shrink-0 bg-acid lg:hidden" aria-hidden="true" />
         <div class="hidden w-3 shrink-0 bg-acid lg:block" aria-hidden="true" />
         <div class="min-w-0 flex-1">
           <div
             v-if="post.cover"
-            class="border-b-[3px] border-ink bg-paper-2"
+            class="border-b border-line bg-paper-2"
           >
             <img
               :src="post.cover"
@@ -138,7 +138,7 @@ useSeoMeta({
         <NuxtLink
           v-if="nav.prev"
           :to="`/blog/${blogSlugFromPath(nav.prev._path!)}`"
-          class="border-[3px] border-ink bg-paper-2 px-4 py-4 shadow-[6px_6px_0_0_#0a0a0a] transition-transform hover:-translate-y-0.5 hover:bg-acid"
+          class="border border-line bg-paper-2 px-4 py-4  transition-transform hover:-translate-y-0.5 hover:bg-acid"
         >
           <span class="block text-xs uppercase tracking-wide text-ink/70">Previous</span>
           <span class="mt-1 block font-bold uppercase tracking-tight text-ink">{{ nav.prev.title }}</span>
@@ -148,7 +148,7 @@ useSeoMeta({
         <NuxtLink
           v-if="nav.next"
           :to="`/blog/${blogSlugFromPath(nav.next._path!)}`"
-          class="border-[3px] border-ink bg-paper-2 px-4 py-4 text-right shadow-[6px_6px_0_0_#0a0a0a] transition-transform hover:-translate-y-0.5 hover:bg-lemon sm:col-start-2"
+          class="border border-line bg-paper-2 px-4 py-4 text-right  transition-transform hover:-translate-y-0.5 hover:bg-lemon sm:col-start-2"
         >
           <span class="block text-xs uppercase tracking-wide text-ink/70">Next</span>
           <span class="mt-1 block font-bold uppercase tracking-tight text-ink">{{ nav.next.title }}</span>

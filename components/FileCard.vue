@@ -103,7 +103,7 @@ function onCardClick(event: MouseEvent) {
     </div>
 
     <footer v-if="file.reads.length" class="fc__reads">
-      <span class="fc__reads-label">reads ↳</span>
+      <span class="fc__reads-label">reads </span>
       <span v-for="r in file.reads" :key="r" class="fc__read-chip">{{ r }}</span>
     </footer>
     <footer v-else class="fc__reads fc__reads--leaf">
@@ -115,8 +115,8 @@ function onCardClick(event: MouseEvent) {
 <style scoped>
 .fc {
   position: relative;
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow-lg);
+  border: var(--stroke-fat) solid var(--line);
+  box-shadow: none;
   padding: 26px 26px 22px;
   display: flex;
   flex-direction: column;
@@ -125,10 +125,10 @@ function onCardClick(event: MouseEvent) {
   cursor: pointer;
   transition: opacity 120ms ease, outline 120ms ease, transform 120ms ease;
 }
-.fc--hot   { background: var(--hot);   color: var(--paper); }
+.fc--hot   { background: var(--hot);   color: var(--ink); }
 .fc--sky   { background: var(--sky);   color: var(--paper); }
 .fc--lemon { background: var(--lemon); color: var(--ink); }
-.fc--pink  { background: var(--pink);  color: var(--paper); }
+.fc--pink  { background: var(--pink);  color: var(--ink); }
 .fc--acid  { background: var(--acid);  color: var(--ink); }
 .fc--grape { background: var(--grape); color: var(--paper); }
 .fc--ink   { background: var(--ink);   color: var(--paper); }
@@ -162,8 +162,8 @@ function onCardClick(event: MouseEvent) {
   padding: 4px 10px;
   background: var(--paper);
   color: var(--ink);
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 3px 3px 0 0 var(--ink);
+  border: var(--stroke) solid var(--line);
+  box-shadow: none;
 }
 .fc--lemon .fc__num, .fc--acid .fc__num {
   background: var(--ink); color: var(--paper);
@@ -204,7 +204,7 @@ function onCardClick(event: MouseEvent) {
   padding: 4px 8px;
   background: var(--paper);
   color: var(--ink);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 .fc--lemon .fc__section, .fc--acid .fc__section {
   background: var(--ink); color: var(--paper);
@@ -213,7 +213,7 @@ function onCardClick(event: MouseEvent) {
 .fc__quote {
   margin: 6px 0 0;
   padding: 12px 14px;
-  border-left: var(--stroke-fat) solid var(--ink);
+  border-left: var(--stroke-fat) solid var(--line);
   background: rgba(10, 10, 10, 0.12);
   font-family: var(--mono);
   font-size: 0.82rem;
@@ -232,11 +232,11 @@ function onCardClick(event: MouseEvent) {
   display: flex;
   flex-direction: column;
   gap: 0;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 .fc--lemon .fc__source,
 .fc--acid .fc__source {
-  border-color: var(--ink);
+  border-color: var(--line);
 }
 
 .fc__source-toggle {
@@ -285,7 +285,7 @@ function onCardClick(event: MouseEvent) {
 }
 
 .fc__source-body {
-  border-top: 2px solid var(--ink);
+  border-top: 2px solid var(--line);
   overflow: hidden;
 }
 .fc__source-bar {
@@ -362,7 +362,7 @@ function onCardClick(event: MouseEvent) {
   padding: 2px 6px;
   background: var(--ink);
   color: var(--paper);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--line);
 }
 .fc--ink .fc__read-chip { background: var(--lemon); color: var(--ink); }
 </style>

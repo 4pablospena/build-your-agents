@@ -77,7 +77,7 @@ const readingMinutes = computed(() => estimateReadingMinutesFromPost(props.post)
       <footer class="ex__foot">
         <NuxtLink class="bya-btn ex__cta" :to="postHref">
           Read the walkthrough
-          <span aria-hidden="true">→</span>
+
         </NuxtLink>
       </footer>
     </div>
@@ -90,8 +90,8 @@ const readingMinutes = computed(() => estimateReadingMinutesFromPost(props.post)
   flex-direction: column;
   gap: 0;
   background: var(--paper);
-  border: var(--stroke-fat) solid var(--ink);
-  box-shadow: var(--shadow-lg);
+  border: var(--stroke-fat) solid var(--line);
+  box-shadow: none;
   overflow: hidden;
 }
 .ex__head {
@@ -121,7 +121,7 @@ const readingMinutes = computed(() => estimateReadingMinutesFromPost(props.post)
 
 .ex__cover-link {
   display: block;
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 .ex__cover {
   display: block;
@@ -185,14 +185,14 @@ const readingMinutes = computed(() => estimateReadingMinutesFromPost(props.post)
   font-size: 1.02rem;
   line-height: 1.5;
   padding: 12px 14px;
-  border-left: var(--stroke-fat) solid var(--ink);
+  border-left: var(--stroke-fat) solid var(--line);
   background: var(--paper-2);
 }
 
 .ex__foot {
   margin-top: 4px;
   padding-top: 16px;
-  border-top: 2px dashed var(--ink);
+  border-top: 2px dashed var(--line);
 }
 .ex__cta {
   font-size: 0.82rem;

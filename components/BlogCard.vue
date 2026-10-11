@@ -21,9 +21,9 @@ const dateLabel = computed(() => {
 
 <template>
   <article
-    class="group flex h-full flex-col overflow-hidden rounded-lg border-[3px] border-ink bg-paper shadow-[6px_6px_0_0_#0a0a0a] transition-transform hover:-translate-y-0.5"
+    class="group flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-paper  transition-transform hover:-translate-y-1"
   >
-    <NuxtLink :to="`/blog/${slug}`" class="block shrink-0 border-b-[3px] border-ink bg-paper-2 overflow-hidden">
+    <NuxtLink :to="`/blog/${slug}`" class="block shrink-0 border-b border-line bg-paper-2 overflow-hidden">
       <img
         v-if="post.cover"
         :src="post.cover"
@@ -47,7 +47,7 @@ const dateLabel = computed(() => {
       </div>
 
       <NuxtLink :to="`/blog/${slug}`" class="block">
-        <h2 class="font-display text-xl leading-snug text-ink group-hover:underline decoration-2 underline-offset-2">
+        <h2 class="font-serif font-bold text-2xl leading-snug text-ink group-hover:underline decoration-2 underline-offset-2">
           {{ post.title }}
         </h2>
       </NuxtLink>
@@ -61,7 +61,7 @@ const dateLabel = computed(() => {
           v-for="t in post.tags"
           :key="t"
           :to="{ path: '/blog', query: { tag: t } }"
-          class="rounded border-2 border-ink bg-lemon px-2 py-0.5 font-mono text-[11px] uppercase tracking-wide text-ink hover:bg-acid"
+          class="rounded-full border border-line bg-lemon px-2 py-0.5 font-mono text-[11px] uppercase tracking-wide text-ink hover:bg-acid"
           @click.stop
         >
           {{ t }}

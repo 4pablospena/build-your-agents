@@ -28,7 +28,7 @@ const { files } = useAgentFiles()
         <p class="bya-lede files__lede-wrap">
           {{ lede }}
           <NuxtLink v-if="showDocsLink" class="files__docs-link" to="/docs">
-            Download the .md templates →
+            Download the .md templates
           </NuxtLink>
         </p>
       </header>
@@ -69,23 +69,15 @@ const { files } = useAgentFiles()
   color: var(--ink);
   text-decoration: none;
   padding: 8px 14px;
-  border: var(--stroke) solid var(--ink);
+  border: var(--stroke) solid var(--line);
   background: var(--acid);
-  box-shadow: 4px 4px 0 0 var(--ink);
+  box-shadow: none;
 }
 .files__docs-link:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 0 var(--ink);
+  box-shadow: none;
 }
-.files__hl {
-  display: inline-block;
-  background: var(--pink);
-  color: var(--paper);
-  padding: 0 12px;
-  border: var(--stroke) solid var(--ink);
-  box-shadow: 6px 6px 0 0 var(--ink);
-  transform: rotate(-1deg);
-}
+.files__hl { color: var(--grape); font-family: var(--display); font-style: normal; font-weight: 400; }
 
 .files__grid {
   display: grid;

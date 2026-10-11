@@ -56,29 +56,17 @@ const steps = [
 <style scoped>
 .loop {
   padding: 96px 0;
-  background: var(--ink);
-  color: var(--paper);
-  border-top: var(--stroke-fat) solid var(--ink);
-  border-bottom: var(--stroke-fat) solid var(--ink);
+  border-top: var(--stroke-fat) solid var(--line);
+  border-bottom: var(--stroke-fat) solid var(--line);
 }
 .loop__head {
   max-width: 760px;
   margin-bottom: 48px;
 }
 .loop__head .bya-eyebrow {
-  background: var(--lemon);
-  color: var(--ink);
-  border-color: var(--lemon);
+  border-color: var(--accent);
 }
-.loop__head .bya-h2, .loop__head .bya-lede { color: var(--paper); }
-.loop__hl {
-  display: inline-block;
-  background: var(--hot);
-  padding: 0 12px;
-  border: var(--stroke) solid var(--paper);
-  box-shadow: 6px 6px 0 0 var(--lemon);
-  transform: rotate(-1deg);
-}
+.loop__hl { font-family: var(--display); font-style: normal; font-weight: 400; }
 
 .loop__list {
   list-style: none;
@@ -96,8 +84,6 @@ const steps = [
   column-gap: 16px;
   row-gap: 0;
   padding: 22px 20px;
-  border: var(--stroke) solid var(--paper);
-  background: var(--ink);
 }
 .loop__step + .loop__step { border-top: 0; }
 
@@ -105,8 +91,6 @@ const steps = [
   grid-column: 1;
   grid-row: 1;
   font-family: var(--display);
-  font-size: 2.4rem;
-  color: var(--acid);
   line-height: 1;
 }
 .loop__connector {
@@ -116,7 +100,6 @@ const steps = [
   font-family: var(--mono);
   font-size: 1.1rem;
   line-height: 1;
-  color: var(--paper);
   opacity: 0.45;
 }
 .loop__body {
@@ -128,15 +111,10 @@ const steps = [
   min-width: 0;
 }
 .loop__file {
-  font-family: var(--mono);
   font-weight: 700;
-  font-size: 0.92rem;
   letter-spacing: 0.04em;
-  color: var(--lemon);
 }
 .loop__act {
-  font-family: var(--serif);
-  font-style: italic;
   font-size: 1.05rem;
 }
 
@@ -145,4 +123,17 @@ const steps = [
   gap: 12px;
   max-width: 720px;
 }
+
+.loop { background: var(--sky); color: var(--paper); border: none; }
+.loop__head .bya-h2, .loop__head .bya-lede { color: var(--paper); }
+.loop__head .bya-eyebrow { background: transparent; color: var(--paper); padding-inline: 0; }
+.loop__hl { color: var(--lemon); }
+.loop__step { background: transparent; border: 0; border-bottom: 1px solid #ebe4d866; padding-inline: 0; }
+.loop__num { color: var(--lemon); font-size: 56px; }
+.loop__file { color: var(--paper); font-family: var(--body); font-size: 20px; }
+.loop__act { font-family: var(--body); font-style: normal; }
+.loop__connector { color: var(--paper); }
+.loop__code-wrap .bya-chip { justify-self: start; background: var(--lemon); border: none; }
+@media (max-width: 600px) { .loop__step { grid-template-columns: 48px 8px 1fr; gap: 10px; } .loop__num { font-size: 42px; } .loop__file { font-size: 17px; } }
+
 </style>
